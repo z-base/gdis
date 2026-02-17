@@ -1,15 +1,15 @@
-[![npm version](https://img.shields.io/npm/v/@z-base/gqscd)](https://www.npmjs.com/package/@z-base/gqscd)
-[![CI](https://github.com/z-base/gqscd/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/z-base/gqscd/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/gh/z-base/gqscd/branch/master/graph/badge.svg)](https://codecov.io/gh/z-base/gqscd)
-[![license](https://img.shields.io/npm/l/@z-base/gqscd)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@z-base/gdis)](https://www.npmjs.com/package/@z-base/gdis)
+[![CI](https://github.com/z-base/gdis/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/z-base/gdis/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/z-base/gdis/branch/master/graph/badge.svg)](https://codecov.io/gh/z-base/gdis)
+[![license](https://img.shields.io/npm/l/@z-base/gdis)](LICENSE)
 
 1. Title
 
-# gqscd
+# gdis
 
 2. Description
 
-Globally Qualified Signature Creation Device
+Global Digital Identity Scheme
 
 what it's for
 

@@ -1,5 +1,5 @@
 {
-  "name": "@z-base/gqscd",
+  "name": "@z-base/gdis",
   "version": "0.0.0",
   "description": "",
   "keywords": [
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/entity/gqscd.git"
+    "url": "git+https://github.com/entity/gdis.git"
   },
   "bugs": {
-    "url": "https://github.com/entity/gqscd/issues"
+    "url": "https://github.com/entity/gdis/issues"
   },
-  "homepage": "https://z-base.github.io/gqscd",
+  "homepage": "https://z-base.github.io/gdis",
   "files": [
     "dist",
     "LICENSE",

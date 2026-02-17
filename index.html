@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Globally Qualified Signature Creation Device (GQSCD) Core</title>
+    <title>Global Digital Identity Scheme (GDIS) Core</title>
     <script
       src="https://www.w3.org/Tools/respec/respec-w3c"
       class="remove"
-      defer
+      defer="defer"
     ></script>
     <script class="remove">
       var respecConfig = {
         specStatus: 'ED',
-        shortName: 'gqscd-core',
-        github: 'z-base/gqscd',
+        shortName: 'gdis-core',
+        github: 'z-base/gdis',
         xref: 'web-platform',
         group: 'none',
         editors: [
@@ -30,55 +30,39 @@
       }
     </script>
     <style>
-      .qhc-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
+      .mono {
+        font-family: Consolas, Monaco, 'Courier New', monospace;
       }
 
-      .qhc-gallery figure {
-        margin: 0;
+      .tight td,
+      .tight th {
+        vertical-align: top;
       }
 
-      .qhc-gallery img {
-        width: 100%;
-        height: auto;
-        border: 1px solid #d0d0d0;
-        border-radius: 4px;
-      }
-
-      .qhc-gallery figcaption {
-        font-size: 0.92em;
-      }
-
-      .qsc-diagram {
-        width: 100%;
-        height: auto;
-        border: 1px solid #d0d0d0;
-        border-radius: 4px;
-        background: #ffffff;
-      }
-
-      .qsc-diagram text {
-        font-size: 13px;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        fill: #1b365d;
+      .status-tag {
+        display: inline-block;
+        border: 1px solid #999;
+        border-radius: 3px;
+        padding: 0.1rem 0.35rem;
+        font-size: 0.85em;
       }
     </style>
   </head>
   <body>
     <section id="abstract">
       <p>
-        GQSCD-Core defines how hardware, firmware, operating system, and
-        application components on an end-user device can provide verifiable
-        signature-creation properties aligned to qualified-signature security
-        objectives (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-        <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+        This document specifies
+        <strong>GDIS: Global Digital Identity Scheme</strong>
+        as a web-first identity binding profile that starts from a physical,
+        governance-issued identity item and produces verifier-checkable
+        cryptographic evidence.
       </p>
       <p>
-        This specification is technical and does not itself grant legal
-        qualification (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-        <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>).
+        GDIS does not claim automatic legal recognition in any jurisdiction. It
+        defines how to derive a stable subject key from MRZ-extracted PID hash
+        material, bind that key to governance verification endpoints,
+        issue the binding as a VC to a DID controlled by a GQSCD-class device,
+        and publish verification material in an open decentralized event log.
       </p>
     </section>
 
@@ -87,37 +71,72 @@
       <p>
         AI assistance disclosure: this draft used OpenAI GPT-5 Codex for
         drafting support, structure proposals, and editorial rewrites. Human
-        editor review determined normative content, accepted/rejected changes,
+        editor review determines normative intent, accepted/rejected changes,
         and final wording.
+      </p>
+      <p>
+        Source currency note: linked source pages were checked on February 17,
+        2026.
       </p>
     </section>
 
-    <section>
+    <section id="conformance">
+      <p>
+        The key words <em class="rfc2119">MUST</em>,
+        <em class="rfc2119">MUST NOT</em>, <em class="rfc2119">REQUIRED</em>,
+        <em class="rfc2119">SHALL</em>, <em class="rfc2119">SHALL NOT</em>,
+        <em class="rfc2119">SHOULD</em>, <em class="rfc2119">SHOULD NOT</em>,
+        <em class="rfc2119">RECOMMENDED</em>, <em class="rfc2119">MAY</em>, and
+        <em class="rfc2119">OPTIONAL</em> in this document are to be interpreted
+        as described in BCP 14
+        <a href="#ref-rfc2119">[RFC2119]</a>
+        <a href="#ref-rfc8174">[RFC8174]</a> when, and only when, they appear in
+        all capitals.
+      </p>
+      <p>
+        Conforming implementations MUST satisfy all requirements for at least
+        one conformance class in
+        <a href="#conformance-classes">Conformance Classes</a>.
+      </p>
+      <p>
+        End-to-end machine verifiability is mandatory: any acceptance decision,
+        legal-status claim, or policy-compatibility claim MUST be backed by
+        machine-verifiable artifacts and explicit source references, not UI
+        labels or unverifiable declarations.
+      </p>
+    </section>
+
+    <section id="scope">
       <h2>Scope</h2>
+      <p>This specification covers:</p>
       <ul>
         <li>
-          Defines a component security profile for end-user signing devices (<a
-            href="#ref-eidas-910"
-            >[EU-910/2014]</a
-          >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+          identity anchoring to a physical item issued under a governance area,
+          with governance legitimacy modeled as an external fact;
         </li>
         <li>
-          Defines explicit threat assumptions and non-trust assumptions (<a
-            href="#ref-etsi-319401"
-            >[ETSI-319401]</a
-          >).
+          deterministic MRZ-extracted PID hash derivation and governance
+          verification endpoint binding;
         </li>
         <li>
-          Defines a primary Web Profile and an EU Compatibility Profile (<a
-            href="#ref-w3c-webcrypto2"
-            >[WEBCRYPTO-L2]</a
-          >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-          <a href="#ref-eu-2024-2982">[EU-2024/2982]</a>).
+          credential binding as a VC issued to a DID where the DID controller is
+          GQSCD-class;
         </li>
         <li>
-          Defines a mapping from GQSCD properties to eIDAS Annex II style
-          objectives (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-          <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+          open-participation decentralized event-log publication and verifier
+          conflict resolution rules.
+        </li>
+      </ul>
+      <p>This specification does not:</p>
+      <ul>
+        <li>create legal recognition by itself;</li>
+        <li>
+          replace jurisdictional trust lists, supervisory registries, or legal
+          status determinations;
+        </li>
+        <li>
+          standardize one specific chain, one specific vendor stack, or one
+          closed host network.
         </li>
       </ul>
     </section>
@@ -125,2563 +144,1077 @@
     <section id="positioning-and-adoption" class="informative">
       <h2>Positioning and Adoption Model</h2>
       <p>
-        This document is a GQSCD-Core baseline specification: a formal technical
-        base document that defines cross-platform security invariants, evidence
-        artifacts, and clause-level Annex II traceability.
-      </p>
-      <p>
-        GQSCD-Core is designed to be extended by [=implementing specification=]
-        documents for platform-specific implementation details, test suites, and
-        jurisdiction-specific evidence publication workflows.
+        GDIS is a technical interoperability profile. It is designed so that
+        legal recognition claims remain anchored to jurisdictional registries,
+        while cryptographic verification remains mechanically testable by
+        independent verifier implementations.
       </p>
       <ul>
         <li>
-          <strong>Manufacturer adoption objective:</strong> build certifiable
-          configurations from the outset and prepare auditable
-          hardware/firmware/software evidence for certification and notification
-          pipelines (<a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-          <a href="#ref-eu-2025-1570">[EU-2025/1570]</a>).
+          <strong>Issuer adoption objective:</strong> produce portable binding
+          credentials and evidence artifacts that can be verified without
+          hidden trust assumptions.
         </li>
         <li>
-          <strong>EU deployment objective:</strong> accelerate compliant device
-          availability for the EU market by aligning engineering outputs with
-          Article 30/31 and Annex II evidence expectations (<a
-            href="#ref-eidas-consolidated"
-            >[EU-910-CONS]</a
-          >, <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>).
+          <strong>Verifier adoption objective:</strong> evaluate signatures,
+          freshness, endpoint state, and replication consistency using explicit
+          algorithmic checks.
         </li>
         <li>
-          <strong>Decentralization and digital sovereignty objective:</strong>
-          reduce single-point trust dependencies through [=zero-trust
-          verification model=] checks and open interoperability, improving
-          market contestability, individual protection, and cost-effective
-          implementation choice (<a href="#ref-nist-sp-800-207"
-            >[NIST-SP-800-207]</a
-          >, <a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>,
-          <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
+          <strong>Host adoption objective:</strong> operate open replication
+          origins that implement deterministic gossip and conflict handling
+          behavior.
         </li>
         <li>
-          <strong>Cross-jurisdiction interoperability objective:</strong>
-          provide a neutral, web-first technical baseline that other
-          jurisdictions can map into their legislation or assurance governance
-          while separating technical validity from legal recognition (<a
-            href="#ref-rfc7515"
-            >[RFC7515]</a
-          >, <a href="#ref-rfc9052">[RFC9052]</a>,
-          <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
+          <strong>Governance objective:</strong> define mandatory minimum
+          publication floors where needed, without converting those floors into
+          exclusive host ceilings.
         </li>
       </ul>
     </section>
 
-    <section id="conformance">
-      <p>
-        The key words <em class="rfc2119">MUST</em>,
-        <em class="rfc2119">MUST NOT</em>, <em class="rfc2119">SHOULD</em>,
-        <em class="rfc2119">SHOULD NOT</em>, and
-        <em class="rfc2119">MAY</em> are to be interpreted as described in BCP
-        14 [[RFC2119]] [[RFC8174]].
-      </p>
-      <p>
-        Requirement drafting follows W3C conformance conventions and ETSI-style
-        security requirement traceability; each security claim in normative and
-        profile matrices includes explicit reference basis links (<a
-          href="#ref-etsi-319401"
-          >[ETSI-319401]</a
-        >).
-      </p>
-      <p>
-        A conforming implementation MUST satisfy all requirements of at least
-        one conformance class in this document.
-      </p>
-    </section>
-
-    <section>
+    <section id="terminology">
       <h2>Terminology</h2>
       <dl>
-        <dt><dfn>end-user device</dfn></dt>
+        <dt><dfn>governance area</dfn></dt>
         <dd>
-          A phone, tablet, laptop, desktop, or hardware authenticator operated
-          by a natural person in signature workflows.
+          A legal and administrative domain that issues and governs identity
+          items and their verification rules.
         </dd>
 
-        <dt><dfn>signature creation data</dfn></dt>
+        <dt><dfn>physical identity item</dfn></dt>
         <dd>
-          Data uniquely used by the signatory to create an electronic signature;
-          aligned with eIDAS terminology for electronic signature creation data
-          (<a href="#ref-eidas-910">[EU-910/2014]</a>).
+          A physical identity document or token issued under a
+          <a>governance area</a> and recognized by that area for identity
+          purposes.
         </dd>
 
-        <dt><dfn>signature creation key</dfn></dt>
+        <dt><dfn>chip-backed private key</dfn></dt>
         <dd>
-          Cryptographic private key material used as [=signature creation data=]
-          in digital signature mechanisms (<a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>).
+          Private-key material whose generation, storage, and signing operations
+          are enforced by secure hardware boundaries.
         </dd>
 
-        <dt><dfn>hardware-backed key</dfn></dt>
+        <dt><dfn>governance verification endpoint</dfn></dt>
         <dd>
-          A [=signature creation key=] whose generation, storage, and
-          cryptographic use are enforced by protected hardware boundaries with
-          non-exportability controls (<a href="#ref-android-keystore"
-            >[ANDROID-KEYSTORE]</a
-          >, <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-          <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>).
+          A network endpoint exposing discovery and/or status information needed
+          to validate document legitimacy within a governance area. In this
+          profile, those endpoints are exposed under
+          <span class="mono">/.well-known/gidas/</span>.
         </dd>
 
-        <dt><dfn>qualified signature creation device</dfn> (QSCD)</dt>
+        <dt><dfn>MRZ</dfn></dt>
         <dd>
-          Device class defined by eIDAS and evaluated against Annex II outcomes
-          and referenced assessment standards (<a href="#ref-eidas-910"
-            >[EU-910/2014]</a
-          >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+          Machine Readable Zone data defined in ICAO Doc 9303
+          <a href="#ref-icao-doc9303">[ICAO-9303]</a>
+          <a href="#ref-icao-doc9303-p3">[ICAO-9303-P3]</a>.
         </dd>
 
-        <dt><dfn>sole control</dfn></dt>
+        <dt><dfn>PID</dfn> (person identification data)</dt>
         <dd>
-          Security objective that signature creation data can be used only under
-          control of the legitimate signatory, as required by Annex II outcome
-          language (<a href="#ref-eidas-910">[EU-910/2014]</a>).
+          A set of data that identifies a person under applicable law or
+          standards contexts.
         </dd>
 
-        <dt><dfn>trusted execution environment</dfn> (TEE)</dt>
+        <dt><dfn>PID hash</dfn></dt>
         <dd>
-          Isolated execution context used for security-critical operations
-          separate from the rich operating environment (<a
-            href="#ref-android-trusty-tee"
-            >[ANDROID-TRUSTY]</a
-          >).
+          A cryptographic hash over canonicalized <a>PID</a> fields extracted
+          from MRZ-compatible document data.
         </dd>
 
-        <dt><dfn>secure boot chain</dfn></dt>
+        <dt><dfn>MRZ hash</dfn></dt>
         <dd>
-          Firmware and boot verification sequence that permits execution only of
-          cryptographically verified boot components (<a href="#ref-android-avb"
-            >[ANDROID-AVB]</a
-          >, <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>,
-          <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>).
+          In GDIS v1, an alias for <a>PID hash</a>. MRZ is used to collect PID
+          input, and the hash is computed once.
         </dd>
 
-        <dt><dfn>measured boot evidence</dfn></dt>
+        <dt><dfn>GDIS binding credential</dfn></dt>
         <dd>
-          Measurement artifacts (for example TPM PCR values and event logs)
-          describing boot state for remote verification (<a
-            href="#ref-msft-tpm-overview"
-            >[MSFT-TPM]</a
-          >, <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>).
+          A verifiable credential binding a <a>PID hash</a> to a subject DID,
+          issuer evidence, and governance verification material.
         </dd>
 
-        <dt><dfn>user intent ceremony</dfn></dt>
+        <dt><dfn>GDIS subject DID</dfn></dt>
         <dd>
-          Complete interaction in which the signer can inspect what is being
-          signed and explicitly authorize the operation, with security-critical
-          portions mediated by trusted platform paths when available (<a
-            href="#ref-android-protected-confirmation"
-            >[ANDROID-PROTECTED-CONFIRMATION]</a
-          >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
+          Subject DID in a <a>GDIS binding credential</a>, controlled by a
+          GQSCD-class controller.
         </dd>
 
-        <dt><dfn>user verification</dfn></dt>
+        <dt><dfn>GQSCD controller</dfn></dt>
         <dd>
-          Authenticator procedure that validates the user through local
-          authentication mechanisms before sensitive operations are performed
-          (<a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
+          DID controller profile requiring protected key custody and
+          signer-intent controls as defined by GQSCD Core
+          <a href="#ref-gqscd-core">[GQSCD-CORE]</a>.
         </dd>
 
-        <dt><dfn>attestation evidence</dfn></dt>
+        <dt><dfn>decentralized event log</dfn></dt>
         <dd>
-          Cryptographically verifiable evidence about key origin,
-          authenticator/device properties, or execution state used by verifiers
-          during trust decisions (<a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a
-          >, <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>).
+          Open-participation append-only event replication layer used to publish
+          and gossip GDIS verification material across many origins.
         </dd>
 
-        <dt><dfn>zero-trust verification model</dfn></dt>
+        <dt><dfn>GDIS host</dfn></dt>
         <dd>
-          Verification model where each decision is based on explicit
-          per-transaction evidence and policy evaluation, rather than implicit
-          trust in network location, client software, or governance labels alone
-          (<a href="#ref-nist-sp-800-207">[NIST-SP-800-207]</a>,
-          <a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>).
+          An origin participating in the <a>decentralized event log</a> by
+          storing, serving, and gossiping signed events.
         </dd>
 
-        <dt><dfn>trusted computing base</dfn></dt>
+        <dt><dfn>mandatory minimum hosts</dfn></dt>
         <dd>
-          Set of hardware, firmware, and software components that must behave
-          correctly to uphold stated security properties (<a
-            href="#ref-etsi-319401"
-            >[ETSI-319401]</a
-          >).
+          Governance-required publication targets that define a minimum
+          publication floor and not an exclusive publication ceiling.
         </dd>
 
-        <dt><dfn>evidence record</dfn></dt>
+        <dt><dfn>publication set</dfn></dt>
         <dd>
-          Machine-verifiable artifact set used to substantiate technical or
-          legal property claims (<a href="#ref-etsi-319401">[ETSI-319401]</a>,
-          <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+          Union of mandatory governance hosts and person-selected additional
+          hosts to which a subject's materials are published.
+        </dd>
+
+        <dt><dfn>evidence artifact</dfn></dt>
+        <dd>
+          A signed or hashed machine-verifiable artifact used by issuers,
+          hosts, or verifiers to substantiate a security or status claim.
+        </dd>
+
+        <dt><dfn>conformance report</dfn></dt>
+        <dd>
+          Implementation report that states conformance class coverage, policy
+          assumptions, test outputs, and produced or consumed
+          <a>evidence artifact</a> types.
+        </dd>
+
+        <dt><dfn>verification result</dfn></dt>
+        <dd>
+          Deterministic output object produced by a verifier after executing the
+          normative processing rules in this specification.
         </dd>
 
         <dt><dfn>web profile</dfn></dt>
         <dd>
-          Primary interoperability profile in this specification, based on
-          globally deployed web and internet standards (<a
-            href="#ref-w3c-webcrypto2"
-            >[WEBCRYPTO-L2]</a
-          >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-          <a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>).
+          Primary interoperability profile based on globally deployed web
+          standards and internet protocols.
         </dd>
 
-        <dt><dfn>eu compatibility profile</dfn></dt>
+        <dt><dfn>EU compatibility profile</dfn></dt>
         <dd>
-          Mapping layer from [=web profile=] artifacts to EU legal and ecosystem
-          evidence requirements (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-          <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-          <a href="#ref-eu-2024-2979">[EU-2024/2979]</a>,
-          <a href="#ref-eu-2024-2982">[EU-2024/2982]</a>).
-        </dd>
-
-        <dt><dfn>qualified status claim</dfn></dt>
-        <dd>
-          Claim that an actor, service, device, or signature has legal qualified
-          status within a defined jurisdiction; such claims require
-          authoritative status evidence (<a href="#ref-eu-trusted-lists"
-            >[EU-TRUSTED-LISTS]</a
-          >, <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>).
-        </dd>
-
-        <dt><dfn>eidas framework</dfn></dt>
-        <dd>
-          EU legal framework for electronic identification and trust services
-          established by Regulation (EU) No 910/2014 and its amendments (<a
-            href="#ref-eidas-910"
-            >[EU-910/2014]</a
-          >, <a href="#ref-eu-2024-1183">[EU-2024/1183]</a>).
-        </dd>
-
-        <dt><dfn>eudi wallet ecosystem</dfn></dt>
-        <dd>
-          EU Digital Identity Wallet ecosystem specified by the 2024 eIDAS
-          amendment and implementing acts defining integrity, protocol, and
-          interoperability requirements (<a href="#ref-eu-2024-1183"
-            >[EU-2024/1183]</a
-          >, <a href="#ref-eu-2024-2979">[EU-2024/2979]</a>,
-          <a href="#ref-eu-2024-2982">[EU-2024/2982]</a>).
-        </dd>
-
-        <dt><dfn>implementing specification</dfn></dt>
-        <dd>
-          Companion specification that profiles GQSCD-Core for a specific
-          platform, deployment model, testing method, or jurisdictional evidence
-          workflow while preserving core conformance semantics.
+          Mapping layer from <a>web profile</a> outputs to EU-specific legal and
+          ecosystem requirements.
         </dd>
       </dl>
     </section>
+    <section id="mandate-law">
+      <h2>Mandate (Law/Standards)</h2>
+      <p>
+        <span class="status-tag">External Fact Layer</span>
+      </p>
+      <p>
+        This section states legal/standards facts as external constraints. GDIS
+        does not redefine these facts; it models and references them.
+      </p>
 
-    <section>
-      <h2>Threat Model</h2>
+      <section id="mandate-anchor">
+        <h3>Physical Issuance and Governance Recognition</h3>
+        <p>
+          A GDIS root identity anchor MUST be a
+          <a>physical identity item</a> issued under a <a>governance area</a>.
+          Any claim that such an item is mandated, recognized, qualified,
+          notified, or trusted MUST be backed by authoritative registries or
+          legal texts for that governance area, such as EUR-Lex acts, trusted
+          lists, or official notification dashboards
+          <a href="#ref-eidas-910">[EU-910/2014]</a>
+          <a href="#ref-eu-2024-1183">[EU-2024/1183]</a>
+          <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>
+          <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>.
+        </p>
+      </section>
+
+      <section id="mandate-eidas-terms">
+        <h3>EU Term Discipline (when EU context is used)</h3>
+        <p>
+          If implementers use EU eIDAS vocabulary (for example "electronic
+          identification", "electronic identification means", "person
+          identification data"), those usages SHOULD be anchored to Article 3
+          definitions and related amendments
+          <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>
+          <a href="#ref-eu-2024-1183">[EU-2024/1183]</a>.
+        </p>
+      </section>
+
+      <section id="mandate-icao-mrz">
+        <h3>MRZ Source Constraint</h3>
+        <p>
+          MRZ semantics are defined by ICAO Doc 9303 and MUST NOT be replaced by
+          ad hoc field interpretations
+          <a href="#ref-icao-doc9303">[ICAO-9303]</a>
+          <a href="#ref-icao-doc9303-p3">[ICAO-9303-P3]</a>.
+        </p>
+      </section>
+
+      <section id="mandate-legal-vs-technical">
+        <h3>Legal Effect vs Technical Assurance</h3>
+        <p>
+          GDIS MAY claim technical comparability or stronger verifier
+          cryptographic evidence, but it MUST NOT claim legal equivalence unless
+          legal text explicitly supports that conclusion
+          <a href="#ref-eidas-910">[EU-910/2014]</a>
+          <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>.
+        </p>
+      </section>
+    </section>
+
+    <section id="design-proposal">
+      <h2>Design Proposal (GDIS Model)</h2>
       <p>
-        Implementations MUST model attacker capabilities including network
-        control, malicious local process execution, UI overlay/tapjacking,
-        software rollback attempts, and dishonest relying-party behavior (<a
-          href="#ref-etsi-319401"
-          >[ETSI-319401]</a
-        >,
-        <a href="#ref-android-protected-confirmation"
-          >[ANDROID-PROTECTED-CONFIRMATION]</a
-        >).
+        <span class="status-tag">Architecture Layer</span>
       </p>
       <p>
-        A conformance report MUST explicitly list the [=trusted computing
-        base=], trust assumptions, and excluded trust assumptions (<a
-          href="#ref-etsi-319401"
-          >[ETSI-319401]</a
-        >).
+        This section is the technical design proposal for GDIS. It defines how
+        physical identity anchors become portable cryptographic evidence.
       </p>
+
+      <section id="actors">
+        <h3>Actors</h3>
+        <ul>
+          <li>
+            <strong>Subject</strong>: person controlling a GQSCD-backed DID and
+            deciding additional publication hosts.
+          </li>
+          <li>
+            <strong>Issuer</strong>: governance authority or delegated issuer
+            producing signed GDIS binding credentials.
+          </li>
+          <li>
+            <strong>Verifier</strong>: relying party validating evidence,
+            endpoint freshness, and event-log consistency.
+          </li>
+          <li>
+            <strong>Host</strong>: any open participant origin implementing GDIS
+            host replication endpoints.
+          </li>
+        </ul>
+      </section>
+
+      <section id="lifecycle">
+        <h3>Lifecycle</h3>
+        <ol>
+          <li>
+            A physical item is inspected and chip/authenticity data is read
+            under governance verification procedures.
+          </li>
+          <li>
+            PID fields are extracted from MRZ-compatible data, canonicalized,
+            and hashed into a single claim value.
+          </li>
+          <li>
+            Governance verification endpoint data is normalized and hashed.
+          </li>
+          <li>
+            The derived <a>PID hash</a> is bound to endpoint evidence for issuer
+            and verifier checks.
+          </li>
+          <li>
+            An issuer creates a <a>GDIS binding credential</a> addressed to a
+            <a>GDIS subject DID</a> with GQSCD controller evidence.
+          </li>
+          <li>
+            PID-hash key material and verification material are published to a
+            <a>publication set</a> in the <a>decentralized event log</a>.
+          </li>
+          <li>
+            Verifiers resolve events mechanically and evaluate binding validity,
+            status, and freshness.
+          </li>
+        </ol>
+      </section>
+
+      <section id="identifier-derivation">
+        <h3>PID Hash and Endpoint Binding</h3>
+        <p>
+          GDIS v1 defines the binding input tuple as:
+          <span class="mono">(pidHash, endpointHash)</span>.
+        </p>
+        <ol>
+          <li>
+            Normalize MRZ text to ICAO-compatible uppercase machine-readable
+            form and extract profile-defined PID fields from MRZ-compatible
+            document data.
+          </li>
+          <li>
+            Canonicalize PID JSON using JCS
+            <a href="#ref-rfc8785">[RFC8785]</a>; compute
+            <span class="mono">pidHash = SHA-256(pidCanonicalBytes)</span>. In
+            v1, <span class="mono">mrzHash</span> is an optional alias and
+            equals <span class="mono">pidHash</span>.
+          </li>
+          <li>
+            Normalize endpoint URI per RFC 3986
+            <a href="#ref-rfc3986">[RFC3986]</a>; compute
+            <span class="mono">endpointHash = SHA-256(endpointBytes)</span>.
+          </li>
+          <li>
+            Compute
+            <span class="mono"
+              >bindingDigest = SHA-256("gdis:v1" || pidHash ||
+              endpointHash)</span
+            >.
+          </li>
+          <li>
+            Publish <span class="mono">pidHash</span> as the primary subject key
+            and include <span class="mono">bindingDigest</span> as optional
+            integrity metadata.
+          </li>
+        </ol>
+      </section>
+
+      <section id="credential-model">
+        <h3>Credential Binding Model</h3>
+        <p>
+          The binding MUST be materialized as a W3C VC
+          <a href="#ref-vc-dm2">[VC-DM2]</a> issued to a DID
+          <a href="#ref-did-core">[DID-CORE]</a> and signed using Data Integrity
+          or JOSE-compatible proof suites
+          <a href="#ref-vc-data-integrity">[VC-DI]</a>
+          <a href="#ref-rfc7515">[RFC7515]</a>.
+        </p>
+        <pre class="example"><code class="json">{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "type": ["VerifiableCredential", "GDISBindingCredential"],
+  "issuer": "did:example:governance-issuer",
+  "credentialSubject": {
+    "id": "did:example:subject",
+    "pidHash": "...",
+    "endpoint": "https://registry.example.gov/.well-known/gidas/verify",
+    "governanceArea": "EX-GOV-001"
+  },
+  "evidence": [{
+    "type": "IssuerEvidenceBundle",
+    "statusList": "https://registry.example.gov/.well-known/gidas/status",
+    "discovery": "https://registry.example.gov/.well-known/gidas/discovery"
+  }],
+  "proof": {"type": "DataIntegrityProof"}
+}</code></pre>
+      </section>
+
+      <section id="event-log-model">
+        <h3>Decentralized Event Log Model</h3>
+        <p>
+          GDIS event material is published as signed append-only events. Any
+          origin MAY join as a <a>GDIS host</a> by implementing this profile's
+          host API and verification rules.
+        </p>
+        <pre class="example"><code class="json">{
+  "eventId": "sha256:...",
+  "pidHash": "sha256:...",
+  "type": "BINDING_CREATED",
+  "sequence": 1,
+  "prev": [],
+  "createdAt": "2026-02-17T12:00:00Z",
+  "issuer": "did:example:governance-issuer",
+  "payload": {"credentialDigest": "sha256:..."},
+  "signature": {"alg": "EdDSA", "value": "..."}
+ }</code></pre>
+      </section>
+    </section>
+
+    <section id="evidence-artifact-model">
+      <h2>Evidence Artifact Model</h2>
       <p>
-        Implementations MUST NOT treat UI labels, software allowlists, or
-        relying-party declarations as sufficient security evidence without
-        cryptographic verification (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-        <a href="#ref-rfc7515">[RFC7515]</a>,
-        <a href="#ref-rfc9052">[RFC9052]</a>).
+        Conforming implementations MUST produce and process explicit
+        <a>evidence artifact</a> objects. Artifact schemas MAY evolve by
+        profile version, but required semantics and verification checks in this
+        section are stable.
       </p>
-      <table class="simple">
+      <table class="simple tight">
         <thead>
           <tr>
-            <th>Threat</th>
-            <th>Required mitigation</th>
-            <th>Reference basis</th>
+            <th>Artifact</th>
+            <th>Required Fields</th>
+            <th>Produced By</th>
+            <th>Validated By</th>
+            <th>Freshness or Retention Rule</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>T-01 key exfiltration</td>
+            <td>Binding credential artifact</td>
             <td>
-              Use [=hardware-backed key=] custody and deny raw private-key
-              export.
+              issuer, subject DID, <a>PID hash</a>, endpoint reference, proof
             </td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>
-            </td>
+            <td>Issuer</td>
+            <td>Verifier, Host (on ingest)</td>
+            <td>Retain until superseded or revoked.</td>
           </tr>
           <tr>
-            <td>T-02 UI deception</td>
-            <td>
-              Bind [=user intent ceremony=] to exact payload digest and policy.
-            </td>
-            <td>
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>
-            </td>
+            <td>Endpoint status artifact</td>
+            <td>endpoint URI, status payload, timestamp, signer data</td>
+            <td>Governance endpoint operator</td>
+            <td>Verifier</td>
+            <td>MUST satisfy verifier freshness policy at decision time.</td>
           </tr>
           <tr>
-            <td>T-03 rollback</td>
-            <td>Use anti-rollback with signed update provenance.</td>
-            <td>
-              <a href="#ref-android-avb">[ANDROID-AVB]</a>,
-              <a href="#ref-android-keymint-version-binding"
-                >[ANDROID-KEYMINT-VERSION-BINDING]</a
-              >, <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>,
-              <a href="#ref-apple-localpolicy">[APPLE-LOCALPOLICY]</a>
-            </td>
+            <td>Event publication artifact</td>
+            <td>event id, sequence, predecessor refs, signature</td>
+            <td>Issuer or Host</td>
+            <td>Host, Verifier</td>
+            <td>MUST remain append-only and auditable.</td>
           </tr>
           <tr>
-            <td>T-04 registry spoofing</td>
+            <td>Key rotation artifact</td>
+            <td>new key reference, prior authority signature chain</td>
+            <td>Issuer or delegated authority</td>
+            <td>Host, Verifier</td>
+            <td>MUST be processed before accepting dependent events.</td>
+          </tr>
+          <tr>
+            <td>Verification transcript artifact</td>
+            <td>challenge, audience, evaluated inputs, decision output</td>
+            <td>Verifier</td>
+            <td>Auditor, governance review process</td>
+            <td>SHOULD be retained per governance audit policy.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="normative-requirements">
+      <h2>Normative Requirements</h2>
+
+      <section id="req-anchor">
+        <h3>1. Physical Anchor Requirements</h3>
+        <ul>
+          <li>
+            A GDIS issuance flow <em class="rfc2119">MUST</em> begin from a
+            <a>physical identity item</a> issued in a <a>governance area</a>.
+          </li>
+          <li>
+            The item <em class="rfc2119">MUST</em> support secure key custody,
+            including a <a>chip-backed private key</a> or equivalent protected
+            key boundary.
+          </li>
+          <li>
+            The item <em class="rfc2119">MUST</em> provide or resolve to
+            <a>governance verification endpoint</a> data sufficient for
+            legitimacy verification in that governance context.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-mrz-pid">
+        <h3>2. MRZ-Derived PID Hash Requirements</h3>
+        <ul>
+          <li>
+            Implementations <em class="rfc2119">MUST</em> derive
+            <a>PID hash</a> from PID fields extracted from MRZ data defined by
+            ICAO Doc 9303 structures.
+          </li>
+          <li>
+            <a>PID hash</a> input fields <em class="rfc2119">MUST</em> be
+            explicitly versioned and canonicalized before hashing.
+          </li>
+          <li>
+            If an implementation emits <a>MRZ hash</a>, it
+            <em class="rfc2119">MUST</em> equal <a>PID hash</a> byte-for-byte.
+          </li>
+          <li>
+            Raw MRZ strings and raw PID fields
+            <em class="rfc2119">MUST NOT</em> be published in cleartext in the
+            decentralized event log.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-endpoint">
+        <h3>3. Verification Endpoint Requirements</h3>
+        <ul>
+          <li>
+            GDIS HTTP endpoints <em class="rfc2119">MUST</em> use the URI
+            namespace
+            <span class="mono"
+              >/.well-known/gidas/&lt;method | flow | operation&gt;</span
+            >.
+          </li>
+          <li>
+            Endpoint URIs <em class="rfc2119">MUST</em> use HTTPS and
+            <em class="rfc2119">MUST</em> be normalized before hashing.
+          </li>
+          <li>
+            Endpoint resources <em class="rfc2119">MUST</em> provide at least
+            discovery metadata and status/revocation data.
+          </li>
+          <li>
+            Implementations <em class="rfc2119">MUST NOT</em> require
+            non-<span class="mono">/.well-known/gidas/</span> paths for
+            normative interoperability behavior.
+          </li>
+          <li>
+            Verifiers <em class="rfc2119">MUST</em> enforce freshness policy on
+            endpoint status responses.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-vc-did-gqscd">
+        <h3>4. VC to DID Binding and Controller Requirements</h3>
+        <ul>
+          <li>
+            The binding statement <em class="rfc2119">MUST</em> be a
+            <a>GDIS binding credential</a> issued to a <a>GDIS subject DID</a>.
+          </li>
+          <li>
+            The subject DID controller <em class="rfc2119">MUST</em> satisfy a
+            <a>GQSCD controller</a> profile
+            <a href="#ref-gqscd-core">[GQSCD-CORE]</a>.
+          </li>
+          <li>
+            Issuance evidence <em class="rfc2119">MUST</em> include proofs for
+            issuer authenticity, subject binding, status freshness, and replay
+            resistance.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-event-log">
+        <h3>5. Event Log Replication and Openness</h3>
+        <ul>
+          <li>
+            Replication participation <em class="rfc2119">MUST</em> be open: any
+            operator MAY run a <a>GDIS host</a>.
+          </li>
+          <li>
+            A governance profile MAY define <a>mandatory minimum hosts</a>.
+          </li>
+          <li>
+            Mandatory hosts <em class="rfc2119">MUST</em> be interpreted as a
+            minimum publication floor and <em class="rfc2119">MUST NOT</em> be
+            treated as an exclusive maximum set.
+          </li>
+          <li>
+            Subjects <em class="rfc2119">MUST</em> be able to add
+            person-selected hosts beyond mandatory minimum hosts.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-ordering">
+        <h3>6. Event Ordering, Integrity, and Rotation</h3>
+        <ul>
+          <li>
+            Each event <em class="rfc2119">MUST</em> include content digest,
+            signature, <a>PID hash</a>, sequence number, and predecessor
+            references.
+          </li>
+          <li>
+            Key rotation <em class="rfc2119">MUST</em> be represented as a
+            signed rotation event, ideally signed by prior authority key(s).
+          </li>
+          <li>
+            Revocation <em class="rfc2119">MUST</em> be represented as explicit
+            status events and reflected in verifier status output.
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-conflicts">
+        <h3>7. Mechanical Conflict Resolution Rules</h3>
+        <p>
+          Verifiers <em class="rfc2119">MUST</em> execute the following
+          deterministic process for each <a>PID hash</a> conflict set:
+        </p>
+        <ol>
+          <li>
+            Discard events with invalid signatures, unsupported schema versions,
+            or invalid timestamps.
+          </li>
+          <li>
+            Build branches from predecessor links and discard branches with
+            broken ancestry.
+          </li>
+          <li>
+            Determine authoritative issuer key state from latest valid
+            key-rotation lineage.
+          </li>
+          <li>
+            For same semantic field and sequence value, choose the candidate
+            with latest <span class="mono">createdAt</span>; if tied, choose the
+            lexicographically smaller <span class="mono">eventId</span>.
+          </li>
+          <li>
+            Any valid revocation event at or after effective binding sequence
+            sets status to revoked.
+          </li>
+        </ol>
+      </section>
+
+      <section id="req-host-api">
+        <h3>8. Minimum Host API</h3>
+        <p>Conforming hosts <em class="rfc2119">MUST</em> expose:</p>
+        <ul>
+          <li>
+            <span class="mono">GET /.well-known/gidas/events/{pidHash}</span>
+          </li>
+          <li>
+            <span class="mono">GET /.well-known/gidas/event/{eventId}</span>
+          </li>
+          <li><span class="mono">POST /.well-known/gidas/gossip</span></li>
+          <li>
+            <span class="mono">GET /.well-known/gidas/status/{pidHash}</span>
+          </li>
+        </ul>
+      </section>
+
+      <section id="req-replay">
+        <h3>9. Replay and Freshness Controls</h3>
+        <ul>
+          <li>
+            Verification payloads <em class="rfc2119">MUST</em> include nonce or
+            challenge binding and verifier audience binding.
+          </li>
+          <li>
+            Replay windows <em class="rfc2119">MUST</em> be bounded by policy
+            and checked at verification time.
+          </li>
+          <li>
+            Verifiers <em class="rfc2119">MUST</em> refuse proofs outside
+            accepted timestamp skew and freshness windows.
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="processing-model">
+      <h2>Processing Model</h2>
+
+      <section id="processing-issuer">
+        <h3>Issuer Processing Rules</h3>
+        <ol>
+          <li>
+            The issuer MUST verify the physical anchor evidence, including
+            governance issuance context, before producing any
+            <a>GDIS binding credential</a>.
+          </li>
+          <li>
+            The issuer MUST compute <a>PID hash</a> and endpoint-binding values
+            exactly as defined in <a href="#identifier-derivation">PID Hash and
+            Endpoint Binding</a>.
+          </li>
+          <li>
+            The issuer MUST include enough evidence references for a verifier to
+            check issuer authenticity, status freshness, and replay resistance.
+          </li>
+          <li>
+            The issuer MUST sign issuance artifacts with currently authoritative
+            keys and publish events compatible with host acceptance rules.
+          </li>
+        </ol>
+      </section>
+
+      <section id="processing-host">
+        <h3>Host Processing Rules</h3>
+        <ol>
+          <li>
+            A host MUST validate event schema version, signature, sequence, and
+            predecessor references before persisting an event.
+          </li>
+          <li>
+            A host MUST reject events with invalid signatures, broken ancestry,
+            or unsupported version markers.
+          </li>
+          <li>
+            A host MUST expose deterministic event retrieval results for the
+            same local view and request parameters.
+          </li>
+          <li>
+            A host SHOULD persist rejection reasons for operational audit and
+            interoperability debugging.
+          </li>
+        </ol>
+      </section>
+
+      <section id="processing-verifier">
+        <h3>Verifier Processing Rules and Output Contract</h3>
+        <p>
+          A verifier MUST execute requirements from sections 3, 5, 6, 7, and 9
+          before returning a decision. The verifier output MUST be explicit and
+          machine-consumable.
+        </p>
+        <pre class="example"><code class="json">{
+  "pidHash": "sha256:...",
+  "decision": "valid",
+  "status": "active",
+  "evaluatedAt": "2026-02-17T12:34:56Z",
+  "issuerKeyState": "trusted",
+  "freshness": {
+    "endpointOk": true,
+    "withinPolicyWindow": true
+  },
+  "eventResolution": {
+    "selectedHead": "sha256:...",
+    "branchCount": 2
+  },
+  "replayCheck": {
+    "nonceBound": true,
+    "audienceBound": true
+  }
+}</code></pre>
+        <p>
+          If decision is not valid, verifiers MUST return an explicit failure
+          reason code and MUST NOT collapse all failures into one opaque error.
+        </p>
+      </section>
+    </section>
+
+    <section id="traceability-matrix" class="informative">
+      <h2>Requirement Traceability Matrix</h2>
+      <table class="simple tight">
+        <thead>
+          <tr>
+            <th>Requirement Unit</th>
+            <th>Primary Artifact</th>
+            <th>Producer</th>
+            <th>Primary Checker</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Section 1 Physical Anchor</td>
+            <td>Issuer anchor evidence artifact</td>
+            <td>Issuer</td>
+            <td>Verifier</td>
+          </tr>
+          <tr>
+            <td>Section 2 MRZ-derived PID hash</td>
+            <td>Canonicalization and hash transcript</td>
+            <td>Issuer</td>
+            <td>Verifier</td>
+          </tr>
+          <tr>
+            <td>Section 3 Endpoint verification</td>
+            <td>Endpoint status artifact</td>
+            <td>Endpoint operator</td>
+            <td>Verifier</td>
+          </tr>
+          <tr>
+            <td>Sections 5-7 Event consistency</td>
+            <td>Signed event log chain</td>
+            <td>Issuer and Hosts</td>
+            <td>Host and Verifier</td>
+          </tr>
+          <tr>
+            <td>Section 9 Replay/freshness</td>
+            <td>Verifier transcript artifact</td>
+            <td>Verifier</td>
+            <td>Auditor or policy authority</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="conformance-classes">
+      <h2>Conformance Classes</h2>
+      <table class="simple tight">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Required Sections</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GDIS Issuer</td>
+            <td>1, 2, 3, 4, 5, 6, 8, 9 and issuance evidence production.</td>
+          </tr>
+          <tr>
+            <td>GDIS Host</td>
+            <td>5, 6, 8 and host-side event-signature validation.</td>
+          </tr>
+          <tr>
+            <td>GDIS Verifier</td>
             <td>
-              Validate signed, freshness-checked [=evidence record=] artifacts.
-            </td>
-            <td>
-              <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>,
-              <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>
+              3, 5, 6, 7, 9 plus endpoint freshness and conflict-resolution
+              output.
             </td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <section>
-      <h2>Component Requirements</h2>
+    <section id="conformance-reporting">
+      <h2>Conformance Reporting Requirements</h2>
       <p>
-        Conforming implementations MUST maintain the matrix: component ->
-        property -> evidence -> threat mitigated -> notes -> reference basis (<a
-          href="#ref-etsi-319401"
-          >[ETSI-319401]</a
-        >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
+        Implementations claiming conformance MUST publish or provide a
+        <a>conformance report</a> containing at least:
       </p>
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>Component</th>
-            <th>Property</th>
-            <th>Evidence</th>
-            <th>Threat</th>
-            <th>Notes</th>
-            <th>Reference basis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Secure element (SE/eSE)</td>
-            <td>Key isolation</td>
-            <td>Attestation and key policy</td>
-            <td>T-01</td>
-            <td>
-              Preferred when available; equivalent hardware-isolation mechanisms
-              are acceptable.
-            </td>
-            <td>
-              <a href="#ref-android-ready-se">[ANDROID-READY-SE]</a>,
-              <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>,
-              <a href="#ref-samsung-knox-vault">[SAMSUNG-KNOX-VAULT]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>TPM</td>
-            <td>Sealed keys + measured state</td>
-            <td>PCR quote and policy log</td>
-            <td>T-01/T-03</td>
-            <td>MAY be primary on laptops/desktops.</td>
-            <td>
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-              <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>,
-              <a href="#ref-cen-419241-1">[CEN-419241-1]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>TEE</td>
-            <td>Isolated key operations</td>
-            <td>TEE attestation</td>
-            <td>T-01/T-02</td>
-            <td>Isolation limits MUST be documented.</td>
-            <td>
-              <a href="#ref-android-trusty-tee">[ANDROID-TRUSTY]</a>,
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Hardware-backed keystore</td>
-            <td>Non-exportable keys</td>
-            <td>API key attributes</td>
-            <td>T-01</td>
-            <td>MUST expose policy flags.</td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-msft-cng">[MSFT-CNG]</a>,
-              <a href="#ref-apple-keychain-dataprotection"
-                >[APPLE-KEYCHAIN-DP]</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Hardware/platform RNG</td>
-            <td>Strong entropy</td>
-            <td>Entropy source statement</td>
-            <td>T-01</td>
-            <td>Evidence trail REQUIRED.</td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-w3c-webcrypto2">[WEBCRYPTO-L2]</a>,
-              <a href="#ref-cen-419221-5">[CEN-419221-5]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Biometric subsystem</td>
-            <td>User presence signal</td>
-            <td>Auth policy flags</td>
-            <td>T-02</td>
-            <td>MUST NOT be treated as secret material.</td>
-            <td>
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-android-biometricprompt"
-                >[ANDROID-BIOMETRICPROMPT]</a
-              >,
-              <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Verified/measured boot</td>
-            <td>Boot integrity</td>
-            <td>Boot measurements</td>
-            <td>T-03</td>
-            <td>MUST cover bootloader and OS handoff.</td>
-            <td>
-              <a href="#ref-android-avb">[ANDROID-AVB]</a>,
-              <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>,
-              <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>,
-              <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Anti-rollback</td>
-            <td>Version monotonicity</td>
-            <td>Rollback counters and logs</td>
-            <td>T-03</td>
-            <td>MUST cover firmware and signer app.</td>
-            <td>
-              <a href="#ref-android-avb-readme">[ANDROID-AVB-README]</a>,
-              <a href="#ref-android-keymint-version-binding"
-                >[ANDROID-KEYMINT-VERSION-BINDING]</a
-              >, <a href="#ref-apple-localpolicy">[APPLE-LOCALPOLICY]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Attestation keys</td>
-            <td>State attestability</td>
-            <td>Signed attestation chains</td>
-            <td>T-03/T-04</td>
-            <td>MUST be verifiable by third parties.</td>
-            <td>
-              <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>,
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Secure time source</td>
-            <td>Trusted time baseline</td>
-            <td>Signed time evidence</td>
-            <td>T-04</td>
-            <td>Limitations MUST be declared.</td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-etsi-319421">[ETSI-319421]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>OS sandboxing</td>
-            <td>App/process isolation</td>
-            <td>Platform policy manifests</td>
-            <td>T-01/T-02</td>
-            <td>Signer MUST be isolated from untrusted apps.</td>
-            <td>
-              <a href="#ref-android-app-sandbox">[ANDROID-APP-SANDBOX]</a>,
-              <a href="#ref-etsi-319401">[ETSI-319401]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Permission + secure UI</td>
-            <td>Anti-overlay/tapjacking</td>
-            <td>UI security policy evidence</td>
-            <td>T-02</td>
-            <td>Signing UI MUST be high-integrity.</td>
-            <td>
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >,
-              <a href="#ref-android-biometricprompt"
-                >[ANDROID-BIOMETRICPROMPT]</a
-              >,
-              <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>OS keystore APIs</td>
-            <td>Policy-enforced signing</td>
-            <td>Capability report</td>
-            <td>T-01</td>
-            <td>Hardware mode SHOULD be preferred.</td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-msft-cng">[MSFT-CNG]</a>,
-              <a href="#ref-apple-keychain-dataprotection"
-                >[APPLE-KEYCHAIN-DP]</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Update mechanism</td>
-            <td>Signed updates</td>
-            <td>Provenance manifests</td>
-            <td>T-03</td>
-            <td>MUST reject unsigned updates.</td>
-            <td>
-              <a href="#ref-android-avb">[ANDROID-AVB]</a>,
-              <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>,
-              <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Wallet/signer architecture</td>
-            <td>Separation or explicit integration</td>
-            <td>Architecture declaration</td>
-            <td>T-01/T-02</td>
-            <td>MUST define trust boundaries.</td>
-            <td>
-              <a href="#ref-etsi-319401">[ETSI-319401]</a>,
-              <a href="#ref-eu-2024-2979">[EU-2024/2979]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>User intent ceremony</td>
-            <td>Exact object approved</td>
-            <td>Signed intent event with digest</td>
-            <td>T-02</td>
-            <td>MUST be auditable.</td>
-            <td>
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Key lifecycle management</td>
-            <td>Generate/backup/rotate/recover/revoke</td>
-            <td>Signed lifecycle log</td>
-            <td>T-01/T-03</td>
-            <td>Recovery MUST preserve auditability.</td>
-            <td>
-              <a href="#ref-etsi-319401">[ETSI-319401]</a>,
-              <a href="#ref-etsi-319411-2">[ETSI-319411-2]</a>,
-              <a href="#ref-eidas-910">[EU-910/2014]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Transparency log</td>
-            <td>Append-only verifiable events</td>
-            <td>Hash chain or Merkle proofs</td>
-            <td>T-04</td>
-            <td>MUST support independent verification.</td>
-            <td>
-              <a href="#ref-etsi-319401">[ETSI-319401]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Export/import formats</td>
-            <td>Web + EU profile compatibility</td>
-            <td>Conformance vectors</td>
-            <td>T-04</td>
-            <td>Web-first baseline REQUIRED.</td>
-            <td>
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>,
-              <a href="#ref-w3c-vc-data-model2">[VC-DM2]</a>,
-              <a href="#ref-w3c-vc-data-integrity">[VC-DI]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>DID documents (if used)</td>
-            <td>Resolvable key discovery</td>
-            <td>DID resolution proofs</td>
-            <td>T-04</td>
-            <td>If present, MUST validate against DID Core.</td>
-            <td><a href="#ref-w3c-did-core">[DID-CORE]</a></td>
-          </tr>
-          <tr>
-            <td>VC containers (if used)</td>
-            <td>Integrity-protected claims</td>
-            <td>VC proof verification output</td>
-            <td>T-04</td>
-            <td>If present, MUST verify proof and issuer binding.</td>
-            <td>
-              <a href="#ref-w3c-vc-data-model2">[VC-DM2]</a>,
-              <a href="#ref-w3c-vc-data-integrity">[VC-DI]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Public endpoints</td>
-            <td>Integrity-protected publication</td>
-            <td>HTTPS/TLS or content hash proofs</td>
-            <td>T-04</td>
-            <td>IPFS/IPNS MAY be used for public artifacts.</td>
-            <td>
-              <a href="#ref-rfc9110">[RFC9110]</a>,
-              <a href="#ref-ipfs-docs">[IPFS-DOCS]</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <ul>
+        <li>declared conformance class (Issuer, Host, Verifier, or multiple);</li>
+        <li>supported profile and schema versions;</li>
+        <li>implemented requirement units and any documented exclusions;</li>
+        <li>test evidence, including pass/fail results and artifact samples;</li>
+        <li>
+          security assumptions, clock/freshness policy values, and trust anchor
+          policy inputs.
+        </li>
+      </ul>
+      <p>
+        Reports SHOULD include machine-readable fields so independent tooling
+        can compare behavior across implementations.
+      </p>
     </section>
 
-    <section id="qhc-qualified-hardware-components" class="informative">
-      <h2>QHC Qualified Hardware Components (Informative)</h2>
-      <p>
-        This section is informative and does not add conformance requirements
-        beyond the normative sections.
-      </p>
-      <p>
-        QSCD hardware requirements in [=eidas framework=] are outcome-oriented,
-        not a fixed catalog of chip models. Annex II security outcomes can be
-        summarized as: [=signature creation data=] is unique/confidential, not
-        feasibly derivable/forgeable, protected against unauthorized use, and
-        the signer can inspect what is being signed without silent alteration by
-        the device (<a href="#ref-eidas-910">[EU-910/2014]</a>).
-      </p>
-      <p>
-        Commission Implementing Decision (EU) 2016/650 links these outcomes to
-        specific assessment standards and protection profiles. The following QHC
-        inventory is a non-normative technology-availability catalog of hardware
-        already common in end-user devices (<a href="#ref-eu-2016-650"
-          >[EU-2016/650]</a
-        >, <a href="#ref-cen-419241-1">[CEN-419241-1]</a>,
-        <a href="#ref-cen-419221-5">[CEN-419221-5]</a>).
-      </p>
-
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>QHC Primitive</th>
-            <th>Why It Matters for Annex II Outcomes</th>
-            <th>Commodity Component Classes</th>
-            <th>Concrete Examples (non-normative)</th>
-            <th>Typical Evidence Artifacts</th>
-            <th>Reference basis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Secure hardware key custody</td>
-            <td>
-              Supports key confidentiality, non-exportability, and anti-forgery
-            </td>
-            <td>
-              SE/eSE/iSE, enclave/vault subsystems, StrongBox-class processors
-            </td>
-            <td>
-              Android StrongBox KeyMint devices, Apple Secure Enclave, Samsung
-              Knox Vault, Google Titan M2
-            </td>
-            <td>
-              Hardware-backed key attestation, key policy metadata,
-              non-exportability flags
-            </td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-android-ready-se">[ANDROID-READY-SE]</a>,
-              <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>,
-              <a href="#ref-samsung-knox-vault">[SAMSUNG-KNOX-VAULT]</a>,
-              <a href="#ref-google-titan-m2">[GOOGLE-TITAN-M2]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Isolated execution environment</td>
-            <td>Reduces key-operation exposure to compromised main OS</td>
-            <td>TEE and secure-world execution</td>
-            <td>
-              Android KeyMint security levels: TRUSTED_ENVIRONMENT and STRONGBOX
-            </td>
-            <td>
-              Attestation claims identifying security level and implementation
-            </td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-android-trusty-tee">[ANDROID-TRUSTY]</a>,
-              <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Trusted user intent/confirmation path</td>
-            <td>
-              Supports the Annex II requirement that signed data is not silently
-              altered
-            </td>
-            <td>Trusted UI and protected confirmation channels</td>
-            <td>
-              Android Protected Confirmation plus KeyMint-backed approval
-              binding
-            </td>
-            <td>Confirmation tokens bound to approved message digest</td>
-            <td>
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >,
-              <a href="#ref-android-confirmationprompt"
-                >[ANDROID-CONFIRMATIONPROMPT]</a
-              >, <a href="#ref-eidas-910">[EU-910/2014]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>PC hardware trust anchor</td>
-            <td>
-              Provides key custody and platform integrity anchor on
-              desktops/laptops
-            </td>
-            <td>TPM 2.0 and integrated security processors</td>
-            <td>
-              Discrete TPM 2.0 modules, Microsoft Pluton with TPM 2.0
-              functionality
-            </td>
-            <td>
-              PCR measurements, quote signatures, sealed-key policy artifacts
-            </td>
-            <td>
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-              <a href="#ref-msft-pluton">[MSFT-PLUTON]</a>,
-              <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>External hardware authenticator</td>
-            <td>
-              Supports sole-control and non-exportable key custody outside
-              general OS
-            </td>
-            <td>FIDO2/WebAuthn security keys and authenticator devices</td>
-            <td>USB/NFC security keys, smartcard-like authenticators</td>
-            <td>
-              Authenticator attestation and protocol-level credential assertions
-            </td>
-            <td>
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-fido-authenticator-requirements"
-                >[FIDO-AUTHNR-REQ]</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <section>
-        <h3>Technology Availability Examples (Chip and Subsystem Families)</h3>
+    <section id="web-first-profile">
+      <h2>Web Profile (Mandatory) and Compatibility Layers</h2>
+      <section id="web-profile-primary">
+        <h3>Primary Web Profile</h3>
         <p>
-          This list is explicitly non-normative and serves as concrete inventory
-          examples for GQSCD profiling work.
+          Implementations <em class="rfc2119">MUST</em> treat web standards as
+          the primary interoperability baseline:
         </p>
         <ul>
+          <li>DID Core <a href="#ref-did-core">[DID-CORE]</a>;</li>
+          <li>VC Data Model 2.0 <a href="#ref-vc-dm2">[VC-DM2]</a>;</li>
           <li>
-            <strong
-              >Android Ready SE / StrongBox-class secure element
-              examples:</strong
-            >
-            NXP SN110, SN220, SN300, SE050, SE060; ST
-            ST54L00xxx/ST54L01xxx/ST54L02xxx/ST54L03xxx/ST54L04xxx/ST54L06xxx/ST54L20xxx/ST54L21xxx/ST54L22xxx/ST54L23xxx
-            and STSAFS320Wxxx; Thales Connected eSE 4.2.3 and 5.3.4; Goodix
-            GSEA0, GSE20, GSN11, GSN22; Kigen THD89-2048; Tongxin THN41 and
-            T10-Mobile; Valid mioSIM eUICC Consumer v3.0; Samsung S3SSE1A (<a
-              href="#ref-android-ready-se"
-              >[ANDROID-READY-SE]</a
-            >).
+            VC Data Integrity or JOSE/COSE proof containers
+            <a href="#ref-vc-data-integrity">[VC-DI]</a>
+            <a href="#ref-rfc7515">[RFC7515]</a>
+            <a href="#ref-rfc9052">[RFC9052]</a>;
           </li>
           <li>
-            <strong>Integrated end-user-device security subsystems:</strong>
-            Apple Secure Enclave, Samsung Knox Vault, Google Titan M2, Microsoft
-            Pluton (<a href="#ref-apple-secure-enclave">[APPLE-SE]</a>,
-            <a href="#ref-samsung-knox-vault">[SAMSUNG-KNOX-VAULT]</a>,
-            <a href="#ref-google-titan-m2">[GOOGLE-TITAN-M2]</a>,
-            <a href="#ref-msft-pluton">[MSFT-PLUTON]</a>).
-          </li>
-          <li>
-            <strong>PC TPM families:</strong> Infineon OPTIGA TPM SLB
-            9670VQ2.0/SLM 9670, ST ST33TPHF2XI2C/ST33TPHF2XSPI, Microchip
-            ATTPM20P, Nuvoton NPCT7xx (<a href="#ref-msft-tpm-overview"
-              >[MSFT-TPM]</a
-            >, <a href="#ref-cen-419241-1">[CEN-419241-1]</a>).
-          </li>
-          <li>
-            <strong
-              >Discrete secure elements for accessory/token designs:</strong
-            >
-            Infineon OPTIGA Trust M family (for example SLS32AIA) (<a
-              href="#ref-cen-419221-5"
-              >[CEN-419221-5]</a
-            >).
+            HTTP transport semantics <a href="#ref-rfc9110">[RFC9110]</a>.
           </li>
         </ul>
       </section>
 
-      <section>
-        <h3>Illustrative End-User Device Examples (Images)</h3>
+      <section id="eu-compat-profile">
+        <h3>EU Compatibility Profile</h3>
         <p>
-          These images are illustrative only; normative security claims are
-          stated in the tables that include explicit reference basis links.
+          EU-specific requirements are mapping layers on top of the primary web
+          profile and do not replace web-profile baseline semantics.
         </p>
-        <div class="qhc-gallery">
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/3/34/Google_Pixel_8_Rose_rear_bottom-left.jpg"
-              alt="Google Pixel 8 rear view smartphone image"
-              loading="lazy"
-            />
-            <figcaption>
-              Pixel-class smartphone example for StrongBox/Titan-style hardware
-              boundaries.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:Google_Pixel_8_Rose_rear_bottom-left.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/93/IPhone_15.jpg"
-              alt="Apple iPhone 15 smartphone image"
-              loading="lazy"
-            />
-            <figcaption>
-              iPhone-class smartphone example for Secure Enclave-backed key
-              custody.
-              <a href="https://commons.wikimedia.org/wiki/File:IPhone_15.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Samsung_Galaxy_s24_series.jpg"
-              alt="Samsung Galaxy S24 series smartphone image"
-              loading="lazy"
-            />
-            <figcaption>
-              Samsung device family example for Knox Vault-style isolated
-              security subsystems.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:Samsung_Galaxy_s24_series.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/64/TPM_Asus.jpg"
-              alt="Trusted Platform Module board image"
-              loading="lazy"
-            />
-            <figcaption>
-              TPM 2.0 hardware example used as a PC trust anchor.
-              <a href="https://commons.wikimedia.org/wiki/File:TPM_Asus.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/4/43/Yubikey.jpg"
-              alt="YubiKey hardware authenticator image"
-              loading="lazy"
-            />
-            <figcaption>
-              External hardware authenticator example for WebAuthn/FIDO flows.
-              <a href="https://commons.wikimedia.org/wiki/File:Yubikey.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Laptop_computer.jpg"
-              alt="Laptop computer image representing PC-class profile"
-              loading="lazy"
-            />
-            <figcaption>
-              Laptop-class profile where TPM/Pluton plus trusted confirmation
-              path is required.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:Laptop_computer.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section>
-        <h3>Reference QHC Configuration Profiles</h3>
-        <ul>
-          <li>
-            <strong>Smartphone baseline:</strong> SE/StrongBox/Secure Enclave
-            class key custody plus TEE/trusted-confirmation path plus device
-            integrity evidence (attestation, secure boot, anti-rollback) (<a
-              href="#ref-android-keystore"
-              >[ANDROID-KEYSTORE]</a
-            >,
-            <a href="#ref-android-protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION]</a
-            >, <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>).
-          </li>
-          <li>
-            <strong>Laptop/desktop baseline:</strong> TPM 2.0/Pluton anchor plus
-            external authenticator for sole control plus trustworthy
-            signing-intent display/confirmation path (<a
-              href="#ref-msft-tpm-overview"
-              >[MSFT-TPM]</a
-            >, <a href="#ref-msft-pluton">[MSFT-PLUTON]</a>,
-            <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>Certification Boundary and Manufacturer Activation</h3>
-        <p>
-          Presence of these components is a technical prerequisite, not a legal
-          qualification result. Legal QSCD status in the EU still requires an
-          evaluated target definition, conformity assessment, and Member State
-          notification/publication workflows (<a href="#ref-eidas-consolidated"
-            >[EU-910-CONS]</a
-          >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-          <a href="#ref-eu-2025-1570">[EU-2025/1570]</a>,
-          <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>).
-        </p>
-        <p>
-          For manufacturer readiness, the certifiable configuration is expected
-          to be frozen early (hardware model plus exact firmware/software
-          versions) and mapped to the publication artifacts required by the EU
-          notification process (<a href="#ref-eu-2025-1570">[EU-2025/1570]</a>).
-        </p>
-      </section>
-    </section>
-
-    <section id="qfc-qualified-firmware-components" class="informative">
-      <h2>QFC Qualified Firmware Components (Informative)</h2>
-      <p>
-        This section is informative and does not add conformance requirements
-        beyond the normative sections.
-      </p>
-      <p>
-        This section defines a firmware and boot-chain component taxonomy. Like
-        hardware, firmware requirements in Annex II are outcome-oriented. The
-        objective is to show concrete, commodity firmware components that can
-        enforce authenticated boot, rollback resistance, non-extractable key use
-        constraints, and malware-resistant user-intent confirmation (<a
-          href="#ref-eidas-910"
-          >[EU-910/2014]</a
-        >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
-      </p>
-      <p>
-        Decision (EU) 2016/650 links these outcomes to specific evaluation
-        methodologies. Therefore, this section is non-normative implementation
-        guidance, not a legal status claim (<a href="#ref-eu-2016-650"
-          >[EU-2016/650]</a
-        >, <a href="#ref-cen-419241-1">[CEN-419241-1]</a>).
-      </p>
-
-      <section>
-        <h3>Smartphones and Tablets (AOSP-Class)</h3>
-        <ul>
-          <li>
-            <strong>Boot ROM and hardware root of trust:</strong> immutable
-            first-stage code that anchors chain-of-trust verification (<a
-              href="#ref-android-avb"
-              >[ANDROID-AVB]</a
-            >).
-          </li>
-          <li>
-            <strong>AVB in bootloader (Verified Boot 2.0):</strong> signed
-            partition metadata, `vbmeta`, and `libavb` integration for boot-time
-            verification (<a href="#ref-android-avb">[ANDROID-AVB]</a>,
-            <a href="#ref-android-avb-readme">[ANDROID-AVB-README]</a>).
-          </li>
-          <li>
-            <strong>Firmware rollback protection:</strong> AVB rollback indexes
-            in `vbmeta` plus device-stored last-seen rollback indexes in
-            tamper-evident storage (<a href="#ref-android-avb-readme"
-              >[ANDROID-AVB-README]</a
-            >).
-          </li>
-          <li>
-            <strong>KeyMint trusted application in TEE:</strong> version binding
-            and key ratcheting tied to verified boot state and patch levels (<a
-              href="#ref-android-keymint-version-binding"
-              >[ANDROID-KEYMINT-VERSION-BINDING]</a
-            >).
-          </li>
-          <li>
-            <strong>Trusted UI and Protected Confirmation:</strong>
-            cryptographic confirmation tokens proving the user approved exact
-            message bytes (<a href="#ref-android-protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION]</a
-            >,
-            <a href="#ref-android-confirmationprompt"
-              >[ANDROID-CONFIRMATIONPROMPT]</a
-            >).
-          </li>
-          <li>
-            <strong>StrongBox KeyMint path (where present):</strong> dedicated
-            secure processor firmware for stronger isolation than generic
-            TEE-only flows (<a href="#ref-android-keystore"
-              >[ANDROID-KEYSTORE]</a
-            >).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>Apple-Class Firmware Components</h3>
-        <ul>
-          <li>
-            <strong>Boot ROM -> LLB -> system-paired firmware:</strong>
-            chain-of-trust boot where LLB verifies signatures and loads paired
-            firmware (<a href="#ref-apple-boot-process">[APPLE-BOOT]</a>).
-          </li>
-          <li>
-            <strong>LocalPolicy signed by Secure Enclave:</strong> boot and
-            runtime policy object signed by SEP-local key material (<a
-              href="#ref-apple-localpolicy"
-              >[APPLE-LOCALPOLICY]</a
-            >).
-          </li>
-          <li>
-            <strong>LocalPolicy anti-replay:</strong> LLB checks anti-replay
-            state sourced from Secure Enclave-attached secure storage to block
-            replay of older policies (<a href="#ref-apple-localpolicy"
-              >[APPLE-LOCALPOLICY]</a
-            >).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>PC and Laptop Firmware Components</h3>
-        <ul>
-          <li>
-            <strong>UEFI Secure Boot policy stores:</strong> `PK`, `KEK`, `db`,
-            and `dbx` control what low-level boot components are trusted or
-            revoked (<a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a
-            >).
-          </li>
-          <li>
-            <strong>Measured boot into TPM PCRs:</strong> firmware and boot
-            components are measured and extended into PCRs for later quote-based
-            attestation (<a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-            <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>).
-          </li>
-          <li>
-            <strong>PCR7 policy signaling:</strong> commonly used to represent
-            Secure Boot policy/state and related key-configuration evidence (<a
-              href="#ref-systemd-tpm-pcr"
-              >[SYSTEMD-PCR]</a
-            >).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>Illustrative Firmware Architecture Examples (Images)</h3>
-        <p>
-          These visuals are non-normative architecture illustrations. Normative
-          security claims are specified in the firmware mapping table with
-          explicit reference basis links.
-        </p>
-        <div class="qhc-gallery">
-          <figure>
-            <img
-              src="https://source.android.com/static/docs/security/images/verified-boot-flow.png"
-              alt="Android Verified Boot flow diagram"
-              loading="lazy"
-            />
-            <figcaption>
-              Android Verified Boot flow (AVB) diagram.
-              <a
-                href="https://source.android.com/docs/security/features/verifiedboot/boot-flow"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/UEFI_boot_process.png"
-              alt="UEFI boot process diagram"
-              loading="lazy"
-            />
-            <figcaption>
-              UEFI boot process block diagram.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:UEFI_boot_process.png"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/TPM_1.2_diagram.svg"
-              alt="Trusted Platform Module simplified architecture diagram"
-              loading="lazy"
-            />
-            <figcaption>
-              Simplified TPM architecture diagram for measured-boot anchoring
-              context.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:TPM_1.2_diagram.svg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/InsydeH20_UEFI_security_custom_Secure_Boot_screenshot.jpg"
-              alt="InsydeH2O UEFI Secure Boot configuration screenshot"
-              loading="lazy"
-            />
-            <figcaption>
-              UEFI Secure Boot configuration screen example (firmware policy
-              controls).
-              <a
-                href="https://commons.wikimedia.org/wiki/File:InsydeH20_UEFI_security_custom_Secure_Boot_screenshot.jpg"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/TPM_2.0_implementation_on_Linux_screenshot.png"
-              alt="Linux TPM 2.0 PCR and measurement screenshot"
-              loading="lazy"
-            />
-            <figcaption>
-              TPM 2.0 PCR readout example on Linux for measured-boot evidence.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:TPM_2.0_implementation_on_Linux_screenshot.png"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/TPMTOOL_GetDeviceInformation_with_TPM_2.0_on_Windows_11_screenshot.webp"
-              alt="Windows 11 TPMTOOL TPM 2.0 information screenshot"
-              loading="lazy"
-            />
-            <figcaption>
-              Windows TPM device information example relevant to firmware-state
-              attestation workflows.
-              <a
-                href="https://commons.wikimedia.org/wiki/File:TPMTOOL_GetDeviceInformation_with_TPM_2.0_on_Windows_11_screenshot.webp"
-                >Image source</a
-              >.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section>
-        <h3>Firmware Component -> Enforced Invariant -> Evidence Artifact</h3>
-        <table class="simple">
+        <table class="simple tight">
           <thead>
             <tr>
-              <th>Firmware Component</th>
-              <th>Enforced Invariant</th>
-              <th>Evidence Artifact</th>
-              <th>Reference basis</th>
+              <th>Compatibility Concern</th>
+              <th>Web Profile Baseline</th>
+              <th>EU Mapping Reference</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Boot ROM + hardware RoT</td>
-              <td>Only authenticated next-stage boot code executes</td>
+              <td>Wallet integrity and secure components</td>
+              <td>Controller and key custody evidence in VC/DID artifacts</td>
               <td>
-                Boot state claims and root-of-trust assertions in attestation
-                evidence
-              </td>
-              <td>
-                <a href="#ref-android-avb">[ANDROID-AVB]</a>,
-                <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>,
-                <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>
+                <a href="#ref-eu-2024-2979">[EU-2024/2979]</a>
               </td>
             </tr>
             <tr>
-              <td>AVB (`vbmeta`, `libavb`)</td>
-              <td>Boot partitions are verified before use</td>
+              <td>Protocol and interface interoperability</td>
+              <td>HTTP + VC/DID transport and data model constraints</td>
               <td>
-                `vbmeta` signature verification results and verified-boot state
-                claims
-              </td>
-              <td>
-                <a href="#ref-android-avb">[ANDROID-AVB]</a>,
-                <a href="#ref-android-avb-readme">[ANDROID-AVB-README]</a>
+                <a href="#ref-eu-2024-2982">[EU-2024/2982]</a>
               </td>
             </tr>
             <tr>
-              <td>AVB rollback index checks</td>
-              <td>Downgrade to vulnerable firmware/OS versions is blocked</td>
-              <td>Rollback index metadata and monotonic-storage state</td>
+              <td>Legal status determination</td>
+              <td>Verifier-side cryptographic validity checks</td>
               <td>
-                <a href="#ref-android-avb-readme">[ANDROID-AVB-README]</a>
-              </td>
-            </tr>
-            <tr>
-              <td>KeyMint version binding and ratchet</td>
-              <td>
-                Keys created in newer security state are unusable after rollback
-              </td>
-              <td>
-                Key attestation authorization lists (`osVersion`, patch levels,
-                `rootOfTrust`)
-              </td>
-              <td>
-                <a href="#ref-android-keymint-version-binding"
-                  >[ANDROID-KEYMINT-VERSION-BINDING]</a
-                >, <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Protected Confirmation (TEE)</td>
-              <td>
-                Signer approved exact bytes; kernel compromise cannot silently
-                alter approval
-              </td>
-              <td>
-                Confirmation token bound to approved payload digest and key-use
-                policy
-              </td>
-              <td>
-                <a href="#ref-android-protected-confirmation"
-                  >[ANDROID-PROTECTED-CONFIRMATION]</a
-                >,
-                <a href="#ref-android-confirmationprompt"
-                  >[ANDROID-CONFIRMATIONPROMPT]</a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>StrongBox KeyMint firmware path</td>
-              <td>
-                Stronger isolation for key operations and authorization policy
-                enforcement
-              </td>
-              <td>
-                Security level in key attestation (`STRONGBOX` versus TEE)
-              </td>
-              <td>
-                <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-                <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Apple LLB + LocalPolicy + anti-replay checks</td>
-              <td>Boot policy rollback and replay are blocked</td>
-              <td>
-                LocalPolicy signature validation and anti-replay value checks
-              </td>
-              <td>
-                <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>,
-                <a href="#ref-apple-localpolicy">[APPLE-LOCALPOLICY]</a>
-              </td>
-            </tr>
-            <tr>
-              <td>UEFI Secure Boot (`PK`/`KEK`/`db`/`dbx`)</td>
-              <td>Only trusted firmware drivers/bootloaders execute</td>
-              <td>
-                UEFI variable configuration state and revocation database status
-              </td>
-              <td>
-                <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Measured boot and TPM quotes</td>
-              <td>
-                Verifiers can evaluate whether booted state matches policy
-              </td>
-              <td>
-                TPM PCR values, TCG event logs, and signed quote from
-                attestation key
-              </td>
-              <td>
-                <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-                <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>
+                <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>
+                <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>
               </td>
             </tr>
           </tbody>
         </table>
       </section>
-
-      <section>
-        <h3>Reference QFC Configuration Profiles</h3>
-        <ul>
-          <li>
-            <strong>Smartphone profile:</strong> AVB + rollback indexes +
-            KeyMint version binding + Protected Confirmation, optionally
-            StrongBox for higher extraction resistance (<a
-              href="#ref-android-avb"
-              >[ANDROID-AVB]</a
-            >,
-            <a href="#ref-android-keymint-version-binding"
-              >[ANDROID-KEYMINT-VERSION-BINDING]</a
-            >,
-            <a href="#ref-android-protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION]</a
-            >).
-          </li>
-          <li>
-            <strong>Laptop/desktop profile:</strong> UEFI Secure Boot + TPM
-            measured boot and quote verification, plus a trusted user-intent
-            path for document-specific signing approval (<a
-              href="#ref-msft-secure-boot-keys"
-              >[MSFT-SECURE-BOOT]</a
-            >, <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>,
-            <a href="#ref-systemd-tpm-pcr">[SYSTEMD-PCR]</a>).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>Certification Boundary for Firmware Claims</h3>
-        <p>
-          These firmware components are strong enforcement primitives, but legal
-          QSCD qualification depends on certification of the exact evaluated
-          firmware/boot-chain target and related conformity-assessment outcomes
-          (<a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-          <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-          <a href="#ref-cen-419241-1">[CEN-419241-1]</a>).
-        </p>
-        <p>
-          Firmware teams should treat rollback counters, boot policy
-          measurements, and trusted-confirmation bindings as first-class
-          certification artifacts, because notification requires specific
-          configuration identifiers and report references (<a
-            href="#ref-eu-2025-1570"
-            >[EU-2025/1570]</a
-          >).
-        </p>
-      </section>
     </section>
-
-    <section id="qsc-qualified-software-components" class="informative">
-      <h2>QSC Qualified Software Components (Informative)</h2>
+    <section id="threat-model">
+      <h2>Threat Model Honesty</h2>
       <p>
-        This section is informative and does not add conformance requirements
-        beyond the normative sections.
+        Implementations MUST assume hostile client/network environments unless
+        security boundaries are cryptographically enforced.
       </p>
       <p>
-        This section provides a software and OS API component taxonomy for
-        QSCD-aligned behavior on commodity end-user devices. The target software
-        invariants are: non-exportable signing keys, per-use authorization bound
-        to real human intent, process isolation against app-to-app abuse,
-        remote-verifiable evidence, and lifecycle controls (rotation, revocation
-        hooks, rollback resistance) (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-        <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-        <a href="#ref-etsi-319401">[ETSI-319401]</a>).
+        At minimum, conforming designs MUST model key exfiltration attempts,
+        endpoint spoofing, replay attempts, event-log inconsistency, and policy
+        abuse where governance minimum host requirements are misused as maximum
+        exclusivity constraints.
       </p>
-
-      <table class="simple">
+      <table class="simple tight">
         <thead>
           <tr>
-            <th>Platform/API Component</th>
-            <th>Enforced Property</th>
-            <th>Evidence Artifact</th>
-            <th>Verifier Check</th>
-            <th>Reference basis</th>
+            <th>Threat</th>
+            <th>Required Control</th>
+            <th>Evidence Type</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Android Keystore + KeyMint/StrongBox</td>
-            <td>
-              Private key non-exportability and hardware-enforced key-use policy
-            </td>
-            <td>Key attestation certificate chain and authorization list</td>
-            <td>Verify hardware-backed key origin and key constraints</td>
-            <td>
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-android-attestation">[ANDROID-ATTESTATION]</a>
-            </td>
+            <td>Key exfiltration</td>
+            <td>Hardware-backed non-exportability + controller attestation</td>
+            <td>Device or controller evidence chain</td>
           </tr>
           <tr>
-            <td>Android auth-bound key parameters + BiometricPrompt</td>
-            <td>Per-use user authorization enforced by OS/secure world</td>
-            <td>Key authorization policy and authentication gating metadata</td>
-            <td>Verify that signing required user authentication policy</td>
-            <td>
-              <a href="#ref-android-keygen-auth-required"
-                >[ANDROID-KEYGEN-AUTH-REQUIRED]</a
-              >,
-              <a href="#ref-android-keygen-auth-params"
-                >[ANDROID-KEYGEN-AUTH-PARAMS]</a
-              >,
-              <a href="#ref-android-biometricprompt"
-                >[ANDROID-BIOMETRICPROMPT]</a
-              >
-            </td>
+            <td>Endpoint spoofing</td>
+            <td>Endpoint hash binding + TLS + issuer signatures</td>
+            <td>Bound endpoint hash and signed metadata</td>
           </tr>
           <tr>
-            <td>Android Protected Confirmation</td>
-            <td>User approved exact bytes, not just generic authentication</td>
-            <td>Confirmation token bound to prompt text and challenge</td>
-            <td>
-              Verify token signature, nonce freshness, and approved text binding
-            </td>
-            <td>
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >,
-              <a href="#ref-android-confirmationprompt"
-                >[ANDROID-CONFIRMATIONPROMPT]</a
-              >
-            </td>
+            <td>Replay of proof artifacts</td>
+            <td>Nonce/audience/timestamp checks</td>
+            <td>Verifier transcript and challenge log</td>
           </tr>
           <tr>
-            <td>Apple Keychain ACL + Secure Enclave evaluation</td>
-            <td>User presence and policy evaluation below application layer</td>
-            <td>Keychain access-control policy and operation result</td>
-            <td>Verify required user-presence policy before sign operation</td>
-            <td>
-              <a href="#ref-apple-keychain-dataprotection"
-                >[APPLE-KEYCHAIN-DP]</a
-              >,
-              <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a
-              >, <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>
-            </td>
+            <td>Registry manipulation</td>
+            <td>Multi-host reconciliation + deterministic conflict rules</td>
+            <td>Host receipts and reconciled event view</td>
           </tr>
           <tr>
-            <td>Windows CNG/NCrypt + Platform Crypto Provider</td>
-            <td>TPM-bound non-exportable key operations</td>
-            <td>Provider metadata, TPM-backed key properties</td>
-            <td>Verify provider class and non-exportable key attributes</td>
-            <td>
-              <a href="#ref-msft-cng">[MSFT-CNG]</a>,
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Windows Hello for Business</td>
-            <td>User gesture unlocks key usage without shared secrets</td>
-            <td>Platform policy settings and key-trust metadata</td>
-            <td>Verify key-based auth policy and device trust posture</td>
-            <td>
-              <a href="#ref-msft-hello-business">[MSFT-HELLO-BUSINESS]</a>,
-              <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Linux PKCS#11 + `tpm2-pkcs11`</td>
-            <td>
-              Tokenized signing where key bytes remain in TPM/token boundary
-            </td>
-            <td>PKCS#11 token metadata and TPM-backed key handles</td>
-            <td>Verify key usage via token operation, not raw key export</td>
-            <td>
-              <a href="#ref-pkcs11-v31">[PKCS11-V3.1]</a>,
-              <a href="#ref-tpm2-pkcs11">[TPM2-PKCS11]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>WebAuthn (browser-mediated)</td>
-            <td>
-              Authenticator-held private keys and user consent/verification
-            </td>
-            <td>Authenticator data, attestation/assertion objects</td>
-            <td>Verify attestation/assertion and policy requirements</td>
-            <td>
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-fido-authenticator-requirements"
-                >[FIDO-AUTHNR-REQ]</a
-              >
-            </td>
+            <td>Governance over-closure of host set</td>
+            <td>Mandatory host sets treated only as publication floor</td>
+            <td>Publication policy and host-distribution record</td>
           </tr>
         </tbody>
       </table>
-
-      <section>
-        <h3>Platform Implementation Examples</h3>
-        <ul>
-          <li>
-            <strong>Android:</strong> Android Keystore with KeyMint/Keymaster
-            and optional StrongBox; authentication-bound key parameters;
-            BiometricPrompt; Protected Confirmation and confirmation-bound key
-            use (<a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-            <a href="#ref-android-biometricprompt">[ANDROID-BIOMETRICPROMPT]</a
-            >,
-            <a href="#ref-android-protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION]</a
-            >).
-          </li>
-          <li>
-            <strong>Apple platforms:</strong> Keychain Access Control policies
-            evaluated in Secure Enclave path; Data Protection/keybag model;
-            OS-owned user-presence prompt for sensitive key operations (<a
-              href="#ref-apple-keychain-dataprotection"
-              >[APPLE-KEYCHAIN-DP]</a
-            >,
-            <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>,
-            <a href="#ref-apple-secure-enclave">[APPLE-SE]</a>).
-          </li>
-          <li>
-            <strong>Windows:</strong> CNG/NCrypt APIs with Microsoft Platform
-            Crypto Provider, Windows Hello for Business key-unlock model, and
-            TPM-backed key attestation workflows (<a href="#ref-msft-cng"
-              >[MSFT-CNG]</a
-            >, <a href="#ref-msft-hello-business">[MSFT-HELLO-BUSINESS]</a>,
-            <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>).
-          </li>
-          <li>
-            <strong>Linux:</strong> PKCS#11 abstraction with providers such as
-            `tpm2-pkcs11`, plus system integration paths that bind signing to
-            hardware-backed keys and policy controls (<a href="#ref-pkcs11-v31"
-              >[PKCS11-V3.1]</a
-            >, <a href="#ref-tpm2-pkcs11">[TPM2-PKCS11]</a>,
-            <a href="#ref-systemd-cryptenroll">[SYSTEMD-CRYPTENROLL]</a>).
-          </li>
-          <li>
-            <strong>Web profile layer:</strong> WebAuthn as a browser-mediated
-            primitive that combines non-exportable keys, user verification, and
-            remote-verifiable evidence (<a href="#ref-w3c-webauthn3"
-              >[WEBAUTHN-L3]</a
-            >).
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>Illustrative Software Architecture Examples (Images)</h3>
-        <p>
-          These visuals are non-normative architecture illustrations. Normative
-          security claims are specified in the software component and
-          conformance tables with explicit reference basis links.
-        </p>
-        <div class="qhc-gallery">
-          <figure>
-            <svg
-              class="qsc-diagram"
-              viewBox="0 0 620 300"
-              role="img"
-              aria-label="Android software signing stack diagram"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="580"
-                height="42"
-                fill="#e8f1ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="46">Relying Party: challenge and policy</text>
-              <rect
-                x="20"
-                y="76"
-                width="580"
-                height="42"
-                fill="#f1f7ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="102">
-                App Layer: signer request (untrusted UI context)
-              </text>
-              <rect
-                x="20"
-                y="132"
-                width="390"
-                height="42"
-                fill="#edf8ee"
-                stroke="#2f7d32"
-              />
-              <text x="34" y="158">
-                Android APIs: Keystore + BiometricPrompt
-              </text>
-              <rect
-                x="430"
-                y="132"
-                width="170"
-                height="98"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="444" y="158">Protected</text>
-              <text x="444" y="174">Confirmation</text>
-              <text x="444" y="190">Trusted UI token</text>
-              <rect
-                x="20"
-                y="188"
-                width="390"
-                height="42"
-                fill="#f6efff"
-                stroke="#6b3ca6"
-              />
-              <text x="34" y="214">
-                Secure World: KeyMint / StrongBox / TEE
-              </text>
-              <rect
-                x="20"
-                y="244"
-                width="580"
-                height="36"
-                fill="#ebf8f3"
-                stroke="#127c57"
-              />
-              <text x="34" y="267">
-                Output: signature + attestation + optional confirmation token
-              </text>
-              <line x1="310" y1="62" x2="310" y2="76" stroke="#2a6db0" />
-              <line x1="310" y1="118" x2="310" y2="132" stroke="#2a6db0" />
-              <line x1="310" y1="174" x2="310" y2="188" stroke="#2a6db0" />
-              <line x1="310" y1="230" x2="310" y2="244" stroke="#2a6db0" />
-              <line x1="410" y1="153" x2="430" y2="153" stroke="#c97a00" />
-            </svg>
-            <figcaption>
-              Android software policy and signing path (Keystore/KeyMint,
-              BiometricPrompt, Protected Confirmation).
-            </figcaption>
-          </figure>
-
-          <figure>
-            <svg
-              class="qsc-diagram"
-              viewBox="0 0 620 300"
-              role="img"
-              aria-label="Apple software signing policy path diagram"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="580"
-                height="42"
-                fill="#eef4ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="46">App requests signing operation</text>
-              <rect
-                x="20"
-                y="76"
-                width="580"
-                height="42"
-                fill="#edf8ee"
-                stroke="#2f7d32"
-              />
-              <text x="34" y="102">
-                Keychain item with Access Control policy (user presence /
-                biometrics)
-              </text>
-              <rect
-                x="20"
-                y="132"
-                width="580"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="34" y="158">
-                OS-owned authentication prompt (Face ID / Touch ID / passcode)
-              </text>
-              <rect
-                x="20"
-                y="188"
-                width="580"
-                height="42"
-                fill="#f6efff"
-                stroke="#6b3ca6"
-              />
-              <text x="34" y="214">
-                Secure Enclave path evaluates policy and releases operation
-              </text>
-              <rect
-                x="20"
-                y="244"
-                width="580"
-                height="36"
-                fill="#ebf8f3"
-                stroke="#127c57"
-              />
-              <text x="34" y="267">
-                Output: sign result + policy-constrained key use
-              </text>
-              <line x1="310" y1="62" x2="310" y2="76" stroke="#2a6db0" />
-              <line x1="310" y1="118" x2="310" y2="132" stroke="#2a6db0" />
-              <line x1="310" y1="174" x2="310" y2="188" stroke="#2a6db0" />
-              <line x1="310" y1="230" x2="310" y2="244" stroke="#2a6db0" />
-            </svg>
-            <figcaption>
-              Apple platform software path for ACL-protected key operations
-              through Secure Enclave policy evaluation.
-            </figcaption>
-          </figure>
-
-          <figure>
-            <svg
-              class="qsc-diagram"
-              viewBox="0 0 620 300"
-              role="img"
-              aria-label="Windows key protection and attestation software path diagram"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="580"
-                height="42"
-                fill="#eef4ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="46">App / service calls CNG or NCrypt APIs</text>
-              <rect
-                x="20"
-                y="76"
-                width="580"
-                height="42"
-                fill="#edf8ee"
-                stroke="#2f7d32"
-              />
-              <text x="34" y="102">
-                Microsoft Platform Crypto Provider key context
-              </text>
-              <rect
-                x="20"
-                y="132"
-                width="280"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="34" y="158">Windows Hello user gesture</text>
-              <rect
-                x="320"
-                y="132"
-                width="280"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="334" y="158">TPM-backed key operation</text>
-              <rect
-                x="20"
-                y="188"
-                width="580"
-                height="42"
-                fill="#f6efff"
-                stroke="#6b3ca6"
-              />
-              <text x="34" y="214">
-                Attestation and trust metadata generation
-              </text>
-              <rect
-                x="20"
-                y="244"
-                width="580"
-                height="36"
-                fill="#ebf8f3"
-                stroke="#127c57"
-              />
-              <text x="34" y="267">
-                Output: signature + provider properties + key attestation
-                evidence
-              </text>
-              <line x1="310" y1="62" x2="310" y2="76" stroke="#2a6db0" />
-              <line x1="160" y1="118" x2="160" y2="132" stroke="#2a6db0" />
-              <line x1="460" y1="118" x2="460" y2="132" stroke="#2a6db0" />
-              <line x1="310" y1="174" x2="310" y2="188" stroke="#2a6db0" />
-              <line x1="310" y1="230" x2="310" y2="244" stroke="#2a6db0" />
-            </svg>
-            <figcaption>
-              Windows software path combining CNG/NCrypt, Platform Crypto
-              Provider, Windows Hello gating, and TPM evidence.
-            </figcaption>
-          </figure>
-
-          <figure>
-            <svg
-              class="qsc-diagram"
-              viewBox="0 0 620 300"
-              role="img"
-              aria-label="Linux tokenized signing stack diagram"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="580"
-                height="42"
-                fill="#eef4ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="46">Signing application or service</text>
-              <rect
-                x="20"
-                y="76"
-                width="580"
-                height="42"
-                fill="#edf8ee"
-                stroke="#2f7d32"
-              />
-              <text x="34" y="102">PKCS#11 interface boundary</text>
-              <rect
-                x="20"
-                y="132"
-                width="580"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="34" y="158">
-                Provider implementation (for example tpm2-pkcs11)
-              </text>
-              <rect
-                x="20"
-                y="188"
-                width="580"
-                height="42"
-                fill="#f6efff"
-                stroke="#6b3ca6"
-              />
-              <text x="34" y="214">
-                TPM / smartcard / secure element key execution boundary
-              </text>
-              <rect
-                x="20"
-                y="244"
-                width="580"
-                height="36"
-                fill="#ebf8f3"
-                stroke="#127c57"
-              />
-              <text x="34" y="267">
-                Output: tokenized signature operation and auditable key usage
-              </text>
-              <line x1="310" y1="62" x2="310" y2="76" stroke="#2a6db0" />
-              <line x1="310" y1="118" x2="310" y2="132" stroke="#2a6db0" />
-              <line x1="310" y1="174" x2="310" y2="188" stroke="#2a6db0" />
-              <line x1="310" y1="230" x2="310" y2="244" stroke="#2a6db0" />
-            </svg>
-            <figcaption>
-              Linux composable software stack using PKCS#11 provider model for
-              non-exportable key operations.
-            </figcaption>
-          </figure>
-
-          <figure>
-            <svg
-              class="qsc-diagram"
-              viewBox="0 0 620 300"
-              role="img"
-              aria-label="Browser mediated WebAuthn flow diagram"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="580"
-                height="42"
-                fill="#eef4ff"
-                stroke="#2a6db0"
-              />
-              <text x="34" y="46">
-                Web app sends challenge and policy requirements
-              </text>
-              <rect
-                x="20"
-                y="76"
-                width="580"
-                height="42"
-                fill="#edf8ee"
-                stroke="#2f7d32"
-              />
-              <text x="34" y="102">
-                Browser/User Agent mediates ceremony and permissions
-              </text>
-              <rect
-                x="20"
-                y="132"
-                width="280"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="34" y="158">Authenticator performs key operation</text>
-              <rect
-                x="320"
-                y="132"
-                width="280"
-                height="42"
-                fill="#fff7e9"
-                stroke="#c97a00"
-              />
-              <text x="334" y="158">User verification / consent</text>
-              <rect
-                x="20"
-                y="188"
-                width="580"
-                height="42"
-                fill="#f6efff"
-                stroke="#6b3ca6"
-              />
-              <text x="34" y="214">
-                Assertion or attestation object returned to RP
-              </text>
-              <rect
-                x="20"
-                y="244"
-                width="580"
-                height="36"
-                fill="#ebf8f3"
-                stroke="#127c57"
-              />
-              <text x="34" y="267">
-                Output: remote-verifiable evidence + non-exportable key use
-                proof
-              </text>
-              <line x1="310" y1="62" x2="310" y2="76" stroke="#2a6db0" />
-              <line x1="160" y1="118" x2="160" y2="132" stroke="#2a6db0" />
-              <line x1="460" y1="118" x2="460" y2="132" stroke="#2a6db0" />
-              <line x1="310" y1="174" x2="310" y2="188" stroke="#2a6db0" />
-              <line x1="310" y1="230" x2="310" y2="244" stroke="#2a6db0" />
-            </svg>
-            <figcaption>
-              Web-first software flow: browser-mediated WebAuthn for key
-              custody, user ceremony, and verifier evidence.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section>
-        <h3>Illustrative QSC Verification Checks (Informative)</h3>
-        <ul>
-          <li>
-            Verifier checks that signing keys used by the implementation are
-            non-exportable through the selected platform API surface (<a
-              href="#ref-android-keystore"
-              >[ANDROID-KEYSTORE]</a
-            >, <a href="#ref-msft-cng">[MSFT-CNG]</a>,
-            <a href="#ref-pkcs11-v31">[PKCS11-V3.1]</a>,
-            <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
-          </li>
-          <li>
-            Verifier checks that each signature operation is bound to per-use
-            authorization under OS-enforced user-authentication policy (<a
-              href="#ref-android-keygen-auth-required"
-              >[ANDROID-KEYGEN-AUTH-REQUIRED]</a
-            >,
-            <a href="#ref-android-biometricprompt">[ANDROID-BIOMETRICPROMPT]</a
-            >,
-            <a href="#ref-apple-secaccesscontrol">[APPLE-SECACCESSCONTROL]</a>,
-            <a href="#ref-msft-hello-business">[MSFT-HELLO-BUSINESS]</a>).
-          </li>
-          <li>
-            Verifier checks whether high-assurance deployments implement
-            protected confirmation/trusted UI evidence where platform support
-            exists (<a href="#ref-android-protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION]</a
-            >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
-          </li>
-          <li>
-            Verifier checks whether remote-verifiable key-property evidence (for
-            example attestation artifacts) is emitted where the platform
-            supports it (<a href="#ref-android-attestation"
-              >[ANDROID-ATTESTATION]</a
-            >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-            <a href="#ref-msft-tpm-overview">[MSFT-TPM]</a>).
-          </li>
-          <li>
-            Verifier checks lifecycle controls for rotation, revocation hooks,
-            and rollback-resistance claims (<a href="#ref-etsi-319401"
-              >[ETSI-319401]</a
-            >, <a href="#ref-etsi-319411-2">[ETSI-319411-2]</a>,
-            <a href="#ref-android-keymint-version-binding"
-              >[ANDROID-KEYMINT-VERSION-BINDING]</a
-            >).
-          </li>
-        </ul>
-      </section>
-    </section>
-
-    <section>
-      <h2>Interoperability Profiles</h2>
-      <section id="web-profile">
-        <h3>Web Profile (Primary)</h3>
-        <ul>
-          <li>
-            MUST be the baseline profile for interoperability (<a
-              href="#ref-w3c-webcrypto2"
-              >[WEBCRYPTO-L2]</a
-            >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
-          </li>
-          <li>
-            MUST support JOSE/JWS/JWK or COSE/CBOR signature containers (<a
-              href="#ref-rfc7515"
-              >[RFC7515]</a
-            >, <a href="#ref-rfc7517">[RFC7517]</a>,
-            <a href="#ref-rfc9052">[RFC9052]</a>,
-            <a href="#ref-rfc8949">[RFC8949]</a>).
-          </li>
-          <li>
-            SHOULD support WebAuthn for hardware authenticator mediation where
-            applicable (<a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>).
-          </li>
-          <li>
-            MAY use DID Core, VC Data Model, Data Integrity, OpenID4VP, and
-            SD-JWT VC when credentials are needed and deployment maturity
-            requirements are satisfied (<a href="#ref-w3c-did-core"
-              >[DID-CORE]</a
-            >, <a href="#ref-w3c-vc-data-model2">[VC-DM2]</a>,
-            <a href="#ref-w3c-vc-data-integrity">[VC-DI]</a>,
-            <a href="#ref-oidf-openid4vp">[OPENID4VP]</a>,
-            <a href="#ref-ietf-sd-jwt-vc">[SD-JWT-VC]</a>).
-          </li>
-          <li>
-            MUST define security properties in physical reality terms: key
-            custody, tamper resistance, and verifiable user intent (<a
-              href="#ref-eidas-910"
-              >[EU-910/2014]</a
-            >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
-          </li>
-        </ul>
-      </section>
-      <section id="eu-compatibility-profile">
-        <h3>EU Compatibility Profile (Mapping Layer)</h3>
-        <ul>
-          <li>
-            MUST map Web Profile artifacts to EU objective/evidence checks (<a
-              href="#ref-eidas-910"
-              >[EU-910/2014]</a
-            >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
-          </li>
-          <li>
-            MUST NOT replace the Web Profile as the primary technical model.
-          </li>
-          <li>
-            Any [=qualified status claim=] MUST carry an [=evidence record=]
-            linked to current trusted-list and/or notification data (<a
-              href="#ref-eu-trusted-lists"
-              >[EU-TRUSTED-LISTS]</a
-            >,
-            <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>).
-          </li>
-          <li>
-            MUST output technical validity and legal recognition as separate
-            results (<a href="#ref-etsi-319401">[ETSI-319401]</a>).
-          </li>
-        </ul>
-      </section>
-    </section>
-
-    <section>
-      <h2>Mapping to eIDAS Annex II Style Objectives</h2>
       <p>
-        For auditability, this section defines explicit clause-level IDs aligned
-        to Annex II requirement units in eIDAS.
+        "Approved software lists" or governance labels alone MUST NOT be treated
+        as technical guarantees without cryptographic enforcement.
       </p>
       <p>
-        Any normative requirement in this specification that claims Annex II
-        alignment MUST reference one or more clause IDs from this section.
-      </p>
-
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>Clause ID</th>
-            <th>Annex II requirement unit (condensed)</th>
-            <th>Legal source</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="annexii-1a">
-            <td><dfn>ANNEXII-1a</dfn></td>
-            <td>
-              Confidentiality of signature creation data is reasonably assured.
-            </td>
-            <td><a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a></td>
-          </tr>
-          <tr id="annexii-1b">
-            <td><dfn>ANNEXII-1b</dfn></td>
-            <td>Signature creation data can practically occur only once.</td>
-            <td><a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a></td>
-          </tr>
-          <tr id="annexii-1c">
-            <td><dfn>ANNEXII-1c</dfn></td>
-            <td>
-              Signature creation data cannot be derived with reasonable
-              assurance; signature is protected against forgery.
-            </td>
-            <td><a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a></td>
-          </tr>
-          <tr id="annexii-1d">
-            <td><dfn>ANNEXII-1d</dfn></td>
-            <td>
-              Signature creation data is reliably protected by the legitimate
-              signatory against use by others.
-            </td>
-            <td><a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a></td>
-          </tr>
-          <tr id="annexii-2">
-            <td><dfn>ANNEXII-2</dfn></td>
-            <td>
-              Qualified signature creation devices do not alter data to be
-              signed and do not prevent prior presentation to the signatory.
-            </td>
-            <td><a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>Annex II clause ID</th>
-            <th>EU objective</th>
-            <th>GQSCD property</th>
-            <th>Evidence</th>
-            <th>Remaining delta</th>
-            <th>Reference basis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="#annexii-1a">ANNEXII-1a</a></td>
-            <td>Confidentiality of signature creation data</td>
-            <td>
-              Non-exportable [=hardware-backed key=] with confidentiality
-              controls
-            </td>
-            <td>Attestation + key policy + lifecycle log</td>
-            <td>Formal certification decision process</td>
-            <td>
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>,
-              <a href="#ref-cen-419241-1">[CEN-419241-1]</a>,
-              <a href="#ref-cen-419221-5">[CEN-419221-5]</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="#annexii-1b">ANNEXII-1b</a></td>
-            <td>Practical uniqueness of signature creation data</td>
-            <td>
-              Controlled key generation with approved entropy source and
-              uniqueness constraints
-            </td>
-            <td>
-              Key generation event evidence + entropy source declaration + key
-              identifier uniqueness checks
-            </td>
-            <td>Jurisdiction-specific uniqueness assurance methodology</td>
-            <td>
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>,
-              <a href="#ref-android-keystore">[ANDROID-KEYSTORE]</a>,
-              <a href="#ref-w3c-webcrypto2">[WEBCRYPTO-L2]</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="#annexii-1c">ANNEXII-1c</a></td>
-            <td>Non-derivability and forgery resistance</td>
-            <td>
-              Algorithm policy + RNG quality + anti-rollback + verified
-              execution state
-            </td>
-            <td>Policy bundle + provenance records + attestation claims</td>
-            <td>Conformity-assessment acceptance gate</td>
-            <td>
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>,
-              <a href="#ref-android-avb">[ANDROID-AVB]</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="#annexii-1d">ANNEXII-1d</a></td>
-            <td>[=sole control=] by signatory</td>
-            <td>
-              Bound [=user intent ceremony=] + policy-enforced user
-              authentication
-            </td>
-            <td>Intent log + auth policy evidence</td>
-            <td>Legal identity attribution workflows</td>
-            <td>
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>,
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="#annexii-2">ANNEXII-2</a></td>
-            <td>
-              No silent alteration and no blocked presentation prior to signing
-            </td>
-            <td>
-              Payload-hash binding + trusted confirmation path + verifier-side
-              integrity checks
-            </td>
-            <td>
-              Verification transcript + confirmation token + log inclusion proof
-            </td>
-            <td>Local legal validation overlays</td>
-            <td>
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>,
-              <a href="#ref-android-protected-confirmation"
-                >[ANDROID-PROTECTED-CONFIRMATION]</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="eu-certification-notification-path" class="informative">
-      <h2>EU Certification and Notification Path (Informative)</h2>
-      <p>
-        In EU operational terms, a QSCD certificate is evidenced by a
-        certificate of conformity and certification report for a specific
-        configured device, and discoverability is achieved through Member State
-        notification and Commission publication/list maintenance.
-      </p>
-      <p>
-        Article 30 defines conformity certification routes and lifecycle
-        constraints, Article 31 defines Commission notification/publication
-        mechanics, Implementing Decision (EU) 2016/650 defines recognized
-        assessment standards routes, and Implementing Regulation (EU) 2025/1570
-        defines notification data fields and procedures (<a
-          href="#ref-eidas-consolidated"
-          >[EU-910-CONS]</a
-        >, <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-        <a href="#ref-eu-2025-1570">[EU-2025/1570]</a>).
-      </p>
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>Step ID</th>
-            <th>Certification/notification step</th>
-            <th>Required evidence artifact</th>
-            <th>Legal anchor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>EUCERT-01</td>
-            <td>
-              Define evaluated target and category (user-managed environment or
-              remote/managed environment)
-            </td>
-            <td>
-              Configuration definition with exact hardware/firmware/software
-              identifiers
-            </td>
-            <td>
-              <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-              <a href="#ref-eu-2025-1570">[EU-2025/1570]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>EUCERT-02</td>
-            <td>
-              Run conformity assessment via designated body using Article 30
-              route
-            </td>
-            <td>
-              Certification report and certificate of conformity aligned to
-              Annex II objectives
-            </td>
-            <td>
-              <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-              <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-              <a href="#ref-eidas-annex-ii">[EU-ANNEX-II]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>EUCERT-03</td>
-            <td>Apply lifecycle maintenance controls after issuance</td>
-            <td>
-              Validity period control (max 5 years) and vulnerability-assessment
-              records every 2 years
-            </td>
-            <td><a href="#ref-eidas-consolidated">[EU-910-CONS]</a></td>
-          </tr>
-          <tr>
-            <td>EUCERT-04</td>
-            <td>Submit Member State notification package to Commission</td>
-            <td>
-              Notification payload including report URL, status dates, cert body
-              identity, and version-specific configuration details
-            </td>
-            <td>
-              <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-              <a href="#ref-eu-2025-1570">[EU-2025/1570]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>EUCERT-05</td>
-            <td>Commission publication/list maintenance and status updates</td>
-            <td>
-              Published list entry and change records for
-              certified/no-longer-certified status
-            </td>
-            <td>
-              <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>,
-              <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <dl>
-        <dt><dfn>qscd certification evidence tuple</dfn></dt>
-        <dd>
-          { certificate of conformity, certification report, certification
-          report URL, certified configuration identifiers
-          (hardware/firmware/software versions), validity dates and status,
-          certification body identity }
-        </dd>
-      </dl>
-      <p>
-        The tuple above is the minimum implementation-facing artifact set this
-        specification expects verifiers and ecosystem operators to ingest when
-        evaluating EU legal qualification claims (<a href="#ref-eu-2025-1570"
-          >[EU-2025/1570]</a
-        >, <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>).
-      </p>
-      <p>
-        ENISA guidance may be used to reduce interpretation ambiguity in
-        evaluation/certification planning, but does not replace legal
-        requirements or designated-body outcomes (<a href="#ref-enisa-qscd-eucc"
-          >[ENISA-QSCD-EUCC]</a
-        >, <a href="#ref-eidas-consolidated">[EU-910-CONS]</a>).
+        Conformance reports SHOULD list which threats were tested directly and
+        which threats are mitigated by inherited platform controls.
       </p>
     </section>
 
-    <section id="conformance-classes">
-      <h2>Conformance Classes</h2>
-      <section>
-        <h3>Class A: Device Stack</h3>
-        <ul>
-          <li>
-            MUST satisfy all normative requirements in this specification for
-            device-side behavior.
-          </li>
-          <li>
-            MUST implement the component matrix with machine-verifiable evidence
-            artifacts (<a href="#ref-etsi-319401">[ETSI-319401]</a>,
-            <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
-          </li>
-          <li>
-            MUST implement signed update verification and anti-rollback (<a
-              href="#ref-android-avb"
-              >[ANDROID-AVB]</a
-            >, <a href="#ref-msft-secure-boot-keys">[MSFT-SECURE-BOOT]</a>,
-            <a href="#ref-apple-boot-process">[APPLE-BOOT]</a>).
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h3>Class B: Verifier</h3>
-        <ul>
-          <li>
-            MUST validate cryptographic signatures and policy constraints (<a
-              href="#ref-rfc7515"
-              >[RFC7515]</a
-            >, <a href="#ref-rfc9052">[RFC9052]</a>).
-          </li>
-          <li>
-            MUST process [=evidence record=] artifacts and emit explicit
-            pass/fail reasons (<a href="#ref-etsi-319401">[ETSI-319401]</a>).
-          </li>
-          <li>
-            MUST emit clause-level Annex II mapping results using
-            [=ANNEXII-1a=], [=ANNEXII-1b=], [=ANNEXII-1c=], [=ANNEXII-1d=], and
-            [=ANNEXII-2=].
-          </li>
-          <li>
-            MUST separate technical validity from legal recognition outcomes (<a
-              href="#ref-eidas-910"
-              >[EU-910/2014]</a
-            >).
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h3>Class C: EU Compatibility Verifier</h3>
-        <ul>
-          <li>MUST satisfy Class B.</li>
-          <li>
-            MUST verify trusted-list and QSCD-notification evidence for legal
-            qualification claims (<a href="#ref-eu-trusted-lists"
-              >[EU-TRUSTED-LISTS]</a
-            >,
-            <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>).
-          </li>
-          <li>
-            MUST NOT infer legal qualification from cryptographic success alone
-            (<a href="#ref-eidas-910">[EU-910/2014]</a>,
-            <a href="#ref-eu-2016-650">[EU-2016/650]</a>).
-          </li>
-        </ul>
-      </section>
-    </section>
-
-    <section>
-      <h2>Security Considerations</h2>
-      <ul>
-        <li>
-          Approved software lists and governance labels are not cryptographic
-          controls by themselves (<a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>,
-          <a href="#ref-eidas-910">[EU-910/2014]</a>).
-        </li>
-        <li>
-          Implementations SHOULD apply a [=zero-trust verification model=] so
-          that every signature decision is derived from fresh, signed evidence
-          and explicit policy checks (<a href="#ref-nist-sp-800-207"
-            >[NIST-SP-800-207]</a
-          >, <a href="#ref-rfc7515">[RFC7515]</a>,
-          <a href="#ref-rfc9052">[RFC9052]</a>).
-        </li>
-        <li>
-          Backup and recovery flows MUST preserve both confidentiality and
-          auditability (<a href="#ref-etsi-319401">[ETSI-319401]</a>,
-          <a href="#ref-etsi-319411-2">[ETSI-319411-2]</a>).
-        </li>
-        <li>
-          Signer authorization channels MUST defend against replay, overlay, and
-          confused-deputy attacks (<a href="#ref-android-protected-confirmation"
-            >[ANDROID-PROTECTED-CONFIRMATION]</a
-          >, <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-          <a href="#ref-rfc7515">[RFC7515]</a>).
-        </li>
-      </ul>
-    </section>
-
-    <section>
+    <section id="privacy-considerations">
       <h2>Privacy Considerations</h2>
       <ul>
         <li>
-          Implementations SHOULD minimize personally identifying data in
-          evidence artifacts (<a href="#ref-w3c-vc-data-model2">[VC-DM2]</a>,
-          <a href="#ref-w3c-vc-data-integrity">[VC-DI]</a>,
-          <a href="#ref-eu-2024-2979">[EU-2024/2979]</a>).
+          Event logs SHOULD store hashes, references, and proof digests instead
+          of raw identity fields.
         </li>
         <li>
-          Public verification endpoints MUST NOT disclose private sensitive
-          material (<a href="#ref-rfc9110">[RFC9110]</a>,
-          <a href="#ref-etsi-319401">[ETSI-319401]</a>).
+          Raw MRZ/PID material MUST remain off-log unless law explicitly
+          requires disclosure.
         </li>
         <li>
-          Selective disclosure SHOULD be used where policy permits (<a
-            href="#ref-ietf-sd-jwt-vc"
-            >[SD-JWT-VC]</a
-          >, <a href="#ref-w3c-vc-data-model2">[VC-DM2]</a>).
+          Selective disclosure mechanisms SHOULD be preferred for verifier
+          transactions.
+        </li>
+        <li>
+          Implementations SHOULD support pairwise verifier challenges to reduce
+          cross-context linkability.
         </li>
       </ul>
     </section>
 
-    <section class="informative">
-      <h2>Interoperability Rationale</h2>
-      <table class="simple">
-        <thead>
-          <tr>
-            <th>EU requires X</th>
-            <th>Web profile provides Y</th>
-            <th>Remaining delta Z</th>
-            <th>Reference basis</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Qualified status listed by authority</td>
-            <td>Cryptographic verification + provenance</td>
-            <td>Constitutive legal listing effect</td>
-            <td>
-              <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>,
-              <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Ecosystem trust concentrated in limited governance and
-              client-assumption channels
-            </td>
-            <td>
-              Decentralized, verifier-side [=zero-trust verification model=]
-              with open evidence formats and independent implementations
-            </td>
-            <td>
-              Legal qualification recognition remains jurisdiction-specific
-            </td>
-            <td>
-              <a href="#ref-nist-sp-800-207">[NIST-SP-800-207]</a>,
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>,
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-eidas-910">[EU-910/2014]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>High assurance signing device behavior</td>
-            <td>Component matrix + attestation evidence</td>
-            <td>Formal conformity assessment governance</td>
-            <td>
-              <a href="#ref-eu-2016-650">[EU-2016/650]</a>,
-              <a href="#ref-cen-419241-1">[CEN-419241-1]</a>,
-              <a href="#ref-cen-419221-5">[CEN-419221-5]</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Ecosystem interoperability constraints</td>
-            <td>JOSE/COSE/WebAuthn/WebCrypto deployment</td>
-            <td>EU-specific schema/container mandates</td>
-            <td>
-              <a href="#ref-rfc7515">[RFC7515]</a>,
-              <a href="#ref-rfc9052">[RFC9052]</a>,
-              <a href="#ref-w3c-webauthn3">[WEBAUTHN-L3]</a>,
-              <a href="#ref-w3c-webcrypto2">[WEBCRYPTO-L2]</a>,
-              <a href="#ref-eu-2024-2982">[EU-2024/2982]</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <section id="self-informative" class="informative">
+      <h2>Informative: Observations from Self Protocol Work</h2>
+      <p>
+        This section is informative and not a normative dependency. It captures
+        design signals from Self documentation and repositories relevant to GDIS
+        architecture choices.
+      </p>
+      <ul>
+        <li>
+          Self describes an NFC scan flow over physical identity documents, with
+          mobile-side BAC/PACE document access and proof-generation pipelines
+          <a href="#ref-self-tech-overview">[SELF-TECH-OVERVIEW]</a>
+          <a href="#ref-self-tech-architecture">[SELF-TECH-ARCH]</a>.
+        </li>
+        <li>
+          Self documentation describes DG1/MRZ-derived attribute pipelines,
+          signed document object checks, and certificate-chain-related validity
+          concerns in passport contexts
+          <a href="#ref-self-tech-overview">[SELF-TECH-OVERVIEW]</a>
+          <a href="#ref-self-github">[SELF-GITHUB]</a>.
+        </li>
+        <li>
+          Self backend APIs explicitly bind scope, endpoint, attestation IDs,
+          user identifiers, and verifier-side policy checks; this aligns with
+          GDIS endpoint and replay/freshness discipline
+          <a href="#ref-self-backend-basic">[SELF-BACKEND-BASIC]</a>
+          <a href="#ref-self-backend-api">[SELF-BACKEND-API]</a>.
+        </li>
+        <li>
+          Self architecture materials describe identity commitments, Merkle root
+          checks, and nullifier-based anti-replay controls; GDIS adapts the
+          verifier-side mechanical discipline while keeping hosting open and not
+          chain-exclusive
+          <a href="#ref-self-tech-architecture">[SELF-TECH-ARCH]</a>
+          <a href="#ref-self-identity-hub">[SELF-IDENTITY-HUB]</a>.
+        </li>
+      </ul>
     </section>
 
-    <section class="appendix informative">
-      <h2>References</h2>
-      <p>
-        Reference currency note: links and version designations in this section
-        were checked on February 17, 2026.
+    <section id="open-issues" class="informative">
+      <h2>Open Issues</h2>
+      <p class="issue">
+        Define a compact canonical PID field set for v1 that is stable across
+        passport and national ID form factors while keeping jurisdiction mapping
+        explicit.
       </p>
+      <p class="issue">
+        Define a portable host gossip anti-spam model that preserves open host
+        admission and does not require centralized host approval.
+      </p>
+      <p class="issue">
+        Define optional pairwise identifier blinding mode that preserves global
+        deduplication properties needed by governance profiles.
+      </p>
+      <p class="issue">
+        Decide whether v1 transport profile includes only HTTP(S) or also
+        content-addressed publication channels (for example IPFS) as first-class
+        options.
+      </p>
+    </section>
+
+    <section class="appendix informative" id="references">
+      <h2>References</h2>
 
       <section>
-        <h3>EU Regulatory and Governance</h3>
+        <h3>Core Standards and Law</h3>
         <ul>
+          <li id="ref-rfc2119">
+            <a href="https://www.rfc-editor.org/rfc/rfc2119"
+              >[RFC2119] Key words for use in RFCs to Indicate Requirement
+              Levels</a
+            >
+          </li>
+          <li id="ref-rfc8174">
+            <a href="https://www.rfc-editor.org/rfc/rfc8174"
+              >[RFC8174] Ambiguity of Uppercase vs Lowercase in RFC 2119 Key
+              Words</a
+            >
+          </li>
+          <li id="ref-rfc3986">
+            <a href="https://www.rfc-editor.org/rfc/rfc3986"
+              >[RFC3986] Uniform Resource Identifier (URI): Generic Syntax</a
+            >
+          </li>
+          <li id="ref-rfc8785">
+            <a href="https://www.rfc-editor.org/rfc/rfc8785"
+              >[RFC8785] JSON Canonicalization Scheme (JCS)</a
+            >
+          </li>
+          <li id="ref-rfc9110">
+            <a href="https://www.rfc-editor.org/rfc/rfc9110"
+              >[RFC9110] HTTP Semantics</a
+            >
+          </li>
+          <li id="ref-rfc7515">
+            <a href="https://www.rfc-editor.org/rfc/rfc7515"
+              >[RFC7515] JSON Web Signature (JWS)</a
+            >
+          </li>
+          <li id="ref-rfc7518">
+            <a href="https://www.rfc-editor.org/rfc/rfc7518"
+              >[RFC7518] JSON Web Algorithms (JWA)</a
+            >
+          </li>
+          <li id="ref-rfc9052">
+            <a href="https://www.rfc-editor.org/rfc/rfc9052"
+              >[RFC9052] CBOR Object Signing and Encryption (COSE) Structures</a
+            >
+          </li>
           <li id="ref-eidas-910">
             <a href="https://eur-lex.europa.eu/eli/reg/2014/910/oj"
               >[EU-910/2014] Regulation (EU) No 910/2014 (eIDAS)</a
@@ -2690,43 +1223,25 @@
           <li id="ref-eidas-consolidated">
             <a
               href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02014R0910-20241018"
-              >[EU-910-CONS] eIDAS consolidated text (including Articles 30 and
-              31)</a
-            >
-          </li>
-          <li id="ref-eidas-annex-ii">
-            <a
-              href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02014R0910-20241018"
-              >[EU-ANNEX-II] eIDAS consolidated text (Annex II requirement
-              units)</a
+              >[EU-910-CONS] eIDAS consolidated text (2024-10-18)</a
             >
           </li>
           <li id="ref-eu-2024-1183">
-            <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj"
-              >[EU-2024/1183] Regulation (EU) 2024/1183</a
-            >
-          </li>
-          <li id="ref-eu-2016-650">
-            <a href="https://eur-lex.europa.eu/eli/dec_impl/2016/650/oj"
-              >[EU-2016/650] Commission Implementing Decision (EU) 2016/650</a
-            >
-          </li>
-          <li id="ref-eu-2025-1570">
-            <a href="https://eur-lex.europa.eu/eli/reg_impl/2025/1570/oj/eng"
-              >[EU-2025/1570] Commission Implementing Regulation (EU) 2025/1570
-              (QSCD notification procedures and data fields)</a
+            <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj/eng"
+              >[EU-2024/1183] Regulation (EU) 2024/1183 (European Digital
+              Identity Framework)</a
             >
           </li>
           <li id="ref-eu-2024-2979">
-            <a href="https://eur-lex.europa.eu/eli/reg_impl/2024/2979/oj"
-              >[EU-2024/2979] EUDI Wallet integrity and core functionality
-              implementing regulation</a
+            <a href="https://eur-lex.europa.eu/eli/reg_impl/2024/2979/oj/eng"
+              >[EU-2024/2979] Implementing Regulation on EUDI Wallet integrity
+              and core functionalities</a
             >
           </li>
           <li id="ref-eu-2024-2982">
-            <a href="https://eur-lex.europa.eu/eli/reg_impl/2024/2982/oj"
-              >[EU-2024/2982] EUDI Wallet protocols and interfaces implementing
-              regulation</a
+            <a href="https://eur-lex.europa.eu/eli/reg_impl/2024/2982/oj/eng"
+              >[EU-2024/2982] Implementing Regulation on EUDI Wallet protocols
+              and interfaces</a
             >
           </li>
           <li id="ref-eu-trusted-lists">
@@ -2738,325 +1253,140 @@
           <li id="ref-eu-qscd-notifications">
             <a
               href="https://eidas.ec.europa.eu/efda/browse/notification/qscd-sscd"
-              >[EU-QSCD-NOTIFICATIONS] EU QSCD notifications dashboard</a
+              >[EU-QSCD-NOTIFICATIONS] QSCD notifications dashboard</a
+            >
+          </li>
+          <li id="ref-icao-doc9303">
+            <a href="https://www.icao.int/publications/doc-series/doc-9303"
+              >[ICAO-9303] ICAO Doc 9303 Machine Readable Travel Documents
+              (series page)</a
+            >
+          </li>
+          <li id="ref-icao-doc9303-p3">
+            <a
+              href="https://www.icao.int/sites/default/files/publications/DocSeries/9303_p3_cons_en.pdf"
+              >[ICAO-9303-P3] ICAO Doc 9303 Part 3: Specifications Common to all
+              MRTDs</a
+            >
+          </li>
+          <li id="ref-icao-doc9303-p4">
+            <a
+              href="https://www.icao.int/sites/default/files/publications/DocSeries/9303_p4_cons_en.pdf"
+              >[ICAO-9303-P4] ICAO Doc 9303 Part 4: Machine Readable Passports
+              and TD3 MRTDs</a
             >
           </li>
         </ul>
       </section>
-
       <section>
-        <h3>ETSI and CEN Security Standards</h3>
+        <h3>Web Credentials and Identity</h3>
         <ul>
-          <li id="ref-etsi-319401">
-            <a
-              href="https://www.etsi.org/deliver/etsi_en/319400_319499/319401/03.01.01_60/en_319401v030101p.pdf"
-              >[ETSI-319401] ETSI EN 319 401 V3.1.1: General policy requirements
-              for trust service providers</a
-            >
-          </li>
-          <li id="ref-etsi-319411-2">
-            <a
-              href="https://www.etsi.org/deliver/etsi_en/319400_319499/31941102/02.06.01_60/en_31941102v020601p.pdf"
-              >[ETSI-319411-2] ETSI EN 319 411-2 V2.6.1: Certificate policy and
-              security requirements for trust service providers issuing
-              certificates</a
-            >
-          </li>
-          <li id="ref-etsi-319421">
-            <a
-              href="https://www.etsi.org/deliver/etsi_en/319400_319499/319421/01.03.01_60/en_319421v010301p.pdf"
-              >[ETSI-319421] ETSI EN 319 421 V1.3.1: Policy and security
-              requirements for trust service providers issuing time-stamps</a
-            >
-          </li>
-          <li id="ref-cen-419241-1">
-            <a
-              href="https://standards.iteh.ai/catalog/standards/cen/0a3d58ed-04b4-4d14-a69e-2647c47e26ba/en-419241-1-2018"
-              >[CEN-419241-1] EN 419241-1:2018 Trustworthy systems supporting
-              server signing</a
-            >
-          </li>
-          <li id="ref-cen-419221-5">
-            <a
-              href="https://standards.iteh.ai/catalog/standards/cen/3e27cc07-2782-4c65-81b7-474d858a471c/en-419221-5-2018"
-              >[CEN-419221-5] EN 419221-5:2018 Protection profiles for TSP
-              cryptographic modules</a
-            >
-          </li>
-          <li id="ref-enisa-qscd-eucc">
-            <a
-              href="https://certification.enisa.europa.eu/publications/security-evaluation-and-certification-qualified-electronic-signatureseal-creation-devices_en"
-              >[ENISA-QSCD-EUCC] ENISA: Security evaluation and certification of
-              QSCD under EUCC</a
-            >
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>W3C and IETF Core Specifications</h3>
-        <ul>
-          <li id="ref-nist-sp-800-207">
-            <a href="https://csrc.nist.gov/pubs/sp/800/207/final"
-              >[NIST-SP-800-207] NIST SP 800-207 Zero Trust Architecture</a
-            >
-          </li>
-          <li id="ref-w3c-webcrypto2">
-            <a href="https://www.w3.org/TR/webcrypto-2/"
-              >[WEBCRYPTO-L2] Web Cryptography API Level 2</a
-            >
-          </li>
-          <li id="ref-w3c-webauthn3">
-            <a href="https://www.w3.org/TR/webauthn-3/"
-              >[WEBAUTHN-L3] Web Authentication: Level 3</a
-            >
-          </li>
-          <li id="ref-w3c-did-core">
+          <li id="ref-did-core">
             <a href="https://www.w3.org/TR/did-core/"
-              >[DID-CORE] Decentralized Identifiers (DID) Core</a
+              >[DID-CORE] Decentralized Identifiers (DID) v1.0</a
             >
           </li>
-          <li id="ref-w3c-vc-data-model2">
+          <li id="ref-vc-dm2">
             <a href="https://www.w3.org/TR/vc-data-model-2.0/"
               >[VC-DM2] Verifiable Credentials Data Model v2.0</a
             >
           </li>
-          <li id="ref-w3c-vc-data-integrity">
+          <li id="ref-vc-data-integrity">
             <a href="https://www.w3.org/TR/vc-data-integrity/"
               >[VC-DI] Verifiable Credential Data Integrity 1.0</a
             >
           </li>
-          <li id="ref-rfc7515">
-            <a href="https://www.rfc-editor.org/rfc/rfc7515.html"
-              >[RFC7515] JSON Web Signature (JWS)</a
+          <li id="ref-json-ld11">
+            <a href="https://www.w3.org/TR/json-ld11/"
+              >[JSON-LD11] JSON-LD 1.1</a
             >
           </li>
-          <li id="ref-rfc7517">
-            <a href="https://www.rfc-editor.org/rfc/rfc7517.html"
-              >[RFC7517] JSON Web Key (JWK)</a
+          <li id="ref-webcrypto2">
+            <a href="https://www.w3.org/TR/webcrypto-2/"
+              >[WEBCRYPTO-L2] Web Cryptography API Level 2</a
             >
           </li>
-          <li id="ref-rfc9052">
-            <a href="https://www.rfc-editor.org/rfc/rfc9052"
-              >[RFC9052] CBOR Object Signing and Encryption (COSE): Structures
-              and Process</a
+          <li id="ref-webauthn3">
+            <a href="https://www.w3.org/TR/webauthn-3/"
+              >[WEBAUTHN-L3] Web Authentication Level 3</a
             >
           </li>
-          <li id="ref-rfc8949">
-            <a href="https://www.rfc-editor.org/rfc/rfc8949"
-              >[RFC8949] Concise Binary Object Representation (CBOR)</a
-            >
-          </li>
-          <li id="ref-rfc9110">
-            <a href="https://www.rfc-editor.org/rfc/rfc9110"
-              >[RFC9110] HTTP Semantics</a
-            >
-          </li>
-          <li id="ref-oidf-openid4vp">
-            <a
-              href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html"
-              >[OPENID4VP] OpenID for Verifiable Presentations 1.0</a
-            >
-          </li>
-          <li id="ref-ietf-sd-jwt-vc">
-            <a
-              href="https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/"
-              >[SD-JWT-VC] SD-JWT based Verifiable Credentials (IETF draft)</a
-            >
-          </li>
-          <li id="ref-ipfs-docs">
-            <a href="https://docs.ipfs.tech/"
-              >[IPFS-DOCS] IPFS and IPNS documentation</a
+          <li id="ref-w3c-digital-credentials">
+            <a href="https://www.w3.org/TR/digital-credentials/"
+              >[DIGITAL-CREDS-API] W3C Digital Credentials API (draft)</a
             >
           </li>
         </ul>
       </section>
 
       <section>
-        <h3>Platform Security and Implementation Specifications</h3>
+        <h3>Security and Trust Context</h3>
         <ul>
-          <li id="ref-android-avb">
+          <li id="ref-nist-sp800-63-3">
+            <a href="https://pages.nist.gov/800-63-3/sp800-63-3.html"
+              >[NIST-SP800-63-3] Digital Identity Guidelines</a
+            >
+          </li>
+          <li id="ref-nist-sp800-207">
+            <a href="https://csrc.nist.gov/pubs/sp/800/207/final"
+              >[NIST-SP800-207] Zero Trust Architecture</a
+            >
+          </li>
+          <li id="ref-etsi-319401">
             <a
-              href="https://source.android.com/docs/security/features/verifiedboot/avb"
-              >[ANDROID-AVB] Android Verified Boot (AVB / Verified Boot 2.0)</a
+              href="https://www.etsi.org/deliver/etsi_en/319400_319499/319401/03.01.01_60/en_319401v030101p.pdf"
+              >[ETSI-319401] ETSI EN 319 401</a
             >
           </li>
-          <li id="ref-android-avb-readme">
+          <li id="ref-ipfs-docs">
+            <a href="https://docs.ipfs.tech/">[IPFS-DOCS] IPFS documentation</a>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>GQSCD and Self Ecosystem Inputs</h3>
+        <ul>
+          <li id="ref-gqscd-core">
+            <a href="https://z-base.github.io/gqscd/"
+              >[GQSCD-CORE] Globally Qualified Signature Creation Device
+              (framework item)</a
+            >
+          </li>
+          <li id="ref-self-docs-overview">
+            <a href="https://docs.self.xyz/">[SELF-DOCS] Self Docs overview</a>
+          </li>
+          <li id="ref-self-tech-overview">
+            <a href="https://docs.self.xyz/technical-docs/overview"
+              >[SELF-TECH-OVERVIEW] Self technical overview</a
+            >
+          </li>
+          <li id="ref-self-tech-architecture">
+            <a href="https://docs.self.xyz/technical-docs/architecture"
+              >[SELF-TECH-ARCH] Self technical architecture</a
+            >
+          </li>
+          <li id="ref-self-identity-hub">
             <a
-              href="https://android.googlesource.com/platform/external/avb/+/master/README.md"
-              >[ANDROID-AVB-README] AOSP AVB README (`vbmeta`, `libavb`,
-              rollback integration)</a
+              href="https://docs.self.xyz/technical-docs/verification-in-the-identityverificationhub"
+              >[SELF-IDENTITY-HUB] Verification in IdentityVerificationHub</a
             >
           </li>
-          <li id="ref-android-keystore">
-            <a href="https://source.android.com/docs/security/features/keystore"
-              >[ANDROID-KEYSTORE] Android Keystore and KeyMint (including
-              StrongBox)</a
-            >
-          </li>
-          <li id="ref-android-keymint-version-binding">
+          <li id="ref-self-backend-basic">
             <a
-              href="https://source.android.com/docs/security/features/keystore/version-binding"
-              >[ANDROID-KEYMINT-VERSION-BINDING] Android KeyMint version binding
-              and rollback resistance</a
+              href="https://docs.self.xyz/backend-integration/basic-integration"
+              >[SELF-BACKEND-BASIC] Backend integration basics</a
             >
           </li>
-          <li id="ref-android-attestation">
+          <li id="ref-self-backend-api">
             <a
-              href="https://source.android.com/docs/security/features/keystore/attestation"
-              >[ANDROID-ATTESTATION] Android key and ID attestation</a
+              href="https://docs.self.xyz/backend-integration/selfbackendverifier-api-reference"
+              >[SELF-BACKEND-API] SelfBackendVerifier API reference</a
             >
           </li>
-          <li id="ref-android-protected-confirmation">
-            <a
-              href="https://source.android.com/docs/security/features/authentication/protected-confirmation"
-              >[ANDROID-PROTECTED-CONFIRMATION] Android Protected
-              Confirmation</a
-            >
-          </li>
-          <li id="ref-android-keygen-auth-required">
-            <a
-              href="https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec.Builder#setUserAuthenticationRequired(boolean)"
-              >[ANDROID-KEYGEN-AUTH-REQUIRED] KeyGenParameterSpec:
-              setUserAuthenticationRequired</a
-            >
-          </li>
-          <li id="ref-android-keygen-auth-params">
-            <a
-              href="https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec.Builder#setUserAuthenticationParameters(int,int)"
-              >[ANDROID-KEYGEN-AUTH-PARAMS] KeyGenParameterSpec:
-              setUserAuthenticationParameters</a
-            >
-          </li>
-          <li id="ref-android-biometricprompt">
-            <a
-              href="https://developer.android.com/reference/androidx/biometric/BiometricPrompt"
-              >[ANDROID-BIOMETRICPROMPT] AndroidX BiometricPrompt API</a
-            >
-          </li>
-          <li id="ref-android-confirmationprompt">
-            <a
-              href="https://developer.android.com/reference/android/security/ConfirmationPrompt"
-              >[ANDROID-CONFIRMATIONPROMPT] Android ConfirmationPrompt API</a
-            >
-          </li>
-          <li id="ref-android-ready-se">
-            <a
-              href="https://developers.google.com/android/security/android-ready-se/supported-chipsets"
-              >[ANDROID-READY-SE] Android Ready SE supported chipsets</a
-            >
-          </li>
-          <li id="ref-android-app-sandbox">
-            <a href="https://source.android.com/docs/security/app-sandbox"
-              >[ANDROID-APP-SANDBOX] Android application sandbox model</a
-            >
-          </li>
-          <li id="ref-android-trusty-tee">
-            <a href="https://source.android.com/docs/security/features/trusty"
-              >[ANDROID-TRUSTY] Trusty TEE architecture (AOSP)</a
-            >
-          </li>
-          <li id="ref-apple-boot-process">
-            <a href="https://support.apple.com/guide/security/secac71d5623/web"
-              >[APPLE-BOOT] Apple Platform Security: boot process for Apple
-              silicon</a
-            >
-          </li>
-          <li id="ref-apple-localpolicy">
-            <a href="https://support.apple.com/guide/security/secc745a0845/web"
-              >[APPLE-LOCALPOLICY] Apple Platform Security: LocalPolicy
-              anti-replay fields</a
-            >
-          </li>
-          <li id="ref-apple-secure-enclave">
-            <a
-              href="https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/web"
-              >[APPLE-SE] Apple Platform Security: Secure Enclave</a
-            >
-          </li>
-          <li id="ref-apple-keychain-dataprotection">
-            <a
-              href="https://support.apple.com/guide/security/keychain-data-protection-secb0694df1a/web"
-              >[APPLE-KEYCHAIN-DP] Apple Platform Security: keychain data
-              protection</a
-            >
-          </li>
-          <li id="ref-apple-secaccesscontrol">
-            <a
-              href="https://developer.apple.com/documentation/security/secaccesscontrolcreateflags"
-              >[APPLE-SECACCESSCONTROL] SecAccessControlCreateFlags API</a
-            >
-          </li>
-          <li id="ref-samsung-knox-vault">
-            <a
-              href="https://docs.samsungknox.com/admin/knox-platform-for-enterprise/knox-vault/"
-              >[SAMSUNG-KNOX-VAULT] Samsung Knox Vault documentation</a
-            >
-          </li>
-          <li id="ref-google-titan-m2">
-            <a
-              href="https://security.googleblog.com/2024/11/more-key-protections-for-android-with.html"
-              >[GOOGLE-TITAN-M2] Google security update: Titan M2 and PP-0084
-              reference</a
-            >
-          </li>
-          <li id="ref-msft-secure-boot-keys">
-            <a
-              href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-secure-boot-key-creation-and-management-guidance"
-              >[MSFT-SECURE-BOOT] Windows Secure Boot key management (`PK`,
-              `KEK`, `db`, `dbx`)</a
-            >
-          </li>
-          <li id="ref-msft-tpm-overview">
-            <a
-              href="https://learn.microsoft.com/en-us/windows/security/hardware-security/tpm/trusted-platform-module-overview"
-              >[MSFT-TPM] Microsoft Trusted Platform Module overview</a
-            >
-          </li>
-          <li id="ref-msft-pluton">
-            <a
-              href="https://learn.microsoft.com/en-us/windows/security/hardware-security/pluton/microsoft-pluton-security-processor"
-              >[MSFT-PLUTON] Microsoft Pluton security processor</a
-            >
-          </li>
-          <li id="ref-msft-cng">
-            <a
-              href="https://learn.microsoft.com/en-us/windows/win32/seccng/cng-portal"
-              >[MSFT-CNG] Microsoft Cryptography API: Next Generation (CNG)</a
-            >
-          </li>
-          <li id="ref-msft-hello-business">
-            <a
-              href="https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/"
-              >[MSFT-HELLO-BUSINESS] Windows Hello for Business</a
-            >
-          </li>
-          <li id="ref-systemd-tpm-pcr">
-            <a href="https://systemd.io/TPM2_PCR_MEASUREMENTS/"
-              >[SYSTEMD-PCR] TPM2 PCR measurements and event logging</a
-            >
-          </li>
-          <li id="ref-pkcs11-v31">
-            <a
-              href="https://docs.oasis-open.org/pkcs11/pkcs11-base/v3.1/os/pkcs11-base-v3.1-os.html"
-              >[PKCS11-V3.1] PKCS#11 Base Specification v3.1</a
-            >
-          </li>
-          <li id="ref-tpm2-pkcs11">
-            <a href="https://github.com/tpm2-software/tpm2-pkcs11"
-              >[TPM2-PKCS11] tpm2-pkcs11 project</a
-            >
-          </li>
-          <li id="ref-systemd-cryptenroll">
-            <a
-              href="https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html"
-              >[SYSTEMD-CRYPTENROLL] systemd-cryptenroll manual</a
-            >
-          </li>
-          <li id="ref-fido-authenticator-requirements">
-            <a
-              href="https://fidoalliance.org/specs/fido-security-requirements/fido-authenticator-security-requirements-v1.4-fd-20241203.html"
-              >[FIDO-AUTHNR-REQ] FIDO Authenticator Security Requirements</a
+          <li id="ref-self-github">
+            <a href="https://github.com/selfxyz/self"
+              >[SELF-GITHUB] selfxyz/self repository</a
             >
           </li>
         </ul>

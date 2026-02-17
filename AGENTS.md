@@ -2,293 +2,223 @@
 
 This file defines **normative development rules** for this repository.
 
-All RFC 2119 / RFC 8174 keywords (**MUST**, **MUST NOT**, **SHOULD**, etc.) are to be interpreted as described in those RFCs.
+All RFC 2119 keywords (**MUST**, **MUST NOT**, **SHOULD**, etc.) are to be interpreted as described in **BCP 14**: RFC 2119 + RFC 8174. ([RFC Editor][1])
 
 ---
 
-## 0) Non-negotiables (reality discipline)
+## 0. Scope and authority model
+
+1. This repository is (currently) **spec-first**. Code, packages, and tooling MAY be introduced later, but the primary artifact is a **single** ReSpec-authored specification: `./index.html`.
+
+2. The agent (including GPT-5.3-Codex) MUST treat itself as a **non-authoritative contributor**. It can propose interpretations and architectures, but it MUST:
+   - Separate **what law/standards say** from **what we want to be true**.
+   - Preserve falsifiability: claims about “qualified”, “notified”, “listed”, “certified”, “recognized”, “mandated”, etc. MUST be backed by an authoritative source that a verifier can independently check (e.g., EUR-Lex, EC eIDAS dashboard, ETSI/CEN publications, national trusted lists / LOTL).
+
+3. Do not “win arguments by wording”. The point of this repo is to drive toward **verifiable trust** (cryptographic proofs + auditable registries), and to reduce the gap between “legal trust” and “technical trust” without pretending the gap does not exist.
+
+4. This AGENTS.md is normative for all automated agents and human contributors. If other docs conflict, **AGENTS.md wins** unless a later PR explicitly updates AGENTS.md.
+
+---
+
+## 1. Generals
 
 - **NEVER USE MEMORY CACHE.**
 - **ALWAYS READ CURRENT FILE STATE FROM DISK OR THE ACTIVE CODE EDITOR BUFFER.**
 - **AGENT MEMORY IS A FORBIDDEN STATE / REALITY SOURCE.**
-- When uncertain about behavior, requirements, or legal meaning, **prefer primary sources** (EUR-Lex / Official Journal, ETSI/CEN publications, W3C/IETF specs, vendor docs) over assumptions.
-- Do not invent behavior. Do not “fill in” missing legal requirements. Verify it.
-- Do not “upgrade” requirements by vibes. If the repo says **suggestion / aspiration**, treat it as such.
+- When uncertain about behavior, **prefer primary specifications and vendor documentation over assumptions.**
+- Do not invent behavior. Verify it.
+
+### 1.1 Preservation rule (critical for this repo)
+
+This repository is intentionally heavy on references, long-form reasoning, and “argument text”.
+
+- When refactoring, the agent MUST NOT delete information “because it looks redundant” or “because it feels wrong”.
+- The agent MAY:
+  - Reorder sections,
+  - Extract into sub-sections,
+  - Rewrite for clarity,
+  - Add missing definitions and cross-references,
+  - Add “Interpretation” vs “Mandate” labeling,
+  - Add TODOs and issue markers,
+  - Add citations and authoritative links,
+  - Add explicit dispute notes.
+
+- The agent MUST keep **all original informational content** present in the file unless a task explicitly authorizes removal.
 
 ---
 
-## 1) Repository mission (what we are actually doing)
+## 2. Repository mission
 
-This repository is a **spec-first attempt** to define a **Globally Qualified Signature Creation Device (GQSCD)**.
+This repository is a **spec-first attempt** to define **GDIS: Global Digital Identity Scheme**.
 
-“GQSCD” is **not claimed** to be a legally recognized term in any jurisdiction. It is a **web-first technical profile** that:
+GDIS is **not** claimed to be a legally-recognised term in any jurisdiction. It is a _web-first technical profile_ that:
 
-1. Specifies what **hardware, firmware, OS, and application components** can exist on widely available end-user devices (phones, laptops, tablets, security keys) such that the device can act like a signature creation device with **QSCD-aligned security properties**.
-2. Defines **verifiable security properties** (what must be provably true to a verifier or auditor) rather than governance narratives (“approved lists”, “trusted clients”, etc.).
-3. Maps those properties to EU QSCD security objectives (eIDAS Annex II and the EU’s referenced assessment/standards regime).
-4. Makes a **mechanical argument** for why globally deployed web standards should be accepted **in parallel** with EU-specific formats and interfaces, without weakening physical security requirements.
-5. Encourages device manufacturers to **get devices certified** (where possible) and to push for **global recognition** of equivalent, evidence-based device properties (instead of region-locked schemas and bottlenecks).
+1. Treats “digital identity” as **data + a binding + a presentation/verification mechanism** (stable core across jurisdictions). ([pages.nist.gov][2])
+2. Requires the _root_ identity anchor to be a **physical identity item** issued under a **governance area** and **mandated/recognized** within that governance area (i.e., legal/administrative binding exists _somewhere_, and we don’t pretend it doesn’t).
+3. Requires that physical item to contain:
+   - a **chip-backed private key** (or equivalent protected key custody), and
+   - **endpoint data** needed to verify legitimacy within the governance area (verification method discovery + status checking).
 
-Worldview constraint (do not violate it in text): **trust comes from verifiable cryptographic evidence, not from client claims, UI promises, “approved browser lists”, or governance vibes.**
+4. Derives a **GDIS identifier** from the physical document’s **MRZ** (Machine Readable Zone) + a **PID hash** extracted from MRZ-compatible data, and binds it to governance verification via a signed statement. (MRZ is a standardized construct in ICAO Doc 9303; do not invent MRZ semantics.) ([ICAO][3])
+5. Materializes the binding as a **VC issued to a DID**, where the DID controller is a **GQSCD**-class device (globally-available end-user device profile) per the GQSCD spec. ([z-base.github.io][4])
+6. Requires publication of identifier + verification material in a **decentralized event log** replicated across **N hosts**:
+   - **Anyone can join and host** (open replication set).
+   - The person decides what hosts receive publication.
+   - Governance MAY require mandatory minimum host URLs where the document MUST be posted as a minimum, **but MUST NOT treat that minimum as a maximum** (no artificial ceiling / cartel-by-schema).
 
----
+7. Defines a **Web Profile** as primary interoperability (W3C/IETF formats and web-deployable protocols), with jurisdictional adapters described explicitly as compatibility layers, not as ontological truth.
 
-## 2) Terminology discipline (don’t add fog)
-
-This repo operates in a swamp of overloaded words. Requirements:
-
-- **Differentiate eIDAS vs EUDI**:
-  - eIDAS is the trust services + eID regulation framework.
-  - EUDI Wallet is an ecosystem introduced via the 2024 amendment establishing the European Digital Identity Framework.
-  - Do not conflate “wallet requirements” with “qualified signature creation device requirements”.
-- **Separate legal recognition from technical assurance**:
-  - “Legally qualified” ≠ “cryptographically strong”.
-  - The spec MAY claim “technically comparable” or “meets the same security objectives”, but MUST NOT claim “legally equivalent” unless the law/standard text explicitly supports that claim.
-- **Be precise about issuer roles**:
-  - If you say “PID Provider” or similar roles, ground the term in the relevant implementing regulation and label it as an **EU ecosystem role**, not a universal truth.
-- Use descriptive names over political names. If a word is misleading (e.g., “blockchain”), write the **invariant** instead.
+Worldview constraint (this repo’s “motive force”): **trust comes from verifier-checkable evidence** (cryptographic proofs + explicit registries), not from client claims, UI “approved lists”, or governance vibes.
 
 ---
 
-## 3) Single-document spec rule (NO MODULES)
+## 3. Terminology discipline
 
-User requirement: **NO MODULES.**
+This repo lives in a swamp of overloaded words. Don’t add more fog.
 
-- The canonical specification MUST live at **repo root**: `./index.html`.
-- The spec MUST be authored using **ReSpec**.
-- External “module” files (`spec/*`, `modules/*`, `data-include` trees, multi-entry specs, etc.) are **FORBIDDEN** unless an issue explicitly changes this rule.
-- If the spec becomes large, structure it using **sections** inside the single `index.html` file. Use appendices within the same file. Do not create parallel specs.
+1. **Differentiate “digital identity” meanings by scope.** The NIST definition is intentionally service-context scoped (“unique representation … in an online transaction”). The UK guidance is more “wallet/document representation” scoped. Both can be simultaneously true, because they’re describing different layers. ([pages.nist.gov][2])
 
-This repository is intentionally forcing clarity via a single artifact: one document, one truth.
+2. **Separate legal recognition from technical assurance**:
+   - “Legally qualified” ≠ “cryptographically strong”.
+   - The spec may claim “technically comparable” but MUST NOT claim “legally equivalent” unless the law text explicitly supports it.
 
----
+3. **Be precise about EU terms (when referenced)**:
+   - eIDAS defines “electronic identification”, “electronic identification means”, and “person identification data”. If you use those terms, anchor them to Article 3 definitions, not vibes. ([EUR-Lex][5])
 
-## 4) ReSpec authoring rules for `./index.html`
-
-When working on `./index.html`:
-
-- Use ReSpec.
-- Keep **Abstract** and **SOTD** readable and short. No walls of text.
-- Normative terms MUST be defined using `<dfn>` and used consistently.
-- Requirements MUST be testable in principle (even if test tooling is added later).
-- Use normative keywords only in normative sections.
-- AI assistance MUST be disclosed in SOTD in a factual, non-marketing way.
-
-### 4.1 Mandatory section skeleton (in this order)
-
-`index.html` MUST contain these sections, in this order (exact titles may vary, but intent may not):
-
-1. Abstract
-2. Status of This Document
-3. Introduction
-4. Scope
-5. Terminology
-6. Threat Model
-7. GQSCD Core Requirements
-8. Component Catalogue (examples + requirements)
-9. Evidence Model (what evidence exists, who can check it)
-10. Web Profile (primary interoperability)
-11. EU Compatibility Notes (mapping, not dominance)
-12. Conformance
-13. Security Considerations
-14. Privacy Considerations
-15. Rationale (critique of governance choices, cost, bottlenecks)
-16. Appendix: Reference Corpus (raw links preserved)
-
-If you need additional content, append it. Do not reorder the above.
+4. Use descriptive names over political names. If a word is misleading (e.g., “blockchain”), write the invariant instead.
 
 ---
 
-## 5) What to specify first: GQSCD-Core (the initial milestone)
+## 4. GDIS: normative model constraints
 
-The first milestone is **GQSCD-Core**: a profile that states:
+### 4.1 Physical identity anchor (mandate vs proposal split)
 
-> “What must exist on a widely available end-user device to behave like a signature creation device with QSCD-aligned properties.”
+- **Mandate (jurisdictional)**: the physical identity item is issued under a governance area and has whatever legal/administrative force that governance area claims. GDIS MUST model that as an _external fact_ and MUST NOT pretend cryptography creates legal mandate.
+- **Proposal (GDIS)**: GDIS formalizes how to convert that anchor into:
+  - a stable identifier derivation (MRZ/PID-hash based),
+  - a verification endpoint binding,
+  - and a portable evidence bundle that verifiers can validate independently.
 
-GQSCD-Core MUST define:
+### 4.2 Cryptographic binding and controller requirements
 
-- Key custody properties (where keys live, when they are usable, what can access them).
-- Anti-exfiltration properties (what _cannot_ happen even if apps are malicious).
-- User intent properties (what the human actually approved, and how that is enforced).
-- Update / provenance properties (what stops downgrade and supply chain attacks).
-- Audit / evidence properties (what a third party can verify after the fact).
+- The DID controller for the GDIS VC MUST be a **GQSCD**-class device/controller profile.
+  Framework item: [https://z-base.github.io/gqscd/](https://z-base.github.io/gqscd/) ([z-base.github.io][4])
 
-GQSCD-Core MUST treat the “client” as adversarial by default:
+- The VC issuance MUST produce verifier-checkable evidence for:
+  - issuer authenticity,
+  - subject binding,
+  - status/revocation freshness,
+  - and replay resistance where applicable.
 
-- UI, apps, and networks can lie.
-- Only cryptographic proofs and hardware-enforced isolation count as trust inputs.
+### 4.3 Decentralized event log replication invariants
 
----
+- Replication MUST be **open participation**: anyone can run a host/origin that gossips verification materials.
+- Governance MAY require minimum publication targets, but MUST NOT impose a closed or exclusive replication set.
+- The spec MUST define:
+  - event ordering/causality model,
+  - integrity (hash chaining / Merkle proofs / signature chaining),
+  - rotation semantics (key rotation is an event, signed by prior authority where possible),
+  - and verifier rules for resolving conflicts (explicit, mechanical).
 
-## 6) Component catalogue requirements (the “physical reality” inventory)
+### 4.4 Threat model honesty
 
-The spec MUST include a **component catalogue** covering hardware, firmware, OS, and application layer.
-
-It MUST present components as a matrix:
-
-- **Component**
-- **Required property**
-- **Evidence / how to test**
-- **Threat mitigated**
-- **Notes / caveats**
-
-### 6.1 Minimum component set (examples you MUST cover)
-
-Hardware / silicon (examples; do not treat as the only valid options)
-
-- Secure Element (SE) / embedded SE
-- TPM (esp. laptops/desktops)
-- TEE / secure execution environment (e.g., TrustZone-class isolation)
-- Hardware-backed keystore / key isolation
-- Cryptographic RNG capability (or platform RNG with evidence constraints)
-- Biometric subsystem as **user presence / intent signal only** (NOT a secret)
-
-Firmware / boot chain
-
-- Verified boot or measured boot (explicitly state which, and why)
-- Anti-rollback / version pinning for firmware and secure OS components
-- Device attestation keys (if present) and the privacy tradeoffs
-- Secure time source considerations (and explicit limits)
-
-Operating system security
-
-- Mandatory app sandboxing / process isolation
-- Permission model and secure UI primitives (anti-overlay / anti-tapjacking)
-- OS keystore API semantics (hardware-backed when available)
-- Update mechanism integrity and provenance
-
-Application layer
-
-- Wallet/signature app separation vs integration (model both explicitly)
-- User intent ceremony: define **exactly what the user approved**
-- Key lifecycle: generation, backup, rotation, recovery, revocation hooks
-- Transparency: signed event log / verifiable history for key lifecycle events
-- Export/import formats (Web Profile first)
-
-Publication / discovery of verification material (if used)
-
-- DID documents / verification methods (if used, keep it optional and justified)
-- Credential containers (if used, constrain scope and define exact semantics)
-- Hosting patterns (HTTPS required for the Web Profile; IPFS/IPNS optional)
-- Integrity guarantees and replay protections
+- The agent MUST assume the client environment is potentially hostile unless the trust boundary is cryptographically enforced.
+- “Approved software lists” and “certified components” can be governance mechanisms, but they do not magically create technical guarantees by themselves.
+- The agent MUST NOT imply that allowlists prevent access by non-compliant clients unless a cryptographic mechanism enforces that property.
 
 ---
 
-## 7) Threat model requirements (stop pretending)
+## 5. Web-first profile rule (MANDATORY)
 
-The spec MUST include an explicit threat model, including:
-
-- Attacker capabilities (device theft, malware, network MITM, server compromise, UI overlay, rollback attempts, etc.).
-- Trusted computing base (TCB): what must be trusted, and why.
-- What is **NOT** trusted:
-  - “Approved client lists” are governance signals, not technical enforcement.
-  - The relying party is not assumed honest.
-  - The network is not assumed honest.
-
-Do not imply that “unapproved browsers can’t access” anything. Model the actual control plane and the actual cryptographic gate.
-
----
-
-## 8) Web-first interoperability rule (MANDATORY)
-
-If EN/CEN/ETSI defines schemas, containers, protocols, or interface formats: **acknowledge them**, but DO NOT make them the primary profile.
+If EN/CEN/ETSI defines schemas, containers, or interface formats: **acknowledge them, but do not make them the primary profile**.
 
 Instead:
 
-1. Define a **Web Profile** as the **primary** interoperability profile.
-2. Define EU-specific constructs as **Compatibility Notes** and **mapping**, not as the baseline.
-3. Include a normative aspiration: EU standardization SHOULD recognize Web Profile formats **in parallel**.
+1. Define a **Web Profile** as the primary interoperability profile.
+2. Define an **EU Compatibility Profile** (and other jurisdiction compatibility profiles) as mapping layers.
 
-The Web Profile MUST prefer globally deployed web/internet standards for:
+The Web Profile MUST prefer globally deployed web / internet standards for:
 
 - cryptographic containers
-- credential formats (if used)
+- credential formats
 - transport protocols
-- browser/user-agent mediated UX where applicable
+- publication and discovery mechanisms
 
-Examples of acceptable building blocks (non-exclusive):
+Acceptable building blocks (examples; not an endorsement of any single stack):
 
-- W3C Digital Credentials API (browser-mediated credential exchange)
-- W3C Verifiable Credentials + Data Integrity (when VC containers are used)
-- W3C DID Core (only if you can justify DID as a discovery mechanism)
-- W3C WebCrypto (when browser primitives are in scope)
-- WebAuthn/FIDO (for attested hardware authenticators and user presence)
-- IETF JOSE (JWS/JWK/JWT) and/or COSE/CBOR for compact signing formats
-- OpenID4VP as an ecosystem transport option (deployed VP rails)
-- SD-JWT VC where selective disclosure JWT profiles are relevant
+- W3C Digital Credentials API. ([W3C][6])
+- WebAuthn / FIDO as a hardware authenticator bridge into the web platform. ([W3C][7])
 
 Hard constraint:
 
 - The spec MUST be “web first”: formats and flows that work in browsers and common developer stacks are the baseline.
-- Hardware/security requirements MUST be stated in **physical reality terms** (key custody, tamper resistance, user intent enforcement), not as EU-only paperwork artifacts.
+- Hardware/security requirements MUST be stated in **physical reality terms** (what must be true about key custody, tamper resistance, user intent, etc.), not as jurisdiction-only paperwork artifacts.
 
 ---
 
-## 9) EU alignment and mapping rule (MANDATORY, but scoped)
+## 6. Specification discipline (`index.html`)
 
-EU qualification is not “just crypto”; it is also an administrative regime (conformity assessment, supervision, trusted lists).
+When working on `(cwd | root | .)/index.html`:
 
-In this repo:
+This applies only when `index.html` exists or a task explicitly asks to create it. Otherwise, do not create or modify it.
 
-- EU requirements MUST be represented as:
-  - a list of **security objectives**
-  - an **evidence model**
-  - a mapping table from **GQSCD properties → EU objectives**
+### 6.1 Single-file ReSpec rule (NO MODULES)
 
-Rules:
+- The specification MUST be authored as a **single** ReSpec document: `./index.html`.
+- Do not split the spec across multiple markdown includes, folders, or module files.
+- If content becomes large, refactor by:
+  - tightening definitions,
+  - using ReSpec sections,
+  - moving non-normative background into appendices **within the same file**,
+  - and using issue markers (`<p class="issue">`) rather than spawning file trees.
 
-- Do not copy/paste EU schemas as the primary model.
-- If EU mandates a particular container/schema today, treat it as:
-  - “EU Compatibility Notes”, plus
-  - a normative aspiration: “EU SHOULD recognize Web Profile formats in parallel”.
+### 6.2 Authoring tool
 
-Legal accuracy rule:
+Use ReSpec.
 
-- Critique is allowed. Misstating what the law says is not.
-- If you claim “EU requires X”, cite the exact article/annex/decision/standard and quote minimally.
+Canonical references:
 
----
+```
+https://respec.org/docs/
+https://respec.org/docs/#using-respec
+https://github.com/speced/respec
+https://www.w3.org/community/reports/reqs/
+```
 
-## 10) “Strong rationales against EU legislation” (allowed, but must be mechanical)
+Script commonly used in `index.html`:
 
-This repo is allowed to be sharp, but it MUST be correct.
+```
+https://www.w3.org/Tools/respec/respec-w3c
+```
 
-Critique MUST be anchored in:
+### 6.3 Normative vs informative
 
-- measurable cost, bottleneck, lock-in, or attack surface
-- falsifiable claims
-- a concrete alternative mechanism (preferably already deployed on the web)
+This repo attracts “law people” and “crypto people” and both groups are allergic to different ambiguities.
 
-Critique MUST NOT:
+Therefore:
 
-- conflate eIDAS vs EUDI implementing rules
-- claim “illegal” unless you can cite and show the logic chain
-- assume “lists” create technical enforcement (they create constitutive legal status)
+- Any statement about **legal effect** MUST be in a section labeled “Mandate (law/standards)” or equivalent.
+- Any architecture proposal MUST be labeled “Design proposal” / “Interpretation” / “Working theory”.
+- Any strong claim about “qualification”, “recognition”, “issuer validity”, “PID issuer/provider”, “notified scheme”, “trusted list”, etc. MUST be traceable to:
+  - an article/recital in EUR-Lex, OR
+  - an EC-operated registry/dashboard view, OR
+  - a published ETSI/CEN norm, OR
+  - an implementing act/delegated act.
 
-When arguing “web standards should be accepted”, show the mapping:
+### 6.4 Editing rule for “argument blobs”
 
-- “EU objective: X”
-- “Web Profile mechanism: Y”
-- “Remaining delta: Z (what still needs certification / evidence)”
+The current drafts tend to contain “argument blobs”. The agent SHOULD refactor them into:
 
----
+- definitions (`<dfn>`),
+- numbered lifecycle steps,
+- threat model bullets,
+- “Mandate vs Proposal” sections,
 
-## 11) Certification posture (manufacturer-facing)
-
-The spec MUST explicitly encourage device manufacturers and platform vendors to:
-
-- expose evidence hooks (attestation, measured boot claims, key isolation guarantees) in privacy-preserving ways
-- pursue certification where it is feasible
-- publish clear security target statements that map to the GQSCD property set
-
-The spec MUST treat “globally recognized” as an aspiration:
-
-- It MAY propose governance paths.
-- It MUST NOT claim global recognition exists today.
+while preserving every informational statement (see Preservation rule).
 
 ---
 
-## 12) Verification / checks (tooling)
+## 7. Verification
 
 Run the smallest set of checks that covers your change.
 
@@ -299,13 +229,24 @@ Run the smallest set of checks that covers your change.
 
 If a required command cannot run in the current environment, state that explicitly and explain why.
 
+### 7.1 Spec verification (when the repo is spec-only)
+
+When changes affect `index.html` (ReSpec):
+
+- Prefer to run a local ReSpec build (or whatever build tooling the repo later introduces).
+- If no build tooling exists yet, do at minimum:
+  - Validate the HTML is well-formed.
+  - Ensure ReSpec config parses.
+  - Ensure all references remain intact.
+  - Ensure there is a clear separation between normative and informative material.
+
 ---
 
-## 13) Architecture rules (apply ONLY when the repo contains `src/` tooling)
+## 8. Architecture rules (apply ONLY when the repo contains `src/` tooling)
 
-The spec comes first. Tools may exist later. When (and only when) there is a `src/` directory, these rules become active.
+The spec comes first, but tools may exist later. When (and only when) there is a `src/` directory, these rules become active.
 
-### 13.1 Minimal surface area
+### 8.1 Minimal Surface Area
 
 Every directory under `src/` represents a single logical unit.
 
@@ -314,6 +255,7 @@ Each unit:
 - MUST contain at most one root-level `.ts` file.
 - MUST export at most one top-level class OR one top-level function.
 - SHOULD remain under ~100 lines of executable logic (imports and type-only declarations excluded).
+- The ~100 line budget counts executable statements only and excludes imports, type-only exports, comments, and blank lines.
 - MUST have a single, clear responsibility.
 
 If complexity grows:
@@ -323,7 +265,7 @@ If complexity grows:
 
 Large files are a design failure, not an achievement.
 
-### 13.2 Package preference rule
+### 8.2 Package Preference Rule
 
 Reimplementation of common infrastructure logic is forbidden.
 
@@ -331,9 +273,11 @@ Reimplementation of common infrastructure logic is forbidden.
 - Do not reimplement encoding, parsing, crypto primitives, validation frameworks, etc.
 - Local code MUST focus on domain logic, not infrastructure recreation.
 
-Dependency evaluation MUST consider: recent maintenance, license compatibility, known security advisories, API stability, and real-world adoption. Record the decision in change notes or the PR description.
+If boilerplate appears repeatedly, dependency evaluation is mandatory.
 
-### 13.3 Helpers
+Dependency evaluation MUST consider maintenance activity within the last 12 months, license compatibility, known security advisories, API stability, and real-world adoption. Record the decision in change notes or the PR description.
+
+### 8.3 Helpers
 
 If helpers are unavoidable:
 
@@ -342,18 +286,20 @@ If helpers are unavoidable:
 - They MUST NOT evolve into a general-purpose utility framework.
 - They MUST NOT contain domain logic.
 
-### 13.4 Types
+A growing `.helpers/` directory indicates architectural drift.
+
+Domain logic means business rules, policy decisions, and data model validation specific to this package. It excludes encoding/decoding, crypto, serialization, I/O, and generic data plumbing.
+
+### 8.4 Types
 
 Reusable structural types MUST be isolated.
 
 Structure:
 
 ```
-
 .types/
 TypeName/
 type.ts
-
 ```
 
 Rules:
@@ -363,17 +309,15 @@ Rules:
 - No executable logic is allowed in `.types/`.
 - Types define contracts, not behavior.
 
-### 13.5 Errors
+### 8.5 Errors
 
 Errors MUST be explicit, semantic, and typed.
 
 Structure:
 
 ```
-
 .errors/
 class.ts
-
 ```
 
 Pattern:
@@ -396,12 +340,14 @@ export class PackageNameError extends Error {
 Rules:
 
 - Error codes MUST be semantic string literals.
-- Error codes MUST be SCREAMING_SNAKE_CASE (use short domain prefixes when needed).
+- Error codes MUST be SCREAMING_SNAKE_CASE and use short domain prefixes when needed (example: `CRYPTO_INVALID_KEY`).
 - Throwing raw `Error` is forbidden.
 - Every thrown error MUST map to an explicit error code.
 - Error messages MUST include package scope.
 
-### 13.6 Forbidden patterns
+Errors are part of the public contract.
+
+### 8.6 Forbidden Patterns
 
 - No multi-responsibility modules
 - No utility dumping grounds
@@ -409,13 +355,22 @@ Rules:
 - No implicit global state
 - No hidden cross-layer imports
 
+Architecture must remain explicit and auditable.
+
+Example disallowed: `.helpers/` importing from `src/domain/*`, or `.types/` importing from runtime code.
+
 ---
 
-## 14) Reference corpus (MUST NOT delete; reorganise only)
+## 9. Framework items (MUST keep; add carefully)
 
-Raw reference links are preserved below as **data**, not as endorsement of any single governance model.
-Keep them intact; add to them carefully.
-Verify questionable or future-dated citations before treating them as authoritative.
+- GQSCD (controller device profile used by GDIS):
+  [https://z-base.github.io/gqscd/](https://z-base.github.io/gqscd/) ([z-base.github.io][4])
+
+---
+
+## 10. Reference corpus (MUST NOT delete; reorganise only)
+
+Raw reference links are preserved below as **data**, not as an endorsement of any single governance model. Keep them intact; add to them carefully.
 
 ```
 Initial Mandate
@@ -537,9 +492,9 @@ Ideas
 
 ---
 
-## 15) Philosophy
+## 11. Philosophy
 
-Small modules (for future tooling only, not the spec).
+Small modules.
 Explicit contracts.
 Typed errors.
 Spec-first reasoning.
@@ -548,17 +503,27 @@ No hidden state.
 
 Architecture is a constraint system, not a suggestion.
 
-[1]: https://chatgpt.com/c/6992ee9d-4018-838a-80c8-15a29f9a0793 'Evaluating SEDI Legislation'
-[2]: https://chatgpt.com/c/6991dc4a-72a0-8394-844f-af750f7fb6f5 'EUDI vs SEDI Debate'
-[3]: https://chatgpt.com/c/69907277-9adc-838a-93d2-b05f1d4c4112 'EUDI vs SEDI Debate'
+### 11.1 Clarification (because “modules” is overloaded)
+
+- “modules” above refers to **code units under `src/`** (if/when they exist).
+- The specification itself MUST remain a **single** ReSpec file (`./index.html`) per §6.1.
+
+---
+
+## 12. Non-normative residue (kept for preservation)
 
 ```
-
-Source notes (not part of AGENTS.md): the key “web-first” building blocks and EU framework references in the rules above are grounded in ReSpec documentation :contentReference[oaicite:0]{index=0}, the EUDI/eIDAS amendment regulation text :contentReference[oaicite:1]{index=1}, VC Data Integrity as a W3C Recommendation :contentReference[oaicite:2]{index=2}, WebAuthn Level 3 as current W3C work :contentReference[oaicite:3]{index=3}, WebCrypto Level 2 as current W3C work :contentReference[oaicite:4]{index=4}, OpenID4VP as deployed protocol rails (including DC API integration) :contentReference[oaicite:5]{index=5}, and SD-JWT VC as the active IETF profile for selective disclosure JWT credentials :contentReference[oaicite:6]{index=6}.
-
-::contentReference[oaicite:7]{index=7}
+::contentReference[oaicite:0]{index=0}
 ```
 
-[1]: https://chatgpt.com/c/69907277-9adc-838a-93d2-b05f1d4c4112 'EUDI vs SEDI Debate'
-[2]: https://chatgpt.com/c/6992ee9d-4018-838a-80c8-15a29f9a0793 'Evaluating SEDI Legislation'
-[3]: https://chatgpt.com/c/6993fc27-158c-8396-831c-118e4c3df4b9 'Disk encryption on devices'
+[1]: https://chatgpt.com/c/6991dc4a-72a0-8394-844f-af750f7fb6f5 'EUDI vs SEDI Debate'
+[2]: https://chatgpt.com/c/69907277-9adc-838a-93d2-b05f1d4c4112 'EUDI vs SEDI Debate'
+[1]: https://www.rfc-editor.org/info/rfc2119?utm_source=chatgpt.com 'Information on RFC 2119 » RFC Editor'
+[2]: https://pages.nist.gov/800-63-3/sp800-63-3.html?utm_source=chatgpt.com 'NIST Special Publication 800-63-3'
+[3]: https://www.icao.int/publications/Documents/9303_p7_cons_en.pdf?utm_source=chatgpt.com 'Doc 9303
+Machine Readable Travel Documents
+Eighth'
+[4]: https://z-base.github.io/gqscd/ 'Globally Qualified Signature Creation Device (GQSCD) Core'
+[5]: https://eur-lex.europa.eu/eli/reg/2014/910/2024-10-18/eng?utm_source=chatgpt.com 'EUR-Lex - 02014R0910-20241018 - DE - EUR-Lex'
+[6]: https://www.w3.org/TR/digital-credentials/all/?utm_source=chatgpt.com 'Cover page | digital-credentials | W3C standards and drafts | W3C'
+[7]: https://www.w3.org/TR/webauthn-3/?utm_source=chatgpt.com 'Web Authentication: An API for accessing Public Key Credentials - Level 3'
