@@ -80,10 +80,10 @@
       <p>
         GDIS does not claim automatic legal recognition in any jurisdiction. It
         defines how to derive deterministic subject-binding evidence from
-        MRZ-extracted PID material, bind that evidence to governance
-        verification endpoints, issue the binding as a VC to a DID controlled by
-        a GQSCD-class device, and publish verification material in an open
-        decentralized publication network.
+        MRZ-extracted PID material, bind physical-validity method evidence and
+        governance verification endpoints, issue the binding as a VC to a DID
+        controlled by a GQSCD-class device, and publish verification material in
+        an open decentralized publication network.
       </p>
     </section>
 
@@ -469,6 +469,29 @@
           <a href="#ref-rfc3339">[RFC3339]</a>.
         </dd>
 
+        <dt><dfn>physical validity method profile</dfn></dt>
+        <dd>
+          Governance-declared method profile describing how physical identity
+          item authenticity and validity are checked (for example MRZ-only or
+          MRZ plus NFC chip checks), including deterministic verifier
+          acceptance/failure rules.
+        </dd>
+
+        <dt><dfn>governance trust source reference</dfn></dt>
+        <dd>
+          Machine-readable reference to an authoritative governance source used
+          in physical-validity or recognition checks (for example a trusted
+          list, registry, or official legal publication endpoint).
+        </dd>
+
+        <dt><dfn>physical validity evidence artifact</dfn></dt>
+        <dd>
+          An <a>evidence artifact</a> proving which
+          <a>physical validity method profile</a> was applied, which evidence
+          checks were executed, and which
+          <a>governance trust source reference</a> values were used.
+        </dd>
+
         <dt><dfn>evidence artifact</dfn></dt>
         <dd>
           A signed or hashed machine-verifiable artifact used by issuers,
@@ -490,6 +513,33 @@
         </dd>
 
         <dt>
+          <dfn
+            data-cite="GQSCD-CORE#zero-trust-verification-model"
+            data-lt="zero-trust verification model"
+            >zero-trust verification model</dfn
+          >
+        </dt>
+        <dd>Imported term from <a href="#ref-gqscd-core">[GQSCD-CORE]</a>.</dd>
+
+        <dt>
+          <dfn
+            data-cite="GQTS-CORE#mechanical-validity"
+            data-lt="mechanical validity"
+            >mechanical validity</dfn
+          >
+        </dt>
+        <dd>Imported term from <a href="#ref-gqts-core">[GQTS-CORE]</a>.</dd>
+
+        <dt>
+          <dfn
+            data-cite="GQTS-CORE#recognition-status"
+            data-lt="recognition status"
+            >recognition status</dfn
+          >
+        </dt>
+        <dd>Imported term from <a href="#ref-gqts-core">[GQTS-CORE]</a>.</dd>
+
+        <dt>
           <dfn data-cite="GQSCD-CORE#web-profile" data-lt="web profile"
             >web profile</dfn
           >
@@ -507,7 +557,7 @@
       </dl>
     </section>
     <section id="mandate-law">
-      <h2>Mandate (Law/Standards)</h2>
+      <h2>Normative Source Constraints</h2>
       <p>
         <span class="status-tag">External Fact Layer</span>
       </p>
@@ -533,7 +583,7 @@
       </section>
 
       <section id="mandate-eidas-terms">
-        <h3>EU Term Discipline (when EU context is used)</h3>
+        <h3>EU Terminology Constraints</h3>
         <p>
           If implementers use EU eIDAS vocabulary (for example "electronic
           identification", "electronic identification means", "person
@@ -545,12 +595,18 @@
       </section>
 
       <section id="mandate-icao-mrz">
-        <h3>MRZ Source Constraint</h3>
+        <h3>MRZ Source Constraints</h3>
         <p>
           MRZ semantics are defined by ICAO Doc 9303 and MUST NOT be replaced by
           ad hoc field interpretations
           <a href="#ref-icao-doc9303">[ICAO-9303]</a>
           <a href="#ref-icao-doc9303-p3">[ICAO-9303-P3]</a>.
+        </p>
+        <p>
+          If a governance profile requires chip-assisted authenticity checks
+          (for example NFC reads), the profile MUST publish a
+          <a>physical validity method profile</a> and authoritative trust-source
+          inputs through the normative PID policy contract.
         </p>
       </section>
 
@@ -567,7 +623,7 @@
     </section>
 
     <section id="design-proposal">
-      <h2>Design Proposal (GDIS Model)</h2>
+      <h2>GDIS Technical Model</h2>
       <p>
         <span class="status-tag">Architecture Layer</span>
       </p>
@@ -604,7 +660,8 @@
         <ol>
           <li>
             A physical item is inspected and chip/authenticity data is read
-            under governance verification procedures.
+            under governance verification procedures, including NFC chip reads
+            where required by policy.
           </li>
           <li>
             PID fields are extracted from <a>MRZ</a>-compatible data,
@@ -617,7 +674,8 @@
           </li>
           <li>
             The derived <a>PID binding value</a> is bound to endpoint evidence
-            for issuer and verifier checks.
+            and <a>physical validity evidence artifact</a> outputs for issuer and
+            verifier checks.
           </li>
           <li>
             An issuer creates a <a>GDIS binding credential</a> addressed to a
@@ -637,7 +695,7 @@
       </section>
 
       <section id="lifecycle-high-level" class="informative">
-        <h3>High-Level End-to-End Walkthrough (Informative)</h3>
+        <h3>End-to-End Lifecycle Walkthrough (Informative)</h3>
         <figure>
           <img
             src="./images/gdis-lifecycle.svg"
@@ -653,7 +711,8 @@
           <li>
             A governance-recognized issuer validates PID evidence from a
             physical identity item and binds it to a user-controlled GQSCD-class
-            controller context.
+            controller context using the declared
+            <a>physical validity method profile</a>.
           </li>
           <li>
             The issuer outputs a binding credential addressed to a subject DID,
@@ -669,7 +728,7 @@
           <li>
             The user wallet executes signing and presentation flows from the
             end-user device boundary; verifier transactions check proof
-            validity, freshness, and policy inputs.
+            validity, physical-validity evidence, freshness, and policy inputs.
           </li>
           <li>
             Revocation and key-state transitions are published as signed,
@@ -809,6 +868,20 @@
             <td>Issuer</td>
             <td>Verifier</td>
             <td>Retain until superseded or revoked.</td>
+          </tr>
+          <tr>
+            <td><a>physical validity evidence artifact</a></td>
+            <td>
+              physicalValidityProfileId, input-channel result (for example
+              mrz-only or mrz-plus-nfc), governance trust source references,
+              checkedAt timestamp, integrity proof
+            </td>
+            <td>Issuer or delegated inspection authority</td>
+            <td>Issuer and Verifier</td>
+            <td>
+              MUST be valid for the effective policy interval and verifier
+              decision time.
+            </td>
           </tr>
           <tr>
             <td>Endpoint status artifact</td>
@@ -1010,6 +1083,16 @@
             implementation.
           </li>
           <li>
+            PID policy responses <em class="rfc2119">MUST</em> declare
+            physical-validity method constraints in a machine-readable object
+            (at minimum
+            <span class="mono">physicalValidityProfileId</span>,
+            <span class="mono">acceptedInputChannels</span>, and
+            <span class="mono">governanceTrustSourceRefs</span>) so issuers and
+            verifiers can deterministically evaluate whether MRZ-only or
+            MRZ-plus-NFC evidence satisfies governance policy.
+          </li>
+          <li>
             PID field regular-expression checks declared by the PID policy
             <em class="rfc2119">MUST</em> be applied as full-value validation,
             not substring detection, with regex profile alignment to I-Regexp
@@ -1076,6 +1159,28 @@
             issuer authenticity, subject binding, status freshness, and replay
             resistance.
           </li>
+          <li>
+            Controller and signing-intent verification behavior
+            <em class="rfc2119">MUST</em> be at least equivalent to
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-06"
+              >REQ-GQSCD-06</a
+            >,
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-17"
+              >REQ-GQSCD-17</a
+            >,
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-26"
+              >REQ-GQSCD-26</a
+            >,
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-27"
+              >REQ-GQSCD-27</a
+            >,
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-28"
+              >REQ-GQSCD-28</a
+            >, and
+            <a href="https://z-base.github.io/gqscd/#req-gqscd-29"
+              >REQ-GQSCD-29</a
+            >.
+          </li>
         </ul>
       </section>
 
@@ -1118,6 +1223,19 @@
             <em class="rfc2119">MUST</em> permit verifier freshness and
             non-revocation decisions without forcing public disclosure of a
             globally reusable person identifier.
+          </li>
+          <li>
+            Host-profile conformance behavior <em class="rfc2119">MUST</em> be
+            at least equivalent to
+            <a href="https://z-base.github.io/gqts/#req-gqts-01"
+              >REQ-GQTS-01</a
+            >
+            through
+            <a href="https://z-base.github.io/gqts/#req-gqts-07"
+              >REQ-GQTS-07</a
+            >
+            for discovery, append-only retrieval, asynchronous ingest, and
+            immutable event addressing.
           </li>
         </ul>
       </section>
@@ -1189,6 +1307,112 @@
           </li>
         </ul>
       </section>
+
+      <section id="req-physical-validity">
+        <h3>
+          <span id="REQ-GDIS-10" class="mono">REQ-GDIS-10</span>
+          8. Physical Validity Evidence Requirements
+        </h3>
+        <ul>
+          <li>
+            Issuance and verification flows <em class="rfc2119">MUST</em> process
+            a <a>physical validity evidence artifact</a> whenever the resolved
+            governance PID policy requires physical-validity checks.
+          </li>
+          <li>
+            The physical-validity artifact <em class="rfc2119">MUST</em> include
+            at minimum
+            <span class="mono">physicalValidityProfileId</span>,
+            <span class="mono">acceptedInputChannels</span> satisfaction result,
+            <span class="mono">governanceTrustSourceRefs</span>, verification
+            timestamp, and integrity proof metadata.
+          </li>
+          <li>
+            If policy requires an NFC-assisted or chip-assisted input channel,
+            issuance/acceptance <em class="rfc2119">MUST NOT</em> proceed when
+            required channel evidence is missing, stale, or invalid.
+          </li>
+          <li>
+            Verifiers <em class="rfc2119">MUST</em> evaluate physical-validity
+            artifacts under deterministic policy rules and
+            <em class="rfc2119">MUST NOT</em> treat UI labels alone as evidence
+            of physical authenticity.
+          </li>
+        </ul>
+      </section>
+
+      <section id="external-clause-references" class="informative">
+        <h3>Cross-Spec Clause References (Informative)</h3>
+        <p>
+          This table provides clause-level cross-references for deployments that
+          profile GDIS with GQSCD-Core and GQTS-Core. It is intended for
+          conformance audit traceability.
+        </p>
+        <table class="simple tight">
+          <thead>
+            <tr>
+              <th>GDIS Clause</th>
+              <th>External Spec</th>
+              <th>Referenced Clauses</th>
+              <th>Binding Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="mono">REQ-GDIS-04</span></td>
+              <td><a href="#ref-gqscd-core">[GQSCD-CORE]</a></td>
+              <td>
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-06">REQ-GQSCD-06</a>,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-17">REQ-GQSCD-17</a>,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-26">REQ-GQSCD-26</a>,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-27">REQ-GQSCD-27</a>,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-28">REQ-GQSCD-28</a>,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-29">REQ-GQSCD-29</a>
+              </td>
+              <td>
+                Controller evidence, user-intent binding, and verifier-checkable
+                signing-control semantics.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="mono">REQ-GDIS-05</span></td>
+              <td><a href="#ref-gqts-core">[GQTS-CORE]</a></td>
+              <td>
+                <a href="https://z-base.github.io/gqts/#req-gqts-01">REQ-GQTS-01</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-02">REQ-GQTS-02</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-03">REQ-GQTS-03</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-04">REQ-GQTS-04</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-05">REQ-GQTS-05</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-06">REQ-GQTS-06</a>,
+                <a href="https://z-base.github.io/gqts/#req-gqts-07">REQ-GQTS-07</a>
+              </td>
+              <td>
+                Host discovery, publication, append-only event retrieval, and
+                event-address integrity.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="mono">REQ-GDIS-10</span></td>
+              <td><a href="#ref-gqscd-core">[GQSCD-CORE]</a></td>
+              <td>
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-06"
+                  >REQ-GQSCD-06</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-24"
+                  >REQ-GQSCD-24</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-29"
+                  >REQ-GQSCD-29</a
+                >
+              </td>
+              <td>
+                Deterministic zero-trust validation of physical-validity evidence
+                and governance-source checks.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </section>
 
     <section id="processing-model">
@@ -1210,6 +1434,12 @@
             <a>PID identification endpoint</a> policy, include all required
             fields, and validate each extracted field value against its declared
             regular expression before subject-binding derivation.
+          </li>
+          <li>
+            The issuer MUST produce and integrity-protect a
+            <a>physical validity evidence artifact</a> aligned with the resolved
+            policy's <a>physical validity method profile</a>, including required
+            input-channel and trust-source checks.
           </li>
           <li>
             The issuer MUST compute <a>PID binding value</a> and
@@ -1236,7 +1466,8 @@
         <p>
           A verifier MUST execute
           <span class="mono"
-            >REQ-GDIS-03, REQ-GDIS-05, REQ-GDIS-06, and REQ-GDIS-07</span
+            >REQ-GDIS-03, REQ-GDIS-05, REQ-GDIS-06, REQ-GDIS-07, and
+            REQ-GDIS-10</span
           >
           before returning a decision. The verifier output MUST be an explicit,
           machine-consumable <a>verification result</a>.
@@ -1252,12 +1483,23 @@
             expressions before accepting derived subject-binding claims.
           </li>
           <li>
+            The verifier MUST validate the
+            <a>physical validity evidence artifact</a> against the declared
+            <a>physical validity method profile</a> and required
+            <a>governance trust source reference</a> inputs.
+          </li>
+          <li>
             The verifier MUST validate publication evidence using the declared
             host profile semantics.
           </li>
           <li>
             The verifier MUST apply replay and freshness checks before producing
             final decision output.
+          </li>
+          <li>
+            The verifier output MUST report
+            <a>mechanical validity</a> and <a>recognition status</a> as separate
+            values.
           </li>
           <li>
             Implementations MAY use different internal algorithms and data
@@ -1268,9 +1510,16 @@
         <pre class="example"><code class="json">{
   "subjectHandle": "aud:merchant.example:2f1f7e6f9a3e",
   "linkabilityClass": "verifier-scoped",
+  "mechanicalValidity": "pass",
+  "recognitionStatus": "accepted",
   "decision": "valid",
   "status": "active",
   "evaluatedAt": "2026-02-17T12:34:56Z",
+  "physicalValidity": {
+    "physicalValidityProfileId": "EX-GOV-001-physical-v2",
+    "channel": "mrz-plus-nfc",
+    "verified": true
+  },
   "issuerKeyState": "trusted",
   "freshness": {
     "endpointOk": true,
@@ -1358,6 +1607,12 @@
             <td>Verifier</td>
             <td>Auditor or policy authority</td>
           </tr>
+          <tr>
+            <td>REQ-GDIS-10 Physical validity evidence</td>
+            <td>Physical validity evidence artifact</td>
+            <td>Issuer or delegated inspection authority</td>
+            <td>Verifier</td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -1376,14 +1631,14 @@
             <td>GDIS Issuer</td>
             <td>
               REQ-GDIS-01, REQ-GDIS-02, REQ-GDIS-03, REQ-GDIS-04, REQ-GDIS-05,
-              REQ-GDIS-06, REQ-GDIS-07, and REQ-GDIS-08.
+              REQ-GDIS-06, REQ-GDIS-07, REQ-GDIS-08, and REQ-GDIS-10.
             </td>
           </tr>
           <tr>
             <td>GDIS Verifier</td>
             <td>
-              REQ-GDIS-03, REQ-GDIS-05, REQ-GDIS-06, REQ-GDIS-07, and
-              REQ-GDIS-09.
+              REQ-GDIS-03, REQ-GDIS-05, REQ-GDIS-06, REQ-GDIS-07, REQ-GDIS-09,
+              and REQ-GDIS-10.
             </td>
           </tr>
         </tbody>
@@ -1421,6 +1676,11 @@
         <li>
           PID field-set source identifiers and regular-expression conformance
           test results for required governance profiles;
+        </li>
+        <li>
+          physical-validity method profile identifiers, accepted input-channel
+          outcomes, and governance trust-source references used during
+          verification;
         </li>
         <li>
           security assumptions, clock/freshness policy values, and trust anchor
@@ -1608,10 +1868,16 @@
       </section>
     </section>
     <section id="threat-model">
-      <h2>Threat Model Honesty</h2>
+      <h2>Security Considerations</h2>
       <p>
         Implementations MUST assume hostile client/network environments unless
         security boundaries are cryptographically enforced.
+      </p>
+      <p>
+        Verifier behavior MUST follow a
+        <a>zero-trust verification model</a>: each acceptance decision MUST be
+        based on explicit, cryptographically checkable artifacts and declared
+        policy inputs.
       </p>
       <p>
         At minimum, conforming designs MUST model key exfiltration attempts,

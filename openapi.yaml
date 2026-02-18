@@ -291,7 +291,8 @@ paths:
       x-gdis-requirement: REQ-GDIS-03
       description: |
         Returns the governance-defined PID identification policy, including required
-        MRZ-derived fields and per-field regular-expression constraints.
+        MRZ-derived fields, physical-validity method constraints, and per-field
+        regular-expression constraints.
       parameters:
         - $ref: '#/components/parameters/AsOf'
         - $ref: '#/components/parameters/IfNoneMatch'
@@ -467,6 +468,48 @@ components:
         value:
           type: string
 
+    GdisPhysicalValidityPolicy:
+      type: object
+      additionalProperties: false
+      required:
+        - physicalValidityProfileId
+        - acceptedInputChannels
+        - governanceTrustSourceRefs
+      properties:
+        physicalValidityProfileId:
+          type: string
+          minLength: 1
+          description: |
+            Governance profile identifier defining deterministic physical-item
+            authenticity checks and verifier failure semantics.
+        acceptedInputChannels:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - mrz-only
+              - mrz-plus-nfc
+              - nfc-chip-only
+              - policy-defined
+          description: |
+            Input-channel policy for identity-item validity checks.
+        governanceTrustSourceRefs:
+          type: array
+          minItems: 1
+          description: |
+            Authoritative governance sources used during physical-validity
+            evaluation and verifier corroboration.
+          items:
+            $ref: '#/components/schemas/UriDigest'
+        evidenceRequiredAtIssuance:
+          type: boolean
+          default: true
+        evidenceRequiredAtVerification:
+          type: boolean
+          default: true
+
     GdisPidIdentificationPolicy:
       type: object
       additionalProperties: false
@@ -477,6 +520,7 @@ components:
         - effectiveFrom
         - subjectBindingProfile
         - publicHandlePolicy
+        - physicalValidity
         - pidFieldSet
         - signature
       properties:
@@ -512,6 +556,8 @@ components:
           description: |
             Declares whether publicly visible subject handles are verifier-scoped
             or otherwise privacy-preserving by default.
+        physicalValidity:
+          $ref: '#/components/schemas/GdisPhysicalValidityPolicy'
         nonRevocationModel:
           type: object
           additionalProperties: false

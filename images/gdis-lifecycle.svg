@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
-  <title id="title">GIDAS High-Level Lifecycle</title>
-  <desc id="desc">End-to-end flow from governance issuance to verifier decision and revocation handling.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">GDIS End-to-End Lifecycle</title>
+  <desc id="desc">Policy-driven MRZ and NFC evidence handling from issuance to verifier outputs with separate mechanical and recognition results.</desc>
   <defs>
     <style>
       .bg { fill: #f6f8fb; }
@@ -14,48 +14,55 @@
     </marker>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="1200" height="560"/>
+  <rect class="bg" x="0" y="0" width="1200" height="620"/>
 
-  <rect class="box" x="40" y="80" width="210" height="140"/>
-  <text class="head" x="56" y="114">1. Governance</text>
-  <text class="txt" x="56" y="145">PID policy + issuer</text>
-  <text class="txt" x="56" y="170">recognition inputs</text>
-  <text class="txt" x="56" y="195">(trusted lists, law)</text>
+  <rect class="box" x="30" y="70" width="220" height="150"/>
+  <text class="head" x="46" y="106">1. Governance Policy</text>
+  <text class="txt" x="46" y="136">PID fields, regex rules,</text>
+  <text class="txt" x="46" y="161">physicalValidityProfileId,</text>
+  <text class="txt" x="46" y="186">trust source refs</text>
 
-  <rect class="box" x="285" y="80" width="210" height="140"/>
-  <text class="head" x="301" y="114">2. Binding</text>
-  <text class="txt" x="301" y="145">MRZ/PID -> deterministic</text>
-  <text class="txt" x="301" y="170">subject binding value</text>
-  <text class="txt" x="301" y="195">+ endpoint binding</text>
+  <rect class="box" x="275" y="70" width="220" height="150"/>
+  <text class="head" x="291" y="106">2. Intake</text>
+  <text class="txt" x="291" y="136">MRZ extraction</text>
+  <text class="txt" x="291" y="161">+ NFC chip checks</text>
+  <text class="txt" x="291" y="186">when policy requires</text>
 
-  <rect class="box" x="530" y="80" width="210" height="140"/>
-  <text class="head" x="546" y="114">3. Issuance</text>
-  <text class="txt" x="546" y="145">VC to subject DID with</text>
-  <text class="txt" x="546" y="170">issuer proof and policy</text>
-  <text class="txt" x="546" y="195">references</text>
+  <rect class="box" x="520" y="70" width="220" height="150"/>
+  <text class="head" x="536" y="106">3. Binding</text>
+  <text class="txt" x="536" y="136">subjectBindingValue</text>
+  <text class="txt" x="536" y="161">+ endpointBindingValue</text>
+  <text class="txt" x="536" y="186">+ physical validity evidence</text>
 
-  <rect class="box" x="775" y="80" width="210" height="140"/>
-  <text class="head" x="791" y="114">4. Publication</text>
-  <text class="txt" x="791" y="145">Replicated host profile</text>
-  <text class="txt" x="791" y="170">(e.g., GQTS) publishes</text>
-  <text class="txt" x="791" y="195">status + key history</text>
+  <rect class="box" x="765" y="70" width="220" height="150"/>
+  <text class="head" x="781" y="106">4. VC Issuance</text>
+  <text class="txt" x="781" y="136">GDIS binding credential</text>
+  <text class="txt" x="781" y="161">to DID with GQSCD</text>
+  <text class="txt" x="781" y="186">controller evidence</text>
 
-  <rect class="box" x="950" y="300" width="210" height="140"/>
-  <text class="head" x="966" y="334">5. Verification</text>
-  <text class="txt" x="966" y="365">Verifier checks proofs,</text>
-  <text class="txt" x="966" y="390">freshness, policy, and</text>
-  <text class="txt" x="966" y="415">host evidence</text>
+  <rect class="box" x="950" y="290" width="220" height="160"/>
+  <text class="head" x="966" y="326">5. Verifier Output</text>
+  <text class="txt" x="966" y="356">mechanicalValidity</text>
+  <text class="txt" x="966" y="381">recognitionStatus</text>
+  <text class="txt" x="966" y="406">+ decision/failure code</text>
+  <text class="txt" x="966" y="431">+ freshness checks</text>
 
-  <rect class="box" x="530" y="300" width="380" height="140"/>
-  <text class="head" x="546" y="334">6. Revocation / Key State</text>
-  <text class="txt" x="546" y="365">Signed timestamped state events constrain</text>
-  <text class="txt" x="546" y="390">valid intervals for future claims.</text>
-  <text class="txt" x="546" y="415">Historical integrity remains auditable.</text>
+  <rect class="box" x="530" y="290" width="390" height="160"/>
+  <text class="head" x="546" y="326">6. Publication and Status</text>
+  <text class="txt" x="546" y="356">Host profile (for example GQTS)</text>
+  <text class="txt" x="546" y="381">publishes status, revocation,</text>
+  <text class="txt" x="546" y="406">and key-history evidence</text>
+  <text class="txt" x="546" y="431">for verifier retrieval</text>
 
-  <line class="arrow" x1="250" y1="150" x2="285" y2="150"/>
-  <line class="arrow" x1="495" y1="150" x2="530" y2="150"/>
-  <line class="arrow" x1="740" y1="150" x2="775" y2="150"/>
-  <path class="arrow" d="M985,150 C1080,150 1085,230 1055,300"/>
-  <line class="arrow" x1="950" y1="370" x2="910" y2="370"/>
-  <path class="arrow" d="M530,370 C370,370 260,300 260,220"/>
+  <rect class="box" x="120" y="470" width="520" height="110"/>
+  <text class="head" x="136" y="506">7. Revocation Timeline</text>
+  <text class="txt" x="136" y="536">Signed timestamped status events define validity intervals.</text>
+  <text class="txt" x="136" y="561">Claims after kill-time are rejected; history remains auditable.</text>
+
+  <line class="arrow" x1="250" y1="150" x2="275" y2="150"/>
+  <line class="arrow" x1="495" y1="150" x2="520" y2="150"/>
+  <line class="arrow" x1="740" y1="150" x2="765" y2="150"/>
+  <path class="arrow" d="M975,150 C1075,160 1095,235 1060,290"/>
+  <line class="arrow" x1="950" y1="370" x2="920" y2="370"/>
+  <path class="arrow" d="M530,430 C430,475 350,500 250,500"/>
 </svg>

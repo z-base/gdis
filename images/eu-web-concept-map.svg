@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
   <title id="title">EU to Web Conceptual Mapping</title>
-  <desc id="desc">Concept bridge between EU signature and seal terminology and web-native DID and VC expressions.</desc>
+  <desc id="desc">Concept bridge between EU signature and seal terminology and web-native DID and VC expressions with separate mechanical-validity and recognition outputs.</desc>
   <defs>
     <style>
       .bg { fill: #f7faf8; }
@@ -38,7 +38,7 @@
 
   <rect class="boxR" x="655" y="205" width="490" height="78"/>
   <text class="txt" x="675" y="235">Issuer proof over VC or signed artifact</text>
-  <text class="txt" x="675" y="260">VC is container; proof is sealing act</text>
+  <text class="txt" x="675" y="260">VC is container; proof is the sealing act</text>
 
   <rect class="boxL" x="55" y="310" width="490" height="78"/>
   <text class="txt" x="75" y="340">Electronic Attestation of Attributes</text>
@@ -52,7 +52,7 @@
   <text class="txt" x="75" y="448">Qualified status remains policy/legal output</text>
 
   <rect class="boxR" x="655" y="415" width="490" height="58"/>
-  <text class="txt" x="675" y="448">Recognition-status derived from trust registries</text>
+  <text class="txt" x="675" y="448">Recognition-status from registries, separate from mechanical validity</text>
 
   <line class="arrow" x1="545" y1="139" x2="655" y2="139"/>
   <line class="arrow" x1="545" y1="244" x2="655" y2="244"/>
