@@ -1,15 +1,15 @@
-[![npm version](https://img.shields.io/npm/v/@z-base/gdis)](https://www.npmjs.com/package/@z-base/gdis)
-[![CI](https://github.com/z-base/gdis/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/z-base/gdis/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/gh/z-base/gdis/branch/master/graph/badge.svg)](https://codecov.io/gh/z-base/gdis)
-[![license](https://img.shields.io/npm/l/@z-base/gdis)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@z-base/gqts)](https://www.npmjs.com/package/@z-base/gqts)
+[![CI](https://github.com/z-base/gqts/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/z-base/gqts/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/z-base/gqts/branch/master/graph/badge.svg)](https://codecov.io/gh/z-base/gqts)
+[![license](https://img.shields.io/npm/l/@z-base/gqts)](LICENSE)
 
 1. Title
 
-# gdis
+# gqts
 
 2. Description
 
-Global Digital Identity Scheme
+Globally Qualified Trust Services
 
 what it's for
 

@@ -1,5 +1,5 @@
 {
-  "name": "@z-base/gdis",
+  "name": "@z-base/gqts",
   "version": "0.0.0",
   "description": "",
   "keywords": [
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/entity/gdis.git"
+    "url": "git+https://github.com/entity/gqts.git"
   },
   "bugs": {
-    "url": "https://github.com/entity/gdis/issues"
+    "url": "https://github.com/entity/gqts/issues"
   },
-  "homepage": "https://z-base.github.io/gdis",
+  "homepage": "https://z-base.github.io/gqts",
   "files": [
     "dist",
     "LICENSE",
@@ -33,6 +33,8 @@
   "scripts": {
     "format": "prettier . --write",
     "build": "tsc -p tsconfig.json",
+    "openapi:lint": "redocly lint openapi.yaml",
+    "openapi:build": "redocly build-docs openapi.yaml --output=openapi/index.html",
     "test": "npm run build && node test/run-coverage.mjs && node test/e2e/run.mjs",
     "bench": "npm run build && node benchmark/bench.js",
     "prepare": "husky",
@@ -58,6 +60,7 @@
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@playwright/test": "^1.58.2",
+    "@redocly/cli": "^2.18.2",
     "@types/node": "^25.2.3",
     "c8": "^10.1.3",
     "fast-glob": "^3.3.3",

@@ -1,0 +1,6 @@
+extends:
+  - recommended
+
+apis:
+  gqts@v1:
+    root: ./openapi.yaml

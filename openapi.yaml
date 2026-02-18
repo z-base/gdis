@@ -1,0 +1,771 @@
+openapi: 3.1.0
+info:
+  title: GQTS Core API
+  version: 1.0.0-draft
+  summary: OpenAPI normative surface for GQTS Core discovery and event-log replication.
+  description: |
+    This OpenAPI file is the normative endpoint contract for GQTS Core.
+
+    Semantics:
+    - GET operations are synchronous retrieval operations.
+    - POST ingest/gossip operations are logically asynchronous and return 202 Accepted.
+
+    Versioning strategy:
+    - Major/minor profile semantics are encoded in `info.version` and media types.
+    - Backward-incompatible changes require a new API version and explicit migration text.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+  x-document-authority:
+    status: editor-draft
+    note: Not an adopted ETSI deliverable and not a W3C Recommendation.
+
+servers:
+  - url: https://example.org
+    description: Example origin
+
+security: []
+
+x-gqts-requirements:
+  REQ-R1: Governance-scoped scheme discovery.
+  REQ-R2: Endpoint-kind taxonomy publication.
+  REQ-R3: Service descriptor head commitment publication.
+  REQ-R4: Low-cost divergence detection via compact head metadata.
+  REQ-R5: Append-only log retrieval.
+  REQ-R6: Asynchronous ingest and receipt model.
+  REQ-R7: Immutable event addressing.
+
+tags:
+  - name: scheme
+    description: Governance-scoped scheme metadata.
+  - name: type
+    description: Trust-service instance metadata and current head commitments.
+  - name: event
+    description: Append-only event log retrieval and ingest.
+
+paths:
+  /.well-known/gidas/gqts/scheme/{governanceCode}:
+    get:
+      tags: [scheme]
+      operationId: getSchemeDescriptor
+      summary: Get scheme descriptor.
+      x-gqts-requirement: REQ-R1
+      description: |
+        Returns governance-scoped naming, canonicalization, proof profile, and publication-floor metadata.
+      parameters:
+        - $ref: '#/components/parameters/GovernanceCode'
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Scheme descriptor.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+          content:
+            application/gqts.scheme+json:
+              schema:
+                $ref: '#/components/schemas/SchemeDescriptor'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemeDescriptor'
+        '304':
+          description: Not modified.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+  /.well-known/gidas/gqts/scheme/{governanceCode}/endpoint-kinds:
+    get:
+      tags: [scheme]
+      operationId: getEndpointKindCatalog
+      summary: Get endpoint-kind catalog.
+      x-gqts-requirement: REQ-R2
+      description: |
+        Returns the normative endpoint-kind mapping (`scheme`, `type`, `event`) for a governance profile.
+        This operation provides machine-readable requirement-level conformance metadata.
+      parameters:
+        - $ref: '#/components/parameters/GovernanceCode'
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Endpoint-kind catalog.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+          content:
+            application/gqts.endpoint-kinds+json:
+              schema:
+                $ref: '#/components/schemas/EndpointKindCatalog'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointKindCatalog'
+        '304':
+          description: Not modified.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+  /.well-known/gidas/gqts/type/{serviceId}:
+    get:
+      tags: [type]
+      operationId: getTypeDescriptor
+      summary: Get service descriptor.
+      x-gqts-requirement: REQ-R3
+      description: |
+        Returns metadata for one trust-service instance, including the current event-log head commitment.
+      parameters:
+        - $ref: '#/components/parameters/ServiceId'
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Service descriptor.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+          content:
+            application/gqts.type+json:
+              schema:
+                $ref: '#/components/schemas/ServiceDescriptor'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceDescriptor'
+        '304':
+          description: Not modified.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+  /.well-known/gidas/gqts/event/{logId}:
+    get:
+      tags: [event]
+      operationId: getEventLogView
+      summary: Get event log head or event page.
+      x-gqts-requirement: REQ-R5
+      description: |
+        Returns either a compact head view (default) or paged events for an append-only log.
+        Implementations SHOULD use conditional retrieval and compare `headDigest` before expensive sync work.
+      parameters:
+        - $ref: '#/components/parameters/LogId'
+        - $ref: '#/components/parameters/IfNoneMatch'
+        - $ref: '#/components/parameters/View'
+        - $ref: '#/components/parameters/FromEventId'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Event log view.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+          content:
+            application/gqts.eventlog+json:
+              schema:
+                $ref: '#/components/schemas/EventLogView'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventLogView'
+        '304':
+          description: Not modified.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+    post:
+      tags: [event]
+      operationId: postEventIngest
+      summary: Submit an event for ingest/gossip.
+      x-gqts-requirement: REQ-R6
+      description: |
+        Accepts an event envelope for asynchronous processing.
+        Successful acceptance returns `202 Accepted`; replication and merge outcomes are observed via GET event-log views.
+      parameters:
+        - $ref: '#/components/parameters/LogId'
+      requestBody:
+        required: true
+        content:
+          application/gqts.event+json:
+            schema:
+              $ref: '#/components/schemas/EventIngestRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventIngestRequest'
+      responses:
+        '202':
+          description: Accepted for asynchronous processing.
+          content:
+            application/gqts.ingest-receipt+json:
+              schema:
+                $ref: '#/components/schemas/AsyncReceipt'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncReceipt'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '409':
+          $ref: '#/components/responses/Problem'
+        '413':
+          $ref: '#/components/responses/Problem'
+
+  /.well-known/gidas/gqts/event/{logId}/meta:
+    get:
+      tags: [event]
+      operationId: getEventHeadMeta
+      summary: Get compact event-head metadata.
+      x-gqts-requirement: REQ-R4
+      description: |
+        Returns a compact head commitment view for opportunistic synchronization.
+        Peers SHOULD compare this result before requesting event pages or merge processing.
+      parameters:
+        - $ref: '#/components/parameters/LogId'
+        - $ref: '#/components/parameters/IfNoneMatch'
+      responses:
+        '200':
+          description: Event-head metadata.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControl'
+          content:
+            application/gqts.event-head+json:
+              schema:
+                $ref: '#/components/schemas/EventHeadMeta'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventHeadMeta'
+        '304':
+          description: Not modified.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+  /.well-known/gidas/gqts/event/{logId}/{eventId}:
+    get:
+      tags: [event]
+      operationId: getEventById
+      summary: Get immutable event object.
+      x-gqts-requirement: REQ-R7
+      description: Retrieves one immutable event object by identifier.
+      parameters:
+        - $ref: '#/components/parameters/LogId'
+        - $ref: '#/components/parameters/EventId'
+      responses:
+        '200':
+          description: Event object.
+          headers:
+            ETag:
+              $ref: '#/components/headers/EntityTag'
+            Cache-Control:
+              $ref: '#/components/headers/CacheControlImmutable'
+          content:
+            application/gqts.event+json:
+              schema:
+                $ref: '#/components/schemas/EventEnvelope'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventEnvelope'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+
+components:
+  parameters:
+    GovernanceCode:
+      name: governanceCode
+      in: path
+      required: true
+      description: |
+        Lowercase ASCII governance identifier.
+        Producers MUST normalize to lowercase before publication.
+      schema:
+        $ref: '#/components/schemas/GovernanceCode'
+
+    ServiceId:
+      name: serviceId
+      in: path
+      required: true
+      description: Trust-service instance identifier.
+      schema:
+        $ref: '#/components/schemas/Identifier'
+
+    LogId:
+      name: logId
+      in: path
+      required: true
+      description: Event log namespace identifier.
+      schema:
+        $ref: '#/components/schemas/Identifier'
+
+    EventId:
+      name: eventId
+      in: path
+      required: true
+      description: Immutable event identifier.
+      schema:
+        $ref: '#/components/schemas/Identifier'
+
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      description: ETag validator for conditional retrieval.
+      schema:
+        type: string
+
+    View:
+      name: view
+      in: query
+      required: false
+      description: Controls head-only versus paged-event retrieval.
+      schema:
+        type: string
+        enum: [head, events]
+        default: head
+
+    FromEventId:
+      name: fromEventId
+      in: query
+      required: false
+      description: Resume cursor for paged event retrieval.
+      schema:
+        $ref: '#/components/schemas/Identifier'
+
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Page size for event retrieval.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+        default: 50
+
+  headers:
+    EntityTag:
+      description: Entity tag representing head commitment or immutable event digest.
+      schema:
+        type: string
+    CacheControl:
+      description: Cache policy for append-only views (typically short freshness with validators).
+      schema:
+        type: string
+    CacheControlImmutable:
+      description: Cache policy for immutable objects.
+      schema:
+        type: string
+
+  responses:
+    Problem:
+      description: Error response.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+
+  schemas:
+    EndpointKind:
+      type: string
+      enum: [scheme, type, event]
+
+    GovernanceCode:
+      type: string
+      pattern: '^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$'
+      examples: [eu, fi-traficom, us-nist]
+
+    Identifier:
+      type: string
+      minLength: 3
+      maxLength: 128
+      pattern: '^[A-Za-z0-9._:-]+$'
+      examples: [a8bb9d18-c3bc-4f5b-9158-3ce0d48f4f8c, eu-qts-registry]
+
+    DigestTuple:
+      type: string
+      description: Algorithm token plus digest value (`algorithm:value`).
+      pattern: '^[A-Za-z0-9._-]+:[A-Za-z0-9_-]+$'
+      examples: ['SHA-256:3f7zcM55W3A8fAq7sP6q18gw4ulvYz6oVaQqM4jLw8Q']
+
+    UriDigest:
+      type: object
+      required: [uri, digest]
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+          format: uri
+        digest:
+          $ref: '#/components/schemas/DigestTuple'
+
+    SchemeDescriptor:
+      type: object
+      additionalProperties: false
+      required:
+        - kind
+        - governanceCode
+        - version
+        - canonicalization
+        - hashAlgorithm
+        - proofSuites
+        - endpointKinds
+        - discovery
+      properties:
+        kind:
+          type: string
+          const: scheme
+        governanceCode:
+          $ref: '#/components/schemas/GovernanceCode'
+        version:
+          type: string
+          examples: [v1]
+        canonicalization:
+          type: string
+          description: Canonicalization profile for event payload hashing.
+          examples: [JCS]
+        hashAlgorithm:
+          type: string
+          examples: [SHA-256]
+        proofSuites:
+          type: array
+          minItems: 1
+          items:
+            type: string
+          examples:
+            - [eddsa-jcs-2022, ecdsa-jcs-2019]
+        endpointKinds:
+          type: array
+          minItems: 3
+          uniqueItems: true
+          examples:
+            - [scheme, type, event]
+          items:
+            $ref: '#/components/schemas/EndpointKind'
+        publicationFloor:
+          type: array
+          description: Optional governance minimum host targets.
+          items:
+            type: string
+            format: uri
+        endpointKindsRef:
+          type: string
+          format: uri-reference
+          description: Relative or absolute URI to endpoint-kind catalog.
+        discovery:
+          type: object
+          additionalProperties: false
+          required: [schemeTemplate, typeTemplate, eventTemplate]
+          properties:
+            schemeTemplate:
+              type: string
+              examples: ['/.well-known/gidas/gqts/scheme/{governanceCode}']
+            typeTemplate:
+              type: string
+              examples: ['/.well-known/gidas/gqts/type/{serviceId}']
+            eventTemplate:
+              type: string
+              examples: ['/.well-known/gidas/gqts/event/{logId}']
+
+    EndpointKindEntry:
+      type: object
+      additionalProperties: false
+      required:
+        - kind
+        - purpose
+        - pathTemplate
+        - operationIds
+        - primarySchema
+        - consistencyModel
+      properties:
+        kind:
+          $ref: '#/components/schemas/EndpointKind'
+        purpose:
+          type: string
+        pathTemplate:
+          type: string
+          examples: ['/.well-known/gidas/gqts/{kind}/{id}']
+        operationIds:
+          type: array
+          minItems: 1
+          items:
+            type: string
+        primarySchema:
+          type: string
+          description: '#/components/schemas/... pointer.'
+          examples: ['#/components/schemas/ServiceDescriptor']
+        consistencyModel:
+          type: string
+          enum: [immutable, append-only, mutable-with-versioning]
+        asyncIngestSupported:
+          type: boolean
+          default: false
+      examples:
+        - kind: event
+          purpose: Append-only history publication and retrieval.
+          pathTemplate: /.well-known/gidas/gqts/event/{logId}
+          operationIds: [getEventHeadMeta, getEventLogView, postEventIngest, getEventById]
+          primarySchema: '#/components/schemas/EventEnvelope'
+          consistencyModel: append-only
+          asyncIngestSupported: true
+
+    EndpointKindCatalog:
+      type: object
+      additionalProperties: false
+      required: [governanceCode, generatedAt, endpointKinds]
+      properties:
+        governanceCode:
+          $ref: '#/components/schemas/GovernanceCode'
+        generatedAt:
+          type: string
+          format: date-time
+        endpointKinds:
+          type: array
+          minItems: 3
+          items:
+            $ref: '#/components/schemas/EndpointKindEntry'
+      examples:
+        - governanceCode: eu
+          generatedAt: '2026-02-18T00:00:00Z'
+          endpointKinds:
+            - kind: scheme
+              purpose: Governance profile metadata discovery.
+              pathTemplate: /.well-known/gidas/gqts/scheme/{governanceCode}
+              operationIds: [getSchemeDescriptor, getEndpointKindCatalog]
+              primarySchema: '#/components/schemas/SchemeDescriptor'
+              consistencyModel: mutable-with-versioning
+            - kind: type
+              purpose: Service descriptor publication.
+              pathTemplate: /.well-known/gidas/gqts/type/{serviceId}
+              operationIds: [getTypeDescriptor]
+              primarySchema: '#/components/schemas/ServiceDescriptor'
+              consistencyModel: mutable-with-versioning
+            - kind: event
+              purpose: Append-only event history operations.
+              pathTemplate: /.well-known/gidas/gqts/event/{logId}
+              operationIds: [getEventHeadMeta, getEventLogView, postEventIngest, getEventById]
+              primarySchema: '#/components/schemas/EventEnvelope'
+              consistencyModel: append-only
+              asyncIngestSupported: true
+
+    ServiceDescriptor:
+      type: object
+      additionalProperties: false
+      required:
+        - kind
+        - serviceId
+        - serviceType
+        - governanceCode
+        - eventLog
+        - verificationSources
+      properties:
+        kind:
+          type: string
+          const: type
+        serviceId:
+          $ref: '#/components/schemas/Identifier'
+        serviceType:
+          type: string
+          enum:
+            - gdis-binding
+            - gqtsp-evidence
+            - trust-registry
+            - pid-scheme
+            - other
+        governanceCode:
+          $ref: '#/components/schemas/GovernanceCode'
+        profileVersion:
+          type: string
+          examples: [v1]
+        eventLog:
+          type: object
+          additionalProperties: false
+          required: [logId, headEventId, headDigest]
+          properties:
+            logId:
+              $ref: '#/components/schemas/Identifier'
+            headEventId:
+              $ref: '#/components/schemas/Identifier'
+            headDigest:
+              $ref: '#/components/schemas/DigestTuple'
+            updatedAt:
+              type: string
+              format: date-time
+        verificationSources:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/UriDigest'
+
+    EventLogView:
+      type: object
+      additionalProperties: false
+      required: [kind, logId, view, headEventId, headDigest, events]
+      properties:
+        kind:
+          type: string
+          const: event
+        logId:
+          $ref: '#/components/schemas/Identifier'
+        view:
+          type: string
+          enum: [head, events]
+        headEventId:
+          $ref: '#/components/schemas/Identifier'
+        headDigest:
+          $ref: '#/components/schemas/DigestTuple'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventEnvelope'
+        nextFromEventId:
+          $ref: '#/components/schemas/Identifier'
+
+    EventHeadMeta:
+      type: object
+      additionalProperties: false
+      required: [kind, logId, headEventId, headDigest, eventCount, updatedAt]
+      properties:
+        kind:
+          type: string
+          const: event
+        logId:
+          $ref: '#/components/schemas/Identifier'
+        headEventId:
+          $ref: '#/components/schemas/Identifier'
+        headDigest:
+          $ref: '#/components/schemas/DigestTuple'
+        eventCount:
+          type: integer
+          minimum: 0
+        updatedAt:
+          type: string
+          format: date-time
+        recommendedPollSeconds:
+          type: integer
+          minimum: 1
+
+    EventEnvelope:
+      type: object
+      additionalProperties: false
+      required:
+        - eventId
+        - logId
+        - sequence
+        - createdAt
+        - eventType
+        - eventDigest
+        - prevEventDigests
+        - payload
+        - proofs
+      properties:
+        eventId:
+          $ref: '#/components/schemas/Identifier'
+        logId:
+          $ref: '#/components/schemas/Identifier'
+        sequence:
+          type: integer
+          minimum: 0
+        createdAt:
+          type: string
+          format: date-time
+        eventType:
+          type: string
+          examples: [publish, revoke, rotate, merge]
+        eventDigest:
+          $ref: '#/components/schemas/DigestTuple'
+        prevEventDigests:
+          type: array
+          description: Parent head commitments. Merge events usually include two or more entries.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/DigestTuple'
+        payload:
+          type: object
+          additionalProperties: true
+        proofs:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Proof'
+
+    Proof:
+      type: object
+      additionalProperties: false
+      required: [type, verificationMethod, created, proofValue]
+      properties:
+        type:
+          type: string
+        verificationMethod:
+          type: string
+        created:
+          type: string
+          format: date-time
+        proofPurpose:
+          type: string
+          examples: [assertionMethod]
+        proofValue:
+          type: string
+
+    EventIngestRequest:
+      type: object
+      additionalProperties: false
+      required: [event]
+      properties:
+        event:
+          $ref: '#/components/schemas/EventEnvelope'
+        expectedHeadDigest:
+          $ref: '#/components/schemas/DigestTuple'
+        correlationId:
+          type: string
+          minLength: 8
+          maxLength: 128
+
+    AsyncReceipt:
+      type: object
+      additionalProperties: false
+      required: [status, correlationId, logId, acceptedAt]
+      properties:
+        status:
+          type: string
+          const: accepted
+        correlationId:
+          type: string
+        logId:
+          $ref: '#/components/schemas/Identifier'
+        acceptedAt:
+          type: string
+          format: date-time
+        queuedEventId:
+          $ref: '#/components/schemas/Identifier'
+
+    ProblemDetails:
+      type: object
+      additionalProperties: true
+      required: [type, title, status]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri-reference
