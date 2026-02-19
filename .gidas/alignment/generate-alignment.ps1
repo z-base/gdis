@@ -357,6 +357,13 @@ function Resolve-TermOwner {
   param([string]$NormalizedTerm, [object[]]$Members)
 
   $explicitOwners = @{
+    'proof artifact' = 'GDIS-CORE'
+    'binding credential' = 'GDIS-CORE'
+    'gdis binding credential' = 'GDIS-CORE'
+    'verification material' = 'GQTS-CORE'
+    'public verification material' = 'GQTS-CORE'
+    'did document' = 'GQTS-CORE'
+    'key history' = 'GQTS-CORE'
     'web profile' = 'GQSCD-CORE'
     'eu compatibility profile' = 'GQSCD-CORE'
   }
@@ -364,9 +371,9 @@ function Resolve-TermOwner {
     return $explicitOwners[$NormalizedTerm]
   }
 
-  $deviceHints = @('device', 'controller', 'sole control', 'intent', 'qscd', 'tee', 'attestation')
-  $identityHints = @('pid', 'mrz', 'identity', 'binding', 'gdis')
-  $gqtsHints = @('event', 'log', 'host', 'scheme descriptor', 'service descriptor', 'replication', 'gqts', 'head digest')
+  $deviceHints = @('device', 'controller', 'sole control', 'intent', 'qscd', 'tee', 'attestation', 'key')
+  $identityHints = @('pid', 'mrz', 'identity', 'binding', 'proof artifact', 'credential', 'claim', 'gdis')
+  $gqtsHints = @('event', 'log', 'host', 'scheme descriptor', 'service descriptor', 'replication', 'gqts', 'head digest', 'verification material', 'did document', 'publication', 'status')
 
   foreach ($h in $deviceHints) {
     if ($NormalizedTerm -like "*$h*") { return 'GQSCD-CORE' }
@@ -384,8 +391,105 @@ function Resolve-TermOwner {
 
 function Resolve-ClauseOwner {
   param([string]$OperationId)
-  if ($OperationId -like 'getGdis*') { return 'GDIS-CORE' }
+  if ($OperationId -match '(?i)gdis|pid|identity|binding') { return 'GDIS-CORE' }
   return 'GQTS-CORE'
+}
+
+function Write-FailureArtifacts {
+  param(
+    [string]$ReportPath,
+    [string]$PlanPath,
+    [string]$Reason,
+    [string[]]$Details
+  )
+
+  $reportLines = New-Object System.Collections.Generic.List[string]
+  $reportLines.Add('# Alignment Report')
+  $reportLines.Add('')
+  $reportLines.Add('## Status')
+  $reportLines.Add("- FAILED_CLOSED: $Reason")
+  $reportLines.Add('')
+  $reportLines.Add('## Details')
+  if ($Details.Count -eq 0) {
+    $reportLines.Add('- none')
+  } else {
+    foreach ($detail in $Details) {
+      $reportLines.Add("- $detail")
+    }
+  }
+  $reportLines.Add('')
+  $reportLines.Add('Provide local peer snapshots and a valid `gidas-alignment.config.json`, then rerun `.gidas/alignment/generate-alignment.ps1`.')
+  $reportLines | Set-Content -Encoding UTF8 $ReportPath
+
+  $planLines = New-Object System.Collections.Generic.List[string]
+  $planLines.Add('# Alignment Plan')
+  $planLines.Add('')
+  $planLines.Add('## Status')
+  $planLines.Add("- BLOCKED: $Reason")
+  $planLines.Add('')
+  $planLines.Add('## Preconditions')
+  foreach ($detail in $Details) {
+    $planLines.Add("- $detail")
+  }
+  $planLines | Set-Content -Encoding UTF8 $PlanPath
+}
+
+function New-AlignmentPromptTemplate {
+  return @'
+SYSTEM / ROLE
+You are GPT-5.3-Codex acting as a cross-repository alignment agent for these specs:
+- z-base/gdis   (GDIS-CORE)
+- z-base/gqts  (GQTS-CORE)
+- z-base/gqscd (GQSCD-CORE)
+Follow the AGENTS.md drafting posture (read it first) and the repo config for peer snapshots.
+
+HARD CONSTRAINTS:
+- Wallet-private vs Trust-public: Treat "proof artifacts" (credentials, PID binding VCs, attestations) as private to the wallet. Do NOT have GQTS or GQSCD restate or store private claims. GQTS only stores public verification material (keys, DID docs, status) in its tamper-evident log.
+- Directed linear logs: Assume the GQTS history is an append-only, signed chain. The first event is the root key; each new verification method event must link by signature to the previous head. If a log entry conflicts, it should be flagged as a bad node (do not silently merge).
+- No duplication of definitions: Replace duplicated term definitions with `data-cite` references to the canonical spec.
+
+INPUT PARAMETERS (per repo)
+SELF_SPEC_ID, SELF_REPO_FULL_NAME, SELF_HOME_URL as before.
+Peer snapshots as before.
+
+TASKS:
+0. Preconditions: Read AGENTS.md and gidas-alignment.config.json. Ensure peer snapshots exist for all peers. Fail (alignment-report.md) if any are missing.
+1. Deterministic index: Run scripts/cross-spec-align.mjs (or replicate its behavior) to compute `spec-index.self.json` and `spec-index.peers.json`.
+2. Cross-spec mapping: Analyze `cross-spec-map.json`:
+   - Term clusters: Merge same concepts. Enforce canonical ownership rules (device/key terms -> GQSCD; identity/PID terms -> GDIS; log/publication terms -> GQTS).
+   - New term rules: "proof artifact" or "binding credential" = private, GDIS-owned; "verification material" = public, GQTS-owned.
+   - Clause clusters: Map identical OpenAPI ops. Check no op is defined in two specs with different semantics.
+   - Conflict detection:
+     - If the same operationId has different request/response schemas, flag `operation-contract-conflict`.
+     - If the same operation has different requirement IDs (`x-gqts-requirement`), flag `requirement-id-namespace-conflict`.
+   - Gap detection:
+     - If a term is used but not defined in SELF (and not imported via data-cite), flag undefined-term.
+3. Alignment plan (alignment-plan.md):
+   - List canonical term/anchor owners (include "proof artifact" as GDIS, "verification material" as GQTS).
+   - List canonical clause mapping per operation.
+   - Outline exactly what SELF repo must change:
+     - E.g. "Replace local definition of `mechanical validity` with `data-cite="GQTS-CORE#mechanical-validity"`."
+     - "In GDIS, keep the Verifiable Credential (PID binding) but mark its output as private (UNSPECIFIED how to publish)."
+     - "In GQTS, ensure the event log is described as a signed linear chain (add or verify text to that effect)."
+     - Mark any details that remain UNSPECIFIED.
+4. Apply edits to SELF repo:
+   - LocalBiblio: Ensure entries for GDIS-CORE, GQTS-CORE, GQSCD-CORE.
+   - Definitions: For each non-canonical term in SELF, replace `<dfn>Term</dfn>` with `<dfn data-cite="OWNER_SPEC_ID#canonical-anchor">Term</dfn>` and minimal local note.
+   - Verification vs Proof: Explicitly note in text that SELF does not store private wallet claims. (No actual data migration is needed, just cross-ref.)
+   - OpenAPI: If SELF includes any GQTS-hosted endpoints, delete or rewrite them to use canonical IDs. Ensure `x-gqts-requirement` matches GQTS's numbering and verify schema equivalence (especially Proof and DID Document structure).
+   - Anchors: Confirm every requirement ID has a stable anchor; add alias spans if needed.
+5. Output:
+   - proposed-changes.patch: a git diff of the above edits.
+   - alignment-report.md: summarize changes made, duplicates removed, and any remaining conflicts (UNSPECIFIED).
+   - alignment-plan.md: the plan from step 3.
+
+FINAL OUTPUT (to user)
+A concise explanation of changes, plus:
+- Files changed.
+- Summary of duplicates removed and cross-references added.
+- Pointer to `.gidas/alignment/` with spec-index and map.
+- The prompt template (above) is ready to copy into each repo for alignment.
+'@
 }
 
 $selfRoot = Resolve-Path (Join-Path $PSScriptRoot '..\..')
@@ -394,63 +498,101 @@ if (-not (Test-Path $outDir)) {
   New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 }
 
-$selfIndex = Parse-ReSpecIndex `
-  -SpecId 'GDIS-CORE' `
-  -Repo 'z-base/gdis' `
-  -HomeUrl 'https://z-base.github.io/gdis/' `
-  -IndexPath (Join-Path $selfRoot 'index.html') `
-  -OpenApiPath (Join-Path $selfRoot 'openapi.yaml')
-
-$peerSpecs = @(
-  @{ spec_id = 'GQSCD-CORE'; repo = 'z-base/gqscd'; home_url = 'https://z-base.github.io/gqscd/'; index = '..\gqscd\index.html'; openapi = $null },
-  @{ spec_id = 'GQTS-CORE'; repo = 'z-base/gqts'; home_url = 'https://z-base.github.io/gqts/'; index = '..\gqts\index.html'; openapi = '..\gqts\openapi.yaml' }
-)
-
-$peers = New-Object System.Collections.Generic.List[object]
-$missingPeers = New-Object System.Collections.Generic.List[string]
-foreach ($peer in $peerSpecs) {
-  $peerIndexPath = Resolve-Path (Join-Path $selfRoot $peer.index) -ErrorAction SilentlyContinue
-  if ($null -eq $peerIndexPath) {
-    $missingPeers.Add($peer.spec_id)
-    continue
-  }
-  $peerOpenApi = $null
-  if ($peer.openapi) {
-    $resolved = Resolve-Path (Join-Path $selfRoot $peer.openapi) -ErrorAction SilentlyContinue
-    if ($null -ne $resolved) {
-      $peerOpenApi = $resolved.Path
-    }
-  }
-  $peers.Add(
-    (Parse-ReSpecIndex `
-      -SpecId $peer.spec_id `
-      -Repo $peer.repo `
-      -HomeUrl $peer.home_url `
-      -IndexPath $peerIndexPath.Path `
-      -OpenApiPath $peerOpenApi)
-  )
-}
-
 $specIndexSelfPath = Join-Path $outDir 'spec-index.self.json'
 $specIndexPeersPath = Join-Path $outDir 'spec-index.peers.json'
 $crossMapPath = Join-Path $outDir 'cross-spec-map.json'
 $reportPath = Join-Path $outDir 'alignment-report.md'
+$planPath = Join-Path $outDir 'alignment-plan.md'
+$promptTemplatePath = Join-Path $outDir 'codex-alignment-prompt.template.txt'
+
+$agentsPath = Join-Path $selfRoot 'AGENTS.md'
+if (-not (Test-Path $agentsPath)) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'missing AGENTS.md' -Details @('AGENTS.md must exist at repo root.')
+  throw 'Missing AGENTS.md at repository root.'
+}
+$agentsContent = Get-Content -Raw $agentsPath
+if ([string]::IsNullOrWhiteSpace($agentsContent)) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'empty AGENTS.md' -Details @('AGENTS.md is present but empty.')
+  throw 'AGENTS.md is empty.'
+}
+
+$configPath = Join-Path $selfRoot 'gidas-alignment.config.json'
+if (-not (Test-Path $configPath)) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'missing gidas-alignment.config.json' -Details @('Create `gidas-alignment.config.json` with SELF and peer snapshot paths.')
+  throw 'Missing gidas-alignment.config.json.'
+}
+
+try {
+  $config = Get-Content -Raw $configPath | ConvertFrom-Json
+} catch {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'invalid gidas-alignment.config.json' -Details @('Config file is not valid JSON.')
+  throw
+}
+
+if ($null -eq $config.self) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'invalid alignment config' -Details @('`self` block is required in gidas-alignment.config.json.')
+  throw 'Missing config.self.'
+}
+if ($null -eq $config.peers -or $config.peers.Count -eq 0) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'invalid alignment config' -Details @('`peers` array is required in gidas-alignment.config.json.')
+  throw 'Missing config.peers.'
+}
+
+$promptTemplate = New-AlignmentPromptTemplate
+$promptTemplate | Set-Content -Encoding UTF8 $promptTemplatePath
+
+$selfSpec = $config.self
+$selfIndexPath = Resolve-Path (Join-Path $selfRoot ([string]$selfSpec.index)) -ErrorAction SilentlyContinue
+if ($null -eq $selfIndexPath) {
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'missing self snapshot' -Details @("Cannot resolve SELF index path: $($selfSpec.index)")
+  throw "Missing SELF index snapshot at $($selfSpec.index)."
+}
+$selfOpenApiPath = $null
+if (-not [string]::IsNullOrWhiteSpace([string]$selfSpec.openapi)) {
+  $resolvedSelfOpenApiPath = Resolve-Path (Join-Path $selfRoot ([string]$selfSpec.openapi)) -ErrorAction SilentlyContinue
+  if ($null -ne $resolvedSelfOpenApiPath) {
+    $selfOpenApiPath = $resolvedSelfOpenApiPath.Path
+  }
+}
+
+$selfIndex = Parse-ReSpecIndex `
+  -SpecId ([string]$selfSpec.spec_id) `
+  -Repo ([string]$selfSpec.repo) `
+  -HomeUrl ([string]$selfSpec.home_url) `
+  -IndexPath $selfIndexPath.Path `
+  -OpenApiPath $selfOpenApiPath
+
+$peers = New-Object System.Collections.Generic.List[object]
+$missingPeers = New-Object System.Collections.Generic.List[string]
+foreach ($peer in $config.peers) {
+  $peerIndexPath = Resolve-Path (Join-Path $selfRoot ([string]$peer.index)) -ErrorAction SilentlyContinue
+  if ($null -eq $peerIndexPath) {
+    $missingPeers.Add([string]$peer.spec_id)
+    continue
+  }
+  $peerOpenApiPath = $null
+  if (-not [string]::IsNullOrWhiteSpace([string]$peer.openapi)) {
+    $resolvedPeerOpenApiPath = Resolve-Path (Join-Path $selfRoot ([string]$peer.openapi)) -ErrorAction SilentlyContinue
+    if ($null -ne $resolvedPeerOpenApiPath) {
+      $peerOpenApiPath = $resolvedPeerOpenApiPath.Path
+    }
+  }
+
+  $peers.Add(
+    (Parse-ReSpecIndex `
+      -SpecId ([string]$peer.spec_id) `
+      -Repo ([string]$peer.repo) `
+      -HomeUrl ([string]$peer.home_url) `
+      -IndexPath $peerIndexPath.Path `
+      -OpenApiPath $peerOpenApiPath)
+  )
+}
 
 $selfIndex | ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8 $specIndexSelfPath
 $peers | ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8 $specIndexPeersPath
 
 if ($missingPeers.Count -gt 0) {
-  @(
-    '# Alignment Report'
-    ''
-    '## Status'
-    '- FAILED_CLOSED: missing peer snapshots'
-    ''
-    '## Missing peers'
-    ($missingPeers | ForEach-Object { "- $_" })
-    ''
-    'Provide local peer snapshots and rerun `.gidas/alignment/generate-alignment.ps1`.'
-  ) | Set-Content -Encoding UTF8 $reportPath
+  Write-FailureArtifacts -ReportPath $reportPath -PlanPath $planPath -Reason 'missing peer snapshots' -Details ($missingPeers | ForEach-Object { "Missing peer snapshot: $_" })
   throw "Missing peer snapshots: $($missingPeers -join ', ')"
 }
 
@@ -512,6 +654,7 @@ foreach ($spec in $allSpecs) {
         path = $op.path
         requirement_id = $op.x_requirement
         requirement_key = $op.requirement_key
+        operation_contract_hash = $op.operation_contract_hash
       })
   }
 }
@@ -539,12 +682,22 @@ foreach ($opId in ($operationGroups.Keys | Sort-Object)) {
       canonical_owner_spec_id = $owner
       canonical_clause_id = $ownerMember.requirement_id
       member_clause_ids = @($members | ForEach-Object { "$($_.spec_id):$($_.requirement_id)" })
+      member_operation_contract_hashes = @($members | ForEach-Object { "$($_.spec_id):$($_.operation_contract_hash)" })
     })
 
   $reqIds = @($members | Select-Object -ExpandProperty requirement_id -Unique)
   if ($reqIds.Count -gt 1) {
     $conflicts.Add([pscustomobject]@{
-        type = 'requirement-namespace-conflict'
+        type = 'requirement-id-namespace-conflict'
+        concept = $opId
+        members = $members
+      })
+  }
+
+  $contractHashes = @($members | Select-Object -ExpandProperty operation_contract_hash -Unique)
+  if ($contractHashes.Count -gt 1) {
+    $conflicts.Add([pscustomobject]@{
+        type = 'operation-contract-conflict'
         concept = $opId
         members = $members
       })
@@ -566,7 +719,7 @@ foreach ($spec in $allSpecs) {
     $t = Normalize-Term $ref.Groups[1].Value
     if (-not $allDefinedTerms.ContainsKey($t)) {
       $gaps.Add([pscustomobject]@{
-          type = 'undefined-term-reference'
+          type = 'undefined-term'
           spec_id = $spec.spec_id
           reference = $ref.Groups[1].Value
         })
@@ -591,12 +744,76 @@ foreach ($spec in $allSpecs) {
 }
 
 $crossMap = [pscustomobject]@{
+  alignment_focus = [pscustomobject]@{
+    wallet_private_artifacts = @('proof artifact', 'binding credential', 'gdis binding credential')
+    trust_public_verification_material = @('verification material', 'did document', 'key history')
+    gqts_log_model = 'append-only signed linear chain; root key at first event; each event links to previous head by signature'
+    conflict_resolution = 'flag conflicting nodes as bad nodes and do not silently merge'
+  }
   canonical_terms = $canonicalTerms
   canonical_clauses = $canonicalClauses
   conflicts = $conflicts
   gaps = $gaps
 }
 $crossMap | ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8 $crossMapPath
+
+$selfSpecId = [string]$selfIndex.spec_id
+$selfNonCanonicalTerms = New-Object System.Collections.Generic.List[object]
+foreach ($ct in $canonicalTerms) {
+  if ($ct.canonical_owner_spec_id -eq $selfSpecId) { continue }
+  $selfLocalMembers = @($ct.members | Where-Object {
+      $_.spec_id -eq $selfSpecId -and [string]::IsNullOrWhiteSpace($_.imported_from)
+    })
+  if ($selfLocalMembers.Count -gt 0) {
+    $selfNonCanonicalTerms.Add([pscustomobject]@{
+        term = $ct.canonical_term
+        owner = $ct.canonical_owner_spec_id
+        owner_anchor = $ct.canonical_anchor
+      })
+  }
+}
+
+$criticalTerms = @('proof artifact', 'binding credential', 'gdis binding credential', 'verification material', 'public verification material')
+$planLines = New-Object System.Collections.Generic.List[string]
+$planLines.Add('# Alignment Plan')
+$planLines.Add('')
+$planLines.Add('## Canonical Term Owners')
+foreach ($term in $criticalTerms) {
+  $match = $canonicalTerms | Where-Object { $_.canonical_term -eq $term } | Select-Object -First 1
+  if ($null -eq $match) {
+    $planLines.Add("- $term -> UNSPECIFIED (term missing from current snapshots)")
+  } else {
+    $planLines.Add("- $term -> $($match.canonical_owner_spec_id)$($match.canonical_anchor)")
+  }
+}
+$planLines.Add('- Device/key terms -> GQSCD-CORE (unless explicitly scoped as public verification material).')
+$planLines.Add('- Identity/PID terms -> GDIS-CORE.')
+$planLines.Add('- Log/publication terms -> GQTS-CORE.')
+$planLines.Add('')
+$planLines.Add('## Canonical Clause Mapping')
+foreach ($clause in $canonicalClauses) {
+  $planLines.Add("- $($clause.clause_concept) -> $($clause.canonical_owner_spec_id):$($clause.canonical_clause_id)")
+}
+$planLines.Add('')
+$planLines.Add("## Required Changes In SELF ($selfSpecId)")
+if ($selfNonCanonicalTerms.Count -eq 0) {
+  $planLines.Add('- No non-canonical local term definitions detected in SELF snapshot.')
+} else {
+  foreach ($item in $selfNonCanonicalTerms) {
+    $anchorId = $item.owner_anchor.TrimStart('#')
+    $planLines.Add("- Replace local definition of `$($item.term)` with `<dfn data-cite=`"$($item.owner)#$anchorId`">...`</dfn>` and keep only minimal local note.")
+  }
+}
+$planLines.Add('- Explicitly state that wallet proof artifacts/claims remain private and are not stored by trust services.')
+$planLines.Add('- Keep GDIS credential issuance semantics, but leave publication mechanics for private artifacts as UNSPECIFIED.')
+$planLines.Add('- Ensure any GQTS-hosted OpenAPI operations use canonical requirement IDs and schema-equivalent Proof/DID document structures.')
+$planLines.Add('- Ensure each requirement ID has a stable anchor or explicit alias anchor.')
+$planLines.Add('')
+$planLines.Add('## UNSPECIFIED')
+$planLines.Add('- OPRF/BBS profile details and blinded/unblinded flow details remain UNSPECIFIED unless separately profiled.')
+$planLines.Add('- Bad-node handling policy details beyond detect/flag/reject are UNSPECIFIED.')
+$planLines.Add('- Cross-repo peer edits are out of scope for this repo and remain UNSPECIFIED in this run.')
+$planLines | Set-Content -Encoding UTF8 $planPath
 
 $dupCount = 0
 foreach ($ct in $canonicalTerms) {
@@ -606,37 +823,56 @@ foreach ($ct in $canonicalTerms) {
   }
 }
 $termConflictCount = ($conflicts | Where-Object { $_.type -eq 'term-definition-conflict' } | Measure-Object).Count
-$reqConflictCount = ($conflicts | Where-Object { $_.type -eq 'requirement-namespace-conflict' } | Measure-Object).Count
+$reqConflictCount = ($conflicts | Where-Object { $_.type -eq 'requirement-id-namespace-conflict' } | Measure-Object).Count
+$operationConflictCount = ($conflicts | Where-Object { $_.type -eq 'operation-contract-conflict' } | Measure-Object).Count
 $gapCount = ($gaps | Measure-Object).Count
 
 $topReqConflicts = $conflicts |
-  Where-Object { $_.type -eq 'requirement-namespace-conflict' } |
+  Where-Object { $_.type -eq 'requirement-id-namespace-conflict' } |
+  Select-Object -First 12
+$topOperationConflicts = $conflicts |
+  Where-Object { $_.type -eq 'operation-contract-conflict' } |
   Select-Object -First 12
 
 $reportLines = New-Object System.Collections.Generic.List[string]
 $reportLines.Add('# Alignment Report')
 $reportLines.Add('')
 $reportLines.Add('## Status')
-$reportLines.Add('- COMPLETED: spec indexes + cross-spec map generated from local working trees.')
+$reportLines.Add('- COMPLETED: preconditions, deterministic indexes, cross-spec map, and alignment plan generated from local working trees.')
+$reportLines.Add('')
+$reportLines.Add('## Alignment Focus Applied')
+$reportLines.Add('- Wallet-private artifacts (`proof artifact`, binding credentials, VC claims) are treated as private and GDIS-owned concepts.')
+$reportLines.Add('- Trust-public verification material (`verification material`, DID docs, key history) is treated as GQTS-owned publication state.')
+$reportLines.Add('- GQTS log semantics are modeled as an append-only signed chain with bad-node conflict signaling.')
 $reportLines.Add('')
 $reportLines.Add('## What Changed')
-$reportLines.Add('- Generated `spec-index.self.json` for `GDIS-CORE`.')
-$reportLines.Add('- Generated `spec-index.peers.json` for `GQSCD-CORE` and `GQTS-CORE` from local sibling repos.')
-$reportLines.Add('- Generated `cross-spec-map.json` with canonical term/clause ownership, conflicts, and gaps.')
+$reportLines.Add("- Read `AGENTS.md` and `gidas-alignment.config.json` preconditions.")
+$reportLines.Add("- Generated `spec-index.self.json` for $selfSpecId.")
+$reportLines.Add('- Generated `spec-index.peers.json` for configured peer snapshots.')
+$reportLines.Add('- Generated `cross-spec-map.json` with canonical ownership, new conflict classes, and gaps.')
+$reportLines.Add('- Generated `alignment-plan.md` with SELF-specific edits and UNSPECIFIED items.')
+$reportLines.Add('- Generated `codex-alignment-prompt.template.txt` ready to copy into peer repos.')
 $reportLines.Add('')
 $reportLines.Add('## Duplicates Removed')
-$reportLines.Add('- NONE in this generation-only step (spec edits are applied separately).')
+if ($selfNonCanonicalTerms.Count -eq 0) {
+  $reportLines.Add('- none detected in this generation step.')
+} else {
+  foreach ($item in $selfNonCanonicalTerms) {
+    $reportLines.Add("- planned removal of local duplicate term: `$($item.term)` (canonical owner: $($item.owner)).")
+  }
+}
 $reportLines.Add('')
 $reportLines.Add('## Cross-References Added')
-$reportLines.Add('- NONE in this generation-only step (spec edits are applied separately).')
+$reportLines.Add('- no spec text edits were applied by this generator; cross-reference actions are listed in `alignment-plan.md`.')
 $reportLines.Add('')
 $reportLines.Add('## Metrics')
 $reportLines.Add("- term_clusters_with_multiple_members: $dupCount")
 $reportLines.Add("- term_definition_conflicts: $termConflictCount")
-$reportLines.Add("- requirement_namespace_conflicts: $reqConflictCount")
+$reportLines.Add("- requirement_id_namespace_conflicts: $reqConflictCount")
+$reportLines.Add("- operation_contract_conflicts: $operationConflictCount")
 $reportLines.Add("- gaps_detected: $gapCount")
 $reportLines.Add('')
-$reportLines.Add('## Key Requirement Namespace Conflicts')
+$reportLines.Add('## Key Requirement ID Namespace Conflicts')
 if ((($topReqConflicts | Measure-Object).Count) -eq 0) {
   $reportLines.Add('- none')
 } else {
@@ -646,7 +882,18 @@ if ((($topReqConflicts | Measure-Object).Count) -eq 0) {
   }
 }
 $reportLines.Add('')
+$reportLines.Add('## Key Operation Contract Conflicts')
+if ((($topOperationConflicts | Measure-Object).Count) -eq 0) {
+  $reportLines.Add('- none')
+} else {
+  foreach ($c in $topOperationConflicts) {
+    $members = ($c.members | ForEach-Object { "$($_.spec_id) $($_.method.ToUpper()) $($_.path) -> $($_.operation_contract_hash)" }) -join '; '
+    $reportLines.Add("- $($c.concept): $members")
+  }
+}
+$reportLines.Add('')
 $reportLines.Add('## Remaining Conflicts/Gaps')
-$reportLines.Add('- See `cross-spec-map.json` (`conflicts[]`, `gaps[]`) for UNSPECIFIED/TODO items requiring editorial decisions.')
+$reportLines.Add('- See `cross-spec-map.json` (`conflicts[]`, `gaps[]`) and `alignment-plan.md` for UNSPECIFIED/TODO items requiring editorial decisions.')
 
 $reportLines | Set-Content -Encoding UTF8 $reportPath
+

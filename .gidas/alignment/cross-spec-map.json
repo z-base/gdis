@@ -1,1056 +1,1465 @@
-{
-  "canonical_terms": [
-    {
-      "canonical_term": "annexii1a",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#annexii-1a",
-      "aliases": ["ANNEXII-1a"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "ANNEXII-1a",
-          "anchor": "#annexii-1a",
-          "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "annexii1b",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#annexii-1b",
-      "aliases": ["ANNEXII-1b"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "ANNEXII-1b",
-          "anchor": "#annexii-1b",
-          "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "annexii1c",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#annexii-1c",
-      "aliases": ["ANNEXII-1c"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "ANNEXII-1c",
-          "anchor": "#annexii-1c",
-          "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "annexii1d",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#annexii-1d",
-      "aliases": ["ANNEXII-1d"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "ANNEXII-1d",
-          "anchor": "#annexii-1d",
-          "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "annexii2",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#annexii-2",
-      "aliases": ["ANNEXII-2"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "ANNEXII-2",
-          "anchor": "#annexii-2",
-          "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "asof query parameter",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#asof-query-parameter",
-      "aliases": ["asOf query parameter"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "asOf query parameter",
-          "anchor": "#asof-query-parameter",
-          "definition_excerpt_hash": "44d7ef64e437cae5dbf7cd4a96ff94459e611cd89d3fbd5f84ca264756da480d",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "attestation evidence",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#attestation-evidence",
-      "aliases": ["attestation evidence"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "attestation evidence",
-          "anchor": "#attestation-evidence",
-          "definition_excerpt_hash": "a907b251ffdc8256e727ed70bcf65617c1e177d6c6aa3e0f60ab40642ccb0e13",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "byte sequence",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#byte-sequence",
-      "aliases": ["byte sequence"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "byte sequence",
-          "anchor": "#byte-sequence",
-          "definition_excerpt_hash": "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "chipbacked private key",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#chip-backed-private-key",
-      "aliases": ["chip-backed private key"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "chip-backed private key",
-          "anchor": "#chip-backed-private-key",
-          "definition_excerpt_hash": "0ee01a0747c0d9d5655c2ab8a8bfb843182b26a32f6e10cad7ce6b8dd951d3a9",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "conformance report",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#conformance-report",
-      "aliases": ["conformance report"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "conformance report",
-          "anchor": "#conformance-report",
-          "definition_excerpt_hash": "7996422db36b38a9e2c5d5c85755f75fa721f56c3883d5f7e2b61ea4ebb41117",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "decentralized event log",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#decentralized-event-log",
-      "aliases": ["decentralized event log"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "decentralized event log",
-          "anchor": "#decentralized-event-log",
-          "definition_excerpt_hash": "eba15d7541c4ceeee5b9404e4b280e8df0f525a785e967839db68a4647152414",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "eidas framework",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#eidas-framework",
-      "aliases": ["eidas framework"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "eidas framework",
-          "anchor": "#eidas-framework",
-          "definition_excerpt_hash": "10c3eb083e62a593cbf8f1d295f8e10b70a9f50df6f7539fc2fe3307cf307166",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "enduser device",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#end-user-device",
-      "aliases": ["end-user device"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "end-user device",
-          "anchor": "#end-user-device",
-          "definition_excerpt_hash": "3368bc77176274d3f8045952d031c53c9327887a140e0253a7aba34787327cdd",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "eu compatibility profile",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#eu-compatibility-profile",
-      "aliases": ["EU compatibility profile", "eu compatibility profile"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "EU compatibility profile",
-          "anchor": "#eu-compatibility-profile",
-          "definition_excerpt_hash": "3b6f2f4a858e9abfb5ed30087c236203e5f9d9309be1fb0f22a578725dfdd5b4",
-          "imported_from": "GQSCD-CORE#eu-compatibility-profile"
-        },
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "eu compatibility profile",
-          "anchor": "#eu-compatibility-profile",
-          "definition_excerpt_hash": "06a9cb45e84ad49e8b89bf9d5c7ee8d3557ca015c3669c4aa89782b32ac2f53c",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "eudi wallet ecosystem",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#eudi-wallet-ecosystem",
-      "aliases": ["eudi wallet ecosystem"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "eudi wallet ecosystem",
-          "anchor": "#eudi-wallet-ecosystem",
-          "definition_excerpt_hash": "07112426e87874a5d04d459dd23c5ae2276ed13df150ae6e5cdc22dbc57fe70f",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "event namespace",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#event-namespace",
-      "aliases": ["event namespace"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "event namespace",
-          "anchor": "#event-namespace",
-          "definition_excerpt_hash": "e5a6b7086515e3e08226c306f653766a6c4e6ce214600142b9acf77643cfda3d",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "evidence artifact",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#evidence-artifact",
-      "aliases": ["evidence artifact"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "evidence artifact",
-          "anchor": "#evidence-artifact",
-          "definition_excerpt_hash": "7317faf06554a2bb0cd3ca2904c8a486a5989942deeee30bbb796ea7498cacda",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "evidence record",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#evidence-record",
-      "aliases": ["evidence record"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "evidence record",
-          "anchor": "#evidence-record",
-          "definition_excerpt_hash": "c10d9c399dff28d57e0e5f87d5648aacb3950b8a4af1c03c67931dcaa9d5f050",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "gdis binding credential",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#gdis-binding-credential",
-      "aliases": ["GDIS binding credential"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "GDIS binding credential",
-          "anchor": "#gdis-binding-credential",
-          "definition_excerpt_hash": "55d2bb46703d2e5afe5443031bdaa46039f336c50c3f6691deb262ed9a205747",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "gdis subject did",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#gdis-subject-did",
-      "aliases": ["GDIS subject DID"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "GDIS subject DID",
-          "anchor": "#gdis-subject-did",
-          "definition_excerpt_hash": "577a8872cef469d40d7c4b258bf9a37571ef5f53f3c47c1e85d55137ae85327b",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "governance area",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#governance-area",
-      "aliases": ["governance area"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "governance area",
-          "anchor": "#governance-area",
-          "definition_excerpt_hash": "bf500fe19d1f3ddf45ca7fdecacf9571d76fe0f1f03d5ac757b236fa089fb8a3",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "governance code",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#governance-code",
-      "aliases": ["governance code"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "governance code",
-          "anchor": "#governance-code",
-          "definition_excerpt_hash": "16753c9c359e84248053137bf59b3fef294688d43dcb54167eead088b5c20dfe",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "governance verification endpoint",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#governance-verification-endpoint",
-      "aliases": ["governance verification endpoint"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "governance verification endpoint",
-          "anchor": "#governance-verification-endpoint",
-          "definition_excerpt_hash": "38b4c3b7807e191b740096675f8e9650fd56cdb76e75ca79296c00fb2ae78708",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "gqscd controller",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#gqscd-controller",
-      "aliases": ["GQSCD controller"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "GQSCD controller",
-          "anchor": "#gqscd-controller",
-          "definition_excerpt_hash": "c0a742523bec04201e72283f81f74f788ba5c1b1040715f40d817c3ad86e0233",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "gqts host",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#gqts-host",
-      "aliases": ["GQTS host"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "GQTS host",
-          "anchor": "#gqts-host",
-          "definition_excerpt_hash": "070466b3c71f8c3ae50c7b8cdf485f0f361daeb7cbbc710e83800d0c6f198295",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "gqtsp discovery endpoint",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#gqtsp-discovery-endpoint",
-      "aliases": ["gqtsp discovery endpoint"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "gqtsp discovery endpoint",
-          "anchor": "#gqtsp-discovery-endpoint",
-          "definition_excerpt_hash": "e5e65dd62af7570164899cf7ae73dab678a8abc5745c377e45078de4c21e4fda",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "hardwarebacked key",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#hardware-backed-key",
-      "aliases": ["hardware-backed key"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "hardware-backed key",
-          "anchor": "#hardware-backed-key",
-          "definition_excerpt_hash": "72dbcdf2ccb8e0d0eefb6c62f5993a0969039a6c4ed0ac09ee733fb2ecc987d5",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "head digest",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#head-digest",
-      "aliases": ["head digest"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "head digest",
-          "anchor": "#head-digest",
-          "definition_excerpt_hash": "fb18ffd23c937c56353b060d4ea0a808ecacb3bb338f1558a01b629e4cff1b2f",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "host profile",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#host-profile",
-      "aliases": ["host profile"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "host profile",
-          "anchor": "#host-profile",
-          "definition_excerpt_hash": "ba3347b2a836a0768e247f91253452ce493889ef1123a4d66f30810274b516d8",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "implementing specification",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#implementing-specification",
-      "aliases": ["implementing specification"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "implementing specification",
-          "anchor": "#implementing-specification",
-          "definition_excerpt_hash": "62bbd44f4eac910fd6a6a881c66e47ccbadcae58fb0ec732c2303f727f33ca5a",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "list",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#list",
-      "aliases": ["list"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "list",
-          "anchor": "#list",
-          "definition_excerpt_hash": "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "local signing profile",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#local-signing-profile",
-      "aliases": ["local signing profile"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "local signing profile",
-          "anchor": "#local-signing-profile",
-          "definition_excerpt_hash": "0149e41ea144479f546f1a4969d66c2b59e163a71d442e161a1cc51e58480c9a",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "mandatory minimum host",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#mandatory-minimum-hosts",
-      "aliases": ["mandatory minimum hosts"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "mandatory minimum hosts",
-          "anchor": "#mandatory-minimum-hosts",
-          "definition_excerpt_hash": "40804cf7d20df63c02314af37bd730dfaa4c416c45f285569710a2d669e1fc85",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "measured boot evidence",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#measured-boot-evidence",
-      "aliases": ["measured boot evidence"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "measured boot evidence",
-          "anchor": "#measured-boot-evidence",
-          "definition_excerpt_hash": "fac6fc3f388c992ae55c075191cb5f1163a5eabfbb583ac406f7565e8bea2fb9",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "mechanical validity",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#mechanical-validity",
-      "aliases": ["mechanical validity"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "mechanical validity",
-          "anchor": "#mechanical-validity",
-          "definition_excerpt_hash": "8762aa65e96d793c649cc2303cb62282c946c4df3e7f34f6f1ca1f41dc2d1ef3",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "merge event",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#merge-event",
-      "aliases": ["merge event"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "merge event",
-          "anchor": "#merge-event",
-          "definition_excerpt_hash": "81879382ea1196498dc73ec4e06f61d426f9baf01a28005590b87834db192c13",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "mrz",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#mrz",
-      "aliases": ["MRZ"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "MRZ",
-          "anchor": "#mrz",
-          "definition_excerpt_hash": "468227f290703f863c7ba9883ea67b12645668ae9c8003cdc7ae7c60d76c9922",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "physical identity item",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#physical-identity-item",
-      "aliases": ["physical identity item"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "physical identity item",
-          "anchor": "#physical-identity-item",
-          "definition_excerpt_hash": "a52b33463b36a78e3864b5362a1e907281e4c6a03b4318e85219996dd826717c",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "pid",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#pid",
-      "aliases": ["PID"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "PID",
-          "anchor": "#pid",
-          "definition_excerpt_hash": "0c5ad621deb1819b7ac24bd061ef895b8a6cc4c0e03368f0c7ab15cadeef6b87",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "pid field set",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#pid-field-set",
-      "aliases": ["PID field set"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "PID field set",
-          "anchor": "#pid-field-set",
-          "definition_excerpt_hash": "6fab225d701e02fbc76f16763148abe8778b354685c3a8dea4659dcb8dcc9977",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "pid hash",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#pid-hash",
-      "aliases": ["PID hash"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "PID hash",
-          "anchor": "#pid-hash",
-          "definition_excerpt_hash": "c773aacf5549bb879af86be2963d8d60f8cef0cb0f13f4d402daefbafcd56ba0",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "pid identification endpoint",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#pid-identification-endpoint",
-      "aliases": ["PID identification endpoint"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "PID identification endpoint",
-          "anchor": "#pid-identification-endpoint",
-          "definition_excerpt_hash": "f4b25794aa51110d3af94d33c2ca0a51defa8b136f3ee334df9924e68b83d9b5",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "publication set",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#publication-set",
-      "aliases": ["publication set"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "publication set",
-          "anchor": "#publication-set",
-          "definition_excerpt_hash": "4af087998d2b49f83bf06cf85ab683ca6b888be8026dca5d7b04585cc43dba7d",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "qscd certification evidence tuple",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#qscd-certification-evidence-tuple",
-      "aliases": ["qscd certification evidence tuple"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "qscd certification evidence tuple",
-          "anchor": "#qscd-certification-evidence-tuple",
-          "definition_excerpt_hash": "e9477bdc320e2a4b5d313fda0b3a6182c6b52f82fb219e2bdcb1c05ca55595bc",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "qualified signature creation device",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#qualified-signature-creation-device",
-      "aliases": ["qualified signature creation device"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "qualified signature creation device",
-          "anchor": "#qualified-signature-creation-device",
-          "definition_excerpt_hash": "268eda3dbb6734bb4edbd19c511868d3af9adc3e2eadd784b52bb1b5f37e41ad",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "qualified status claim",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#qualified-status-claim",
-      "aliases": ["qualified status claim"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "qualified status claim",
-          "anchor": "#qualified-status-claim",
-          "definition_excerpt_hash": "6e0ed188aff15053f645193170c721ca3696f609bf4dfc95ab316587ff0202a6",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "recognition statu",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#recognition-status",
-      "aliases": ["recognition status"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "recognition status",
-          "anchor": "#recognition-status",
-          "definition_excerpt_hash": "e95ba89f3d544f2dfb17b6fb909a3d884b7f185b79a2019de0379ddf78df6284",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "remote signing model",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#remote-signing-model",
-      "aliases": ["remote signing model"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "remote signing model",
-          "anchor": "#remote-signing-model",
-          "definition_excerpt_hash": "1c7b7b782e84122ab5a6625b46bd6bfead1470c72bacf437aec8d4181c3614b3",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "scheme descriptor",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#scheme-descriptor",
-      "aliases": ["scheme descriptor"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "scheme descriptor",
-          "anchor": "#scheme-descriptor",
-          "definition_excerpt_hash": "33fd49dbd784498c81573074e5fa1eeec84a1ef7f85ea3127f40e862e86b66cb",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "secure boot chain",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#secure-boot-chain",
-      "aliases": ["secure boot chain"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "secure boot chain",
-          "anchor": "#secure-boot-chain",
-          "definition_excerpt_hash": "2d8dfe4a192d96425f14deb674cd168f8214e13be7ba5937314230889082052e",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "service descriptor",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_anchor": "#service-descriptor",
-      "aliases": ["service descriptor"],
-      "members": [
-        {
-          "spec_id": "GQTS-CORE",
-          "term_text": "service descriptor",
-          "anchor": "#service-descriptor",
-          "definition_excerpt_hash": "da1a2e712533861f42837395d640f9f86cb5a4023f5cc03ff88b7b279576de45",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "set",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#set",
-      "aliases": ["set"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "set",
-          "anchor": "#set",
-          "definition_excerpt_hash": "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "signature creation data",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#signature-creation-data",
-      "aliases": ["signature creation data"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "signature creation data",
-          "anchor": "#signature-creation-data",
-          "definition_excerpt_hash": "8f8cf2d4e95650332728e54a43da68d2ad42014000cd1e6b3ede242a606b76b1",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "signature creation key",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#signature-creation-key",
-      "aliases": ["signature creation key"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "signature creation key",
-          "anchor": "#signature-creation-key",
-          "definition_excerpt_hash": "825d2eb260200f7a3c2210f8e0c04b3fa1fb9039b6f136027f8e380287b5d8ec",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "sole control",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#sole-control",
-      "aliases": ["sole control"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "sole control",
-          "anchor": "#sole-control",
-          "definition_excerpt_hash": "accd434d8672846002d21ffa4814ad833a514bfdde3ba7f97ad64dd243a1dbec",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "trusted computing base",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#trusted-computing-base",
-      "aliases": ["trusted computing base"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "trusted computing base",
-          "anchor": "#trusted-computing-base",
-          "definition_excerpt_hash": "58c5c9edb7651ff6a51d5ac6060f1f533529b70bb06689ab07c696236a9444fc",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "trusted execution environment",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#trusted-execution-environment",
-      "aliases": ["trusted execution environment"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "trusted execution environment",
-          "anchor": "#trusted-execution-environment",
-          "definition_excerpt_hash": "1e6b62db7b4a474d6c228bfab3e411e3aa145c205ac5411d15b38551a1f1dd18",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "tuple",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#tuple",
-      "aliases": ["tuple"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "tuple",
-          "anchor": "#tuple",
-          "definition_excerpt_hash": "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "tuple expression",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#tuple-expression",
-      "aliases": ["tuple expression"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "tuple expression",
-          "anchor": "#tuple-expression",
-          "definition_excerpt_hash": "e644cf4dd1a5f39fd14eeaf5f85dd5a47eb5e39fb5c402903a5a8fcbdf8ae176",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "user approved object",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#user-approved-object",
-      "aliases": ["user approved object"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "user approved object",
-          "anchor": "#user-approved-object",
-          "definition_excerpt_hash": "e13526b2a51c675543adf760f2923466c0bc150474490edbc08019e331aed8b5",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "user intent ceremony",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#user-intent-ceremony",
-      "aliases": ["user intent ceremony"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "user intent ceremony",
-          "anchor": "#user-intent-ceremony",
-          "definition_excerpt_hash": "b15b6cc931bca2ba90c47070f2ceade6967409ef2d8f4b005723b669d9fd14c8",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "user verification",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#user-verification",
-      "aliases": ["user verification"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "user verification",
-          "anchor": "#user-verification",
-          "definition_excerpt_hash": "5dde4882fcb42392d81ba50032f38d83d89a39867794d134c97de2d919be1228",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "verification result",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_anchor": "#verification-result",
-      "aliases": ["verification result"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "verification result",
-          "anchor": "#verification-result",
-          "definition_excerpt_hash": "f12a1a5604e8e4a59c086babced35fdf95636f64ef8ea15d4596b74dd27104dd",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "web profile",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#web-profile",
-      "aliases": ["web profile"],
-      "members": [
-        {
-          "spec_id": "GDIS-CORE",
-          "term_text": "web profile",
-          "anchor": "#web-profile",
-          "definition_excerpt_hash": "3b6f2f4a858e9abfb5ed30087c236203e5f9d9309be1fb0f22a578725dfdd5b4",
-          "imported_from": "GQSCD-CORE#web-profile"
-        },
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "web profile",
-          "anchor": "#web-profile",
-          "definition_excerpt_hash": "47083c0afe248b15efdbd63b5348a00970762a71bdb3f16c8af5e3c912e4b39d",
-          "imported_from": null
-        }
-      ]
-    },
-    {
-      "canonical_term": "zerotrust verification model",
-      "canonical_owner_spec_id": "GQSCD-CORE",
-      "canonical_anchor": "#zero-trust-verification-model",
-      "aliases": ["zero-trust verification model"],
-      "members": [
-        {
-          "spec_id": "GQSCD-CORE",
-          "term_text": "zero-trust verification model",
-          "anchor": "#zero-trust-verification-model",
-          "definition_excerpt_hash": "49098f6099ec0053bee307bc2060ee199584f915500c5bd6b7849bb093149484",
-          "imported_from": null
-        }
-      ]
-    }
-  ],
-  "canonical_clauses": [
-    {
-      "clause_concept": "getEndpointKindCatalog",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-02",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-02", "GQTS-CORE:REQ-GQTS-02"]
-    },
-    {
-      "clause_concept": "getEventById",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-07",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-07", "GQTS-CORE:REQ-GQTS-07"]
-    },
-    {
-      "clause_concept": "getEventHeadMeta",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-04",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-04", "GQTS-CORE:REQ-GQTS-04"]
-    },
-    {
-      "clause_concept": "getEventLogView",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-05",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-05", "GQTS-CORE:REQ-GQTS-05"]
-    },
-    {
-      "clause_concept": "getGdisPidIdentificationPolicy",
-      "canonical_owner_spec_id": "GDIS-CORE",
-      "canonical_clause_id": "REQ-GDIS-03",
-      "member_clause_ids": ["GDIS-CORE:REQ-GDIS-03"]
-    },
-    {
-      "clause_concept": "getSchemeDescriptor",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-01",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-01", "GQTS-CORE:REQ-GQTS-01"]
-    },
-    {
-      "clause_concept": "getTypeDescriptor",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-03",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-03", "GQTS-CORE:REQ-GQTS-03"]
-    },
-    {
-      "clause_concept": "postEventIngest",
-      "canonical_owner_spec_id": "GQTS-CORE",
-      "canonical_clause_id": "REQ-GQTS-06",
-      "member_clause_ids": ["GDIS-CORE:REQ-GQTS-06", "GQTS-CORE:REQ-GQTS-06"]
-    }
-  ],
-  "conflicts": [],
-  "gaps": [
-    {
-      "type": "missing-requirement-anchor",
-      "spec_id": "GQSCD-CORE",
-      "reference": "REQ-GQSCD-"
-    },
-    {
-      "type": "missing-requirement-anchor",
-      "spec_id": "GQTS-CORE",
-      "reference": "REQ-GQTS-"
-    }
-  ]
+﻿{
+    "alignment_focus":  {
+                            "wallet_private_artifacts":  [
+                                                             "proof artifact",
+                                                             "binding credential",
+                                                             "gdis binding credential"
+                                                         ],
+                            "trust_public_verification_material":  [
+                                                                       "verification material",
+                                                                       "did document",
+                                                                       "key history"
+                                                                   ],
+                            "gqts_log_model":  "append-only signed linear chain; root key at first event; each event links to previous head by signature",
+                            "conflict_resolution":  "flag conflicting nodes as bad nodes and do not silently merge"
+                        },
+    "canonical_terms":  [
+                            {
+                                "canonical_term":  "annexii1a",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#annexii-1a",
+                                "aliases":  [
+                                                "ANNEXII-1a"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "ANNEXII-1a",
+                                                    "anchor":  "#annexii-1a",
+                                                    "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "annexii1b",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#annexii-1b",
+                                "aliases":  [
+                                                "ANNEXII-1b"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "ANNEXII-1b",
+                                                    "anchor":  "#annexii-1b",
+                                                    "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "annexii1c",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#annexii-1c",
+                                "aliases":  [
+                                                "ANNEXII-1c"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "ANNEXII-1c",
+                                                    "anchor":  "#annexii-1c",
+                                                    "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "annexii1d",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#annexii-1d",
+                                "aliases":  [
+                                                "ANNEXII-1d"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "ANNEXII-1d",
+                                                    "anchor":  "#annexii-1d",
+                                                    "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "annexii2",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#annexii-2",
+                                "aliases":  [
+                                                "ANNEXII-2"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "ANNEXII-2",
+                                                    "anchor":  "#annexii-2",
+                                                    "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "asof query parameter",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#asof-query-parameter",
+                                "aliases":  [
+                                                "asOf query parameter"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "asOf query parameter",
+                                                    "anchor":  "#asof-query-parameter",
+                                                    "definition_excerpt_hash":  "44d7ef64e437cae5dbf7cd4a96ff94459e611cd89d3fbd5f84ca264756da480d",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "byte sequence",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#byte-sequence",
+                                "aliases":  [
+                                                "byte sequence"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "byte sequence",
+                                                    "anchor":  "#byte-sequence",
+                                                    "definition_excerpt_hash":  "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "chipbacked private key",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#chip-backed-private-key",
+                                "aliases":  [
+                                                "chip-backed private key"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "chip-backed private key",
+                                                    "anchor":  "#chip-backed-private-key",
+                                                    "definition_excerpt_hash":  "0ee01a0747c0d9d5655c2ab8a8bfb843182b26a32f6e10cad7ce6b8dd951d3a9",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "conformance report",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#conformance-report",
+                                "aliases":  [
+                                                "conformance report"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "conformance report",
+                                                    "anchor":  "#conformance-report",
+                                                    "definition_excerpt_hash":  "7996422db36b38a9e2c5d5c85755f75fa721f56c3883d5f7e2b61ea4ebb41117",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "dataintegrityproof",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#dataintegrityproof",
+                                "aliases":  [
+                                                "DataIntegrityProof"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "DataIntegrityProof",
+                                                    "anchor":  "#dataintegrityproof",
+                                                    "definition_excerpt_hash":  "629bdc255bae6dcf46735b8b147bc38b7f9cf1ced2234755a005302a33043cdd",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "decentralized event log",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#decentralized-event-log",
+                                "aliases":  [
+                                                "decentralized event log"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "decentralized event log",
+                                                    "anchor":  "#decentralized-event-log",
+                                                    "definition_excerpt_hash":  "eba15d7541c4ceeee5b9404e4b280e8df0f525a785e967839db68a4647152414",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "delegated pid issuer",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#delegated-pid-issuer",
+                                "aliases":  [
+                                                "delegated PID issuer"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "delegated PID issuer",
+                                                    "anchor":  "#delegated-pid-issuer",
+                                                    "definition_excerpt_hash":  "71f2427b2577fc3e59ed934449c9aa53fd537ec127fa883cad03176a0054f203",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "eidas framework",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#eidas-framework",
+                                "aliases":  [
+                                                "eidas framework"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "eidas framework",
+                                                    "anchor":  "#eidas-framework",
+                                                    "definition_excerpt_hash":  "10c3eb083e62a593cbf8f1d295f8e10b70a9f50df6f7539fc2fe3307cf307166",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "enduser device",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#end-user-device",
+                                "aliases":  [
+                                                "end-user device"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "end-user device",
+                                                    "anchor":  "#end-user-device",
+                                                    "definition_excerpt_hash":  "3368bc77176274d3f8045952d031c53c9327887a140e0253a7aba34787327cdd",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "eu compatibility profile",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#term-eu-compatibility-profile",
+                                "aliases":  [
+                                                "eu compatibility profile"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "eu compatibility profile",
+                                                    "anchor":  "#term-eu-compatibility-profile",
+                                                    "definition_excerpt_hash":  "06a9cb45e84ad49e8b89bf9d5c7ee8d3557ca015c3669c4aa89782b32ac2f53c",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "event namespace",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#event-namespace",
+                                "aliases":  [
+                                                "event namespace"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "event namespace",
+                                                    "anchor":  "#event-namespace",
+                                                    "definition_excerpt_hash":  "256402727373bef1440eaf1fc2b3558400065df9cd9d07ab551b6926778bc3b8",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "evidence artifact",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#evidence-artifact",
+                                "aliases":  [
+                                                "evidence artifact"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "evidence artifact",
+                                                    "anchor":  "#evidence-artifact",
+                                                    "definition_excerpt_hash":  "7317faf06554a2bb0cd3ca2904c8a486a5989942deeee30bbb796ea7498cacda",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "evidence record",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#evidence-record",
+                                "aliases":  [
+                                                "evidence record"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "evidence record",
+                                                    "anchor":  "#evidence-record",
+                                                    "definition_excerpt_hash":  "c10d9c399dff28d57e0e5f87d5648aacb3950b8a4af1c03c67931dcaa9d5f050",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "gdis binding credential",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#gdis-binding-credential",
+                                "aliases":  [
+                                                "GDIS binding credential"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "GDIS binding credential",
+                                                    "anchor":  "#gdis-binding-credential",
+                                                    "definition_excerpt_hash":  "12f2f9482ffb427a53e8b5e7328ca5430654408b9971b71206823c1580a81b7b",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "gdis subject did",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#gdis-subject-did",
+                                "aliases":  [
+                                                "GDIS subject DID"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "GDIS subject DID",
+                                                    "anchor":  "#gdis-subject-did",
+                                                    "definition_excerpt_hash":  "577a8872cef469d40d7c4b258bf9a37571ef5f53f3c47c1e85d55137ae85327b",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "governance area",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#governance-area",
+                                "aliases":  [
+                                                "governance area"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "governance area",
+                                                    "anchor":  "#governance-area",
+                                                    "definition_excerpt_hash":  "bf500fe19d1f3ddf45ca7fdecacf9571d76fe0f1f03d5ac757b236fa089fb8a3",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "governance code",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#governance-code",
+                                "aliases":  [
+                                                "governance code"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "governance code",
+                                                    "anchor":  "#governance-code",
+                                                    "definition_excerpt_hash":  "16753c9c359e84248053137bf59b3fef294688d43dcb54167eead088b5c20dfe",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "governance trust source reference",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#governance-trust-source-reference",
+                                "aliases":  [
+                                                "governance trust source reference"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "governance trust source reference",
+                                                    "anchor":  "#governance-trust-source-reference",
+                                                    "definition_excerpt_hash":  "33136e9518589e9eb9d11b9de0c8d16966a8a45f7bc30435385671d320408e94",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "governance verification endpoint",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#governance-verification-endpoint",
+                                "aliases":  [
+                                                "governance verification endpoint"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "governance verification endpoint",
+                                                    "anchor":  "#governance-verification-endpoint",
+                                                    "definition_excerpt_hash":  "38b4c3b7807e191b740096675f8e9650fd56cdb76e75ca79296c00fb2ae78708",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "gqscd controller",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#gqscd-controller",
+                                "aliases":  [
+                                                "GQSCD controller"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "GQSCD controller",
+                                                    "anchor":  "#gqscd-controller",
+                                                    "definition_excerpt_hash":  "c0a742523bec04201e72283f81f74f788ba5c1b1040715f40d817c3ad86e0233",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "gqts host",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#gqts-host",
+                                "aliases":  [
+                                                "GQTS host"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "GQTS host",
+                                                    "anchor":  "#gqts-host",
+                                                    "definition_excerpt_hash":  "8f62732a2a292d910ba432273547ad2239cd7eae49cc9a2d459261405ed97fde",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "gqtsp discovery endpoint",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#gqtsp-discovery-endpoint",
+                                "aliases":  [
+                                                "gqtsp discovery endpoint"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "gqtsp discovery endpoint",
+                                                    "anchor":  "#gqtsp-discovery-endpoint",
+                                                    "definition_excerpt_hash":  "15e05cf55c65cb0f6629ecf7736db2ff048f3333828a23b36a614369685c56b9",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "hardwarebacked key",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#hardware-backed-key",
+                                "aliases":  [
+                                                "hardware-backed key"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "hardware-backed key",
+                                                    "anchor":  "#hardware-backed-key",
+                                                    "definition_excerpt_hash":  "72dbcdf2ccb8e0d0eefb6c62f5993a0969039a6c4ed0ac09ee733fb2ecc987d5",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "head token",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#head-token",
+                                "aliases":  [
+                                                "head token"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "head token",
+                                                    "anchor":  "#head-token",
+                                                    "definition_excerpt_hash":  "9e8966a9b1884ca112815677822168da55f2aa48ba2e30890517dfe7d62507e6",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "host profile",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#host-profile",
+                                "aliases":  [
+                                                "host profile"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "host profile",
+                                                    "anchor":  "#host-profile",
+                                                    "definition_excerpt_hash":  "ba3347b2a836a0768e247f91253452ce493889ef1123a4d66f30810274b516d8",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "list",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#list",
+                                "aliases":  [
+                                                "list"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "list",
+                                                    "anchor":  "#list",
+                                                    "definition_excerpt_hash":  "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "local signing profile",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#local-signing-profile",
+                                "aliases":  [
+                                                "local signing profile"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "local signing profile",
+                                                    "anchor":  "#local-signing-profile",
+                                                    "definition_excerpt_hash":  "0149e41ea144479f546f1a4969d66c2b59e163a71d442e161a1cc51e58480c9a",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "mandatory minimum host",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#mandatory-minimum-hosts",
+                                "aliases":  [
+                                                "mandatory minimum hosts"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "mandatory minimum hosts",
+                                                    "anchor":  "#mandatory-minimum-hosts",
+                                                    "definition_excerpt_hash":  "40804cf7d20df63c02314af37bd730dfaa4c416c45f285569710a2d669e1fc85",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "mechanical validity",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#mechanical-validity",
+                                "aliases":  [
+                                                "mechanical validity"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "mechanical validity",
+                                                    "anchor":  "#mechanical-validity",
+                                                    "definition_excerpt_hash":  "f8892ef5d120029b291f844e591282c22b57548ccd13587caa8e825454d13c6e",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "merge token",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#merge-token",
+                                "aliases":  [
+                                                "merge token"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "merge token",
+                                                    "anchor":  "#merge-token",
+                                                    "definition_excerpt_hash":  "2d0c093e078d30c2f416b698f9e6a1a99cc49a78d9d72815aa33bc0d5ac27152",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "mrz",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#mrz",
+                                "aliases":  [
+                                                "MRZ"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "MRZ",
+                                                    "anchor":  "#mrz",
+                                                    "definition_excerpt_hash":  "468227f290703f863c7ba9883ea67b12645668ae9c8003cdc7ae7c60d76c9922",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "physical identity item",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#physical-identity-item",
+                                "aliases":  [
+                                                "physical identity item"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "physical identity item",
+                                                    "anchor":  "#physical-identity-item",
+                                                    "definition_excerpt_hash":  "a52b33463b36a78e3864b5362a1e907281e4c6a03b4318e85219996dd826717c",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "physical validity evidence artifact",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#physical-validity-evidence-artifact",
+                                "aliases":  [
+                                                "physical validity evidence artifact"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "physical validity evidence artifact",
+                                                    "anchor":  "#physical-validity-evidence-artifact",
+                                                    "definition_excerpt_hash":  "69c31d8e776375e6bb76574ac7868b206c95f09b04f39de50ccafb4d14763088",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "physical validity method profile",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#physical-validity-method-profile",
+                                "aliases":  [
+                                                "physical validity method profile"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "physical validity method profile",
+                                                    "anchor":  "#physical-validity-method-profile",
+                                                    "definition_excerpt_hash":  "762b3ddce8fdd0a19efc05c855656ae7c63347b347808012265b089878a9999a",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "pid",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#pid",
+                                "aliases":  [
+                                                "PID"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "PID",
+                                                    "anchor":  "#pid",
+                                                    "definition_excerpt_hash":  "0c5ad621deb1819b7ac24bd061ef895b8a6cc4c0e03368f0c7ab15cadeef6b87",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "pid binding value",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#pid-binding-value",
+                                "aliases":  [
+                                                "PID binding value"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "PID binding value",
+                                                    "anchor":  "#pid-binding-value",
+                                                    "definition_excerpt_hash":  "e5418e9339d171f7062790fa4ab9c63f76a6ded5fee174858b09478bd6b67294",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "pid field set",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#pid-field-set",
+                                "aliases":  [
+                                                "PID field set"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "PID field set",
+                                                    "anchor":  "#pid-field-set",
+                                                    "definition_excerpt_hash":  "6fab225d701e02fbc76f16763148abe8778b354685c3a8dea4659dcb8dcc9977",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "pid identification endpoint",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#pid-identification-endpoint",
+                                "aliases":  [
+                                                "PID identification endpoint"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "PID identification endpoint",
+                                                    "anchor":  "#pid-identification-endpoint",
+                                                    "definition_excerpt_hash":  "f4b25794aa51110d3af94d33c2ca0a51defa8b136f3ee334df9924e68b83d9b5",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "proof object",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#proof-object",
+                                "aliases":  [
+                                                "proof object"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "proof object",
+                                                    "anchor":  "#proof-object",
+                                                    "definition_excerpt_hash":  "e0580884eca767ca4a3b65aadbfa2f1573a69096bb0c3888696a230d42e3fcb7",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "publication set",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#publication-set",
+                                "aliases":  [
+                                                "publication set"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "publication set",
+                                                    "anchor":  "#publication-set",
+                                                    "definition_excerpt_hash":  "4af087998d2b49f83bf06cf85ab683ca6b888be8026dca5d7b04585cc43dba7d",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "qscd certification evidence tuple",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#qscd-certification-evidence-tuple",
+                                "aliases":  [
+                                                "qscd certification evidence tuple"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "qscd certification evidence tuple",
+                                                    "anchor":  "#qscd-certification-evidence-tuple",
+                                                    "definition_excerpt_hash":  "e9477bdc320e2a4b5d313fda0b3a6182c6b52f82fb219e2bdcb1c05ca55595bc",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "qualified signature creation device",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#qualified-signature-creation-device",
+                                "aliases":  [
+                                                "qualified signature creation device"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "qualified signature creation device",
+                                                    "anchor":  "#qualified-signature-creation-device",
+                                                    "definition_excerpt_hash":  "268eda3dbb6734bb4edbd19c511868d3af9adc3e2eadd784b52bb1b5f37e41ad",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "qualified status claim",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#qualified-status-claim",
+                                "aliases":  [
+                                                "qualified status claim"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "qualified status claim",
+                                                    "anchor":  "#qualified-status-claim",
+                                                    "definition_excerpt_hash":  "6e0ed188aff15053f645193170c721ca3696f609bf4dfc95ab316587ff0202a6",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "recognition statu",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#recognition-status",
+                                "aliases":  [
+                                                "recognition status"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "recognition status",
+                                                    "anchor":  "#recognition-status",
+                                                    "definition_excerpt_hash":  "e95ba89f3d544f2dfb17b6fb909a3d884b7f185b79a2019de0379ddf78df6284",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "remote eid provider",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#remote-eid-provider",
+                                "aliases":  [
+                                                "remote eID provider"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "remote eID provider",
+                                                    "anchor":  "#remote-eid-provider",
+                                                    "definition_excerpt_hash":  "1347ffef80218a3deaad9700548e51492965eb730b695a2364cfd9dcb8fc0cb2",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "remote signing model",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#remote-signing-model",
+                                "aliases":  [
+                                                "remote signing model"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "remote signing model",
+                                                    "anchor":  "#remote-signing-model",
+                                                    "definition_excerpt_hash":  "1c7b7b782e84122ab5a6625b46bd6bfead1470c72bacf437aec8d4181c3614b3",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "scheme descriptor",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#scheme-descriptor",
+                                "aliases":  [
+                                                "scheme descriptor"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "scheme descriptor",
+                                                    "anchor":  "#scheme-descriptor",
+                                                    "definition_excerpt_hash":  "33fd49dbd784498c81573074e5fa1eeec84a1ef7f85ea3127f40e862e86b66cb",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "service descriptor",
+                                "canonical_owner_spec_id":  "GQTS-CORE",
+                                "canonical_anchor":  "#service-descriptor",
+                                "aliases":  [
+                                                "service descriptor"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQTS-CORE",
+                                                    "term_text":  "service descriptor",
+                                                    "anchor":  "#service-descriptor",
+                                                    "definition_excerpt_hash":  "d66aba3af2f350862c12380a5eea02dc0e55e4009f043e88e4db7ec414bbbad4",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "set",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#set",
+                                "aliases":  [
+                                                "set"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "set",
+                                                    "anchor":  "#set",
+                                                    "definition_excerpt_hash":  "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "signature creation data",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#signature-creation-data",
+                                "aliases":  [
+                                                "signature creation data"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "signature creation data",
+                                                    "anchor":  "#signature-creation-data",
+                                                    "definition_excerpt_hash":  "8f8cf2d4e95650332728e54a43da68d2ad42014000cd1e6b3ede242a606b76b1",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "signature creation key",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#signature-creation-key",
+                                "aliases":  [
+                                                "signature creation key"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "signature creation key",
+                                                    "anchor":  "#signature-creation-key",
+                                                    "definition_excerpt_hash":  "825d2eb260200f7a3c2210f8e0c04b3fa1fb9039b6f136027f8e380287b5d8ec",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "sole control",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#sole-control",
+                                "aliases":  [
+                                                "sole control"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "sole control",
+                                                    "anchor":  "#sole-control",
+                                                    "definition_excerpt_hash":  "accd434d8672846002d21ffa4814ad833a514bfdde3ba7f97ad64dd243a1dbec",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "trusted computing base",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#trusted-computing-base",
+                                "aliases":  [
+                                                "trusted computing base"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "trusted computing base",
+                                                    "anchor":  "#trusted-computing-base",
+                                                    "definition_excerpt_hash":  "58c5c9edb7651ff6a51d5ac6060f1f533529b70bb06689ab07c696236a9444fc",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "tuple",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#tuple",
+                                "aliases":  [
+                                                "tuple"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "tuple",
+                                                    "anchor":  "#tuple",
+                                                    "definition_excerpt_hash":  "e4168218475d7bb5150d637ef8229fb281b872460d9e6103d60c1f2a58437b23",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "tuple expression",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#tuple-expression",
+                                "aliases":  [
+                                                "tuple expression"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "tuple expression",
+                                                    "anchor":  "#tuple-expression",
+                                                    "definition_excerpt_hash":  "e644cf4dd1a5f39fd14eeaf5f85dd5a47eb5e39fb5c402903a5a8fcbdf8ae176",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "user approved object",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#user-approved-object",
+                                "aliases":  [
+                                                "user approved object"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "user approved object",
+                                                    "anchor":  "#user-approved-object",
+                                                    "definition_excerpt_hash":  "e13526b2a51c675543adf760f2923466c0bc150474490edbc08019e331aed8b5",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "user intent ceremony",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#user-intent-ceremony",
+                                "aliases":  [
+                                                "user intent ceremony"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "user intent ceremony",
+                                                    "anchor":  "#user-intent-ceremony",
+                                                    "definition_excerpt_hash":  "b15b6cc931bca2ba90c47070f2ceade6967409ef2d8f4b005723b669d9fd14c8",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "verification result",
+                                "canonical_owner_spec_id":  "GDIS-CORE",
+                                "canonical_anchor":  "#verification-result",
+                                "aliases":  [
+                                                "verification result"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GDIS-CORE",
+                                                    "term_text":  "verification result",
+                                                    "anchor":  "#verification-result",
+                                                    "definition_excerpt_hash":  "f12a1a5604e8e4a59c086babced35fdf95636f64ef8ea15d4596b74dd27104dd",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "web profile",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#term-web-profile",
+                                "aliases":  [
+                                                "web profile"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "web profile",
+                                                    "anchor":  "#term-web-profile",
+                                                    "definition_excerpt_hash":  "47083c0afe248b15efdbd63b5348a00970762a71bdb3f16c8af5e3c912e4b39d",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "canonical_term":  "zerotrust verification model",
+                                "canonical_owner_spec_id":  "GQSCD-CORE",
+                                "canonical_anchor":  "#zero-trust-verification-model",
+                                "aliases":  [
+                                                "zero-trust verification model"
+                                            ],
+                                "members":  [
+                                                {
+                                                    "spec_id":  "GQSCD-CORE",
+                                                    "term_text":  "zero-trust verification model",
+                                                    "anchor":  "#zero-trust-verification-model",
+                                                    "definition_excerpt_hash":  "49098f6099ec0053bee307bc2060ee199584f915500c5bd6b7849bb093149484",
+                                                    "imported_from":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "canonical_clauses":  [
+                              {
+                                  "clause_concept":  "getEndpointKindCatalog",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-02",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-02",
+                                                            "GQTS-CORE:REQ-GQTS-02"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:b99e64b4a067c3d04e09f20d5d4533a05e693642df23eb9dffe8ceee6518ec95",
+                                                                           "GQTS-CORE:b99e64b4a067c3d04e09f20d5d4533a05e693642df23eb9dffe8ceee6518ec95"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getEventById",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-07",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-07",
+                                                            "GQTS-CORE:REQ-GQTS-07"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:629c37284614988e4423fae71ab52f7f79b30a347904c9404ecf4744149cb1b7",
+                                                                           "GQTS-CORE:3437664a3321cdfe81317baf4e6a75dd04a37bba645fa0a572ac4aa15d2cc413"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getEventHeadMeta",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-04",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-04",
+                                                            "GQTS-CORE:REQ-GQTS-04"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:ba0f6e87e1618034e7ea928da24edd3d97f2daa118d809ccbd8d4dba922d2a66",
+                                                                           "GQTS-CORE:ba0f6e87e1618034e7ea928da24edd3d97f2daa118d809ccbd8d4dba922d2a66"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getEventLogView",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-05",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-05",
+                                                            "GQTS-CORE:REQ-GQTS-05"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:6f50ab0c8126b90241e7e831c374173464d2067371a8e72cc73a38648601e497",
+                                                                           "GQTS-CORE:6f50ab0c8126b90241e7e831c374173464d2067371a8e72cc73a38648601e497"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getGdisPidIdentificationPolicy",
+                                  "canonical_owner_spec_id":  "GDIS-CORE",
+                                  "canonical_clause_id":  "REQ-GDIS-03",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GDIS-03"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:3a3af7720700567c81bec8982c5dce3e572d1014ceec7dd5dbe2f9887c500378"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getSchemeDescriptor",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-01",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-01",
+                                                            "GQTS-CORE:REQ-GQTS-01"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:eb261882d3fd63334b14867c013db40bc7c5639767ba6729655c5665cfffb846",
+                                                                           "GQTS-CORE:eb261882d3fd63334b14867c013db40bc7c5639767ba6729655c5665cfffb846"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "getTypeDescriptor",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-03",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-03",
+                                                            "GQTS-CORE:REQ-GQTS-03"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:7e62c7b1058716e8a8f814c059ac6c4723b358bca3f3746b6fab2d6c00369f3e",
+                                                                           "GQTS-CORE:7e62c7b1058716e8a8f814c059ac6c4723b358bca3f3746b6fab2d6c00369f3e"
+                                                                       ]
+                              },
+                              {
+                                  "clause_concept":  "postEventIngest",
+                                  "canonical_owner_spec_id":  "GQTS-CORE",
+                                  "canonical_clause_id":  "REQ-GQTS-06",
+                                  "member_clause_ids":  [
+                                                            "GDIS-CORE:REQ-GQTS-06",
+                                                            "GQTS-CORE:REQ-GQTS-06"
+                                                        ],
+                                  "member_operation_contract_hashes":  [
+                                                                           "GDIS-CORE:715382d694607ab116a666c24451746d1a84fa8023b923819f21ac56ba65f35d",
+                                                                           "GQTS-CORE:715382d694607ab116a666c24451746d1a84fa8023b923819f21ac56ba65f35d"
+                                                                       ]
+                              }
+                          ],
+    "conflicts":  [
+                      {
+                          "type":  "operation-contract-conflict",
+                          "concept":  "getEventById",
+                          "members":  [
+                                          {
+                                              "spec_id":  "GDIS-CORE",
+                                              "operationId":  "getEventById",
+                                              "method":  "get",
+                                              "path":  "/.well-known/gidas/gqts/event/{logId}/{eventId}",
+                                              "requirement_id":  "REQ-GQTS-07",
+                                              "requirement_key":  "x-gqts-requirement",
+                                              "operation_contract_hash":  "629c37284614988e4423fae71ab52f7f79b30a347904c9404ecf4744149cb1b7"
+                                          },
+                                          {
+                                              "spec_id":  "GQTS-CORE",
+                                              "operationId":  "getEventById",
+                                              "method":  "get",
+                                              "path":  "/.well-known/gidas/gqts/event/{logId}/{eventId}",
+                                              "requirement_id":  "REQ-GQTS-07",
+                                              "requirement_key":  "x-gqts-requirement",
+                                              "operation_contract_hash":  "3437664a3321cdfe81317baf4e6a75dd04a37bba645fa0a572ac4aa15d2cc413"
+                                          }
+                                      ]
+                      }
+                  ],
+    "gaps":  [
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-06"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-17"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-26"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-27"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-28"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-29"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-01"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-06"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-17"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-26"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-27"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-28"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-29"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-01"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-02"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-03"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-04"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-06"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQTS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-06"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-24"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GDIS-CORE",
+                     "reference":  "REQ-GQSCD-29"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQSCD-"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-01"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-09"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-03"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-04"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-09"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GDIS-09"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-04"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-05"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQSCD-CORE",
+                     "reference":  "REQ-GQTS-07"
+                 },
+                 {
+                     "type":  "missing-requirement-anchor",
+                     "spec_id":  "GQTS-CORE",
+                     "reference":  "REQ-GQTS-"
+                 }
+             ]
 }

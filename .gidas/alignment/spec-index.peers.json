@@ -1,1187 +1,1322 @@
-[
-  {
-    "spec_id": "GQSCD-CORE",
-    "repo": "z-base/gqscd",
-    "commit_or_version": "unspecified",
-    "home_url": "https://z-base.github.io/gqscd/",
-    "files": {
-      "index_html": "C:\\Users\\jorts\\gqscd\\index.html",
-      "openapi_yaml": null,
-      "agents_md": "AGENTS.md"
+﻿[
+    {
+        "spec_id":  "GQSCD-CORE",
+        "repo":  "z-base/gqscd",
+        "commit_or_version":  "unspecified",
+        "home_url":  "https://z-base.github.io/gqscd/",
+        "files":  {
+                      "index_html":  "C:\\Users\\jorts\\gqscd\\index.html",
+                      "openapi_yaml":  null,
+                      "agents_md":  "AGENTS.md"
+                  },
+        "terms":  [
+                      {
+                          "term_text":  "end-user device",
+                          "normalized_term":  "enduser device",
+                          "term_id":  "end-user-device",
+                          "anchor":  "#end-user-device",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "3368bc77176274d3f8045952d031c53c9327887a140e0253a7aba34787327cdd",
+                          "definition_text_excerpt":  "A phone, tablet, laptop, desktop, or hardware authenticator operated by a natural person in signature workflows.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "signature creation data",
+                          "normalized_term":  "signature creation data",
+                          "term_id":  "signature-creation-data",
+                          "anchor":  "#signature-creation-data",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "8f8cf2d4e95650332728e54a43da68d2ad42014000cd1e6b3ede242a606b76b1",
+                          "definition_text_excerpt":  "Data uniquely used by the signatory to create an electronic signature; aligned with eIDAS terminology for electronic signature creation data ( [EU-910/2014] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "signature creation key",
+                          "normalized_term":  "signature creation key",
+                          "term_id":  "signature-creation-key",
+                          "anchor":  "#signature-creation-key",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "825d2eb260200f7a3c2210f8e0c04b3fa1fb9039b6f136027f8e380287b5d8ec",
+                          "definition_text_excerpt":  "Cryptographic private key material used as [=signature creation data=] in digital signature mechanisms ( [RFC7515] , [RFC9052] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "hardware-backed key",
+                          "normalized_term":  "hardwarebacked key",
+                          "term_id":  "hardware-backed-key",
+                          "anchor":  "#hardware-backed-key",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "72dbcdf2ccb8e0d0eefb6c62f5993a0969039a6c4ed0ac09ee733fb2ecc987d5",
+                          "definition_text_excerpt":  "A [=signature creation key=] whose generation, storage, and cryptographic use are enforced by protected hardware boundaries with non-exportability controls ( [ANDROID-KEYSTORE] , [MSFT-TPM] , [APPLE-SE] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "qualified signature creation device",
+                          "normalized_term":  "qualified signature creation device",
+                          "term_id":  "qualified-signature-creation-device",
+                          "anchor":  "#qualified-signature-creation-device",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "268eda3dbb6734bb4edbd19c511868d3af9adc3e2eadd784b52bb1b5f37e41ad",
+                          "definition_text_excerpt":  "Device class defined by eIDAS and evaluated against Annex II outcomes and referenced assessment standards ( [EU-910/2014] , [EU-2016/650] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "sole control",
+                          "normalized_term":  "sole control",
+                          "term_id":  "sole-control",
+                          "anchor":  "#sole-control",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "accd434d8672846002d21ffa4814ad833a514bfdde3ba7f97ad64dd243a1dbec",
+                          "definition_text_excerpt":  "Security objective that signature creation data can be used only under control of the legitimate signatory, as required by Annex II outcome language ( [EU-910/2014] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "user intent ceremony",
+                          "normalized_term":  "user intent ceremony",
+                          "term_id":  "user-intent-ceremony",
+                          "anchor":  "#user-intent-ceremony",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "b15b6cc931bca2ba90c47070f2ceade6967409ef2d8f4b005723b669d9fd14c8",
+                          "definition_text_excerpt":  "Complete interaction in which the signer can inspect what is being signed and explicitly authorize the operation, with security-critical portions mediated by trusted platform paths when available ( [ANDROID-PROTECTED-CONFIRMATION] , [WEBAUT",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "user approved object",
+                          "normalized_term":  "user approved object",
+                          "term_id":  "user-approved-object",
+                          "anchor":  "#user-approved-object",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "e13526b2a51c675543adf760f2923466c0bc150474490edbc08019e331aed8b5",
+                          "definition_text_excerpt":  "The exact full payload byte sequence presented to and approved by the signer before signature creation; this profile does not permit signing operations where only a partial or transformed subset is shown as the approval target ( [EU-ANNEX-I",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "proof object",
+                          "normalized_term":  "proof object",
+                          "term_id":  "proof-object",
+                          "anchor":  "#proof-object",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "e0580884eca767ca4a3b65aadbfa2f1573a69096bb0c3888696a230d42e3fcb7",
+                          "definition_text_excerpt":  "JSON object attached to an artifact that carries cryptographic proof metadata and proof bytes so a verifier can check integrity and authenticity deterministically ( [VC-DI] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "DataIntegrityProof",
+                          "normalized_term":  "dataintegrityproof",
+                          "term_id":  "dataintegrityproof",
+                          "anchor":  "#dataintegrityproof",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "629bdc255bae6dcf46735b8b147bc38b7f9cf1ced2234755a005302a33043cdd",
+                          "definition_text_excerpt":  "[=proof object=] type defined by the W3C Data Integrity model; in this profile it is used for profile-level integrity claims and is paired with the selected cryptosuite and proofValue members ( [VC-DI] , [VC-DI-ECDSA] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "zero-trust verification model",
+                          "normalized_term":  "zerotrust verification model",
+                          "term_id":  "zero-trust-verification-model",
+                          "anchor":  "#zero-trust-verification-model",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "49098f6099ec0053bee307bc2060ee199584f915500c5bd6b7849bb093149484",
+                          "definition_text_excerpt":  "Verification model where each decision is based on explicit per-transaction evidence and policy evaluation, rather than implicit trust in network location, client software, or governance labels alone ( [NIST-SP-800-207] , [RFC7515] , [RFC90",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "trusted computing base",
+                          "normalized_term":  "trusted computing base",
+                          "term_id":  "trusted-computing-base",
+                          "anchor":  "#trusted-computing-base",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "58c5c9edb7651ff6a51d5ac6060f1f533529b70bb06689ab07c696236a9444fc",
+                          "definition_text_excerpt":  "Set of hardware, firmware, and software components that must behave correctly to uphold stated security properties ( [ETSI-319401] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "evidence record",
+                          "normalized_term":  "evidence record",
+                          "term_id":  "evidence-record",
+                          "anchor":  "#evidence-record",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "c10d9c399dff28d57e0e5f87d5648aacb3950b8a4af1c03c67931dcaa9d5f050",
+                          "definition_text_excerpt":  "Machine-verifiable artifact set used to substantiate technical or legal property claims ( [ETSI-319401] , [EU-2016/650] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "gqtsp discovery endpoint",
+                          "normalized_term":  "gqtsp discovery endpoint",
+                          "term_id":  "gqtsp-discovery-endpoint",
+                          "anchor":  "#gqtsp-discovery-endpoint",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "15e05cf55c65cb0f6629ecf7736db2ff048f3333828a23b36a614369685c56b9",
+                          "definition_text_excerpt":  "Deployment-defined HTTPS discovery location used to publish evidence metadata and pointers for decentralized verifier retrieval in this profile ( [RFC8615] , [RFC9110] , [GDIS-CORE] , REQ-GDIS-05 , getSchemeDescriptor , getEndpointKindCatal",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "local signing profile",
+                          "normalized_term":  "local signing profile",
+                          "term_id":  "local-signing-profile",
+                          "anchor":  "#local-signing-profile",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "0149e41ea144479f546f1a4969d66c2b59e163a71d442e161a1cc51e58480c9a",
+                          "definition_text_excerpt":  "Model where signature creation data remains on the signatory-operated [=end-user device=] and is not duplicated to remote service custody.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "remote signing model",
+                          "normalized_term":  "remote signing model",
+                          "term_id":  "remote-signing-model",
+                          "anchor":  "#remote-signing-model",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "1c7b7b782e84122ab5a6625b46bd6bfead1470c72bacf437aec8d4181c3614b3",
+                          "definition_text_excerpt":  "Model where signature creation data is created, managed, or activated in server-side trust-service components external to the signatory device ( [CEN-419241-1] , [ETSI-119431-1] , [ETSI-119431-2] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "web profile",
+                          "normalized_term":  "web profile",
+                          "term_id":  "term-web-profile",
+                          "anchor":  "#term-web-profile",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "47083c0afe248b15efdbd63b5348a00970762a71bdb3f16c8af5e3c912e4b39d",
+                          "definition_text_excerpt":  "Primary interoperability profile in this specification, based on globally deployed web and internet standards ( [WEBCRYPTO-L2] , [WEBAUTHN-L3] , [RFC7515] , [RFC9052] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "eu compatibility profile",
+                          "normalized_term":  "eu compatibility profile",
+                          "term_id":  "term-eu-compatibility-profile",
+                          "anchor":  "#term-eu-compatibility-profile",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "06a9cb45e84ad49e8b89bf9d5c7ee8d3557ca015c3669c4aa89782b32ac2f53c",
+                          "definition_text_excerpt":  "Mapping layer from [=web profile=] artifacts to EU legal and ecosystem evidence requirements ( [EU-910/2014] , [EU-2016/650] , [EU-2024/2979] , [EU-2024/2982] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "qualified status claim",
+                          "normalized_term":  "qualified status claim",
+                          "term_id":  "qualified-status-claim",
+                          "anchor":  "#qualified-status-claim",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "6e0ed188aff15053f645193170c721ca3696f609bf4dfc95ab316587ff0202a6",
+                          "definition_text_excerpt":  "Claim that an actor, service, device, or signature has legal qualified status within a defined jurisdiction; such claims require authoritative status evidence ( [EU-TRUSTED-LISTS] , [EU-QSCD-NOTIFICATIONS] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "eidas framework",
+                          "normalized_term":  "eidas framework",
+                          "term_id":  "eidas-framework",
+                          "anchor":  "#eidas-framework",
+                          "section_anchor":  "#conformance",
+                          "definition_excerpt_hash":  "10c3eb083e62a593cbf8f1d295f8e10b70a9f50df6f7539fc2fe3307cf307166",
+                          "definition_text_excerpt":  "EU legal framework for electronic identification and trust services established by Regulation (EU) No 910/2014 and its amendments ( [EU-910/2014] , [EU-2024/1183] ).",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "qscd certification evidence tuple",
+                          "normalized_term":  "qscd certification evidence tuple",
+                          "term_id":  "qscd-certification-evidence-tuple",
+                          "anchor":  "#qscd-certification-evidence-tuple",
+                          "section_anchor":  "#eu-certification-notification-path",
+                          "definition_excerpt_hash":  "e9477bdc320e2a4b5d313fda0b3a6182c6b52f82fb219e2bdcb1c05ca55595bc",
+                          "definition_text_excerpt":  "{ certificate of conformity, certification report, certification report URL, certified configuration identifiers (hardware/firmware/software versions), validity dates and status, certification body identity }",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "ANNEXII-1a",
+                          "normalized_term":  "annexii1a",
+                          "term_id":  "annexii-1a",
+                          "anchor":  "#annexii-1a",
+                          "section_anchor":  "#eu-compatibility-profile",
+                          "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                          "definition_text_excerpt":  "",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "ANNEXII-1b",
+                          "normalized_term":  "annexii1b",
+                          "term_id":  "annexii-1b",
+                          "anchor":  "#annexii-1b",
+                          "section_anchor":  "#eu-compatibility-profile",
+                          "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                          "definition_text_excerpt":  "",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "ANNEXII-1c",
+                          "normalized_term":  "annexii1c",
+                          "term_id":  "annexii-1c",
+                          "anchor":  "#annexii-1c",
+                          "section_anchor":  "#eu-compatibility-profile",
+                          "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                          "definition_text_excerpt":  "",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "ANNEXII-1d",
+                          "normalized_term":  "annexii1d",
+                          "term_id":  "annexii-1d",
+                          "anchor":  "#annexii-1d",
+                          "section_anchor":  "#eu-compatibility-profile",
+                          "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                          "definition_text_excerpt":  "",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "ANNEXII-2",
+                          "normalized_term":  "annexii2",
+                          "term_id":  "annexii-2",
+                          "anchor":  "#annexii-2",
+                          "section_anchor":  "#eu-compatibility-profile",
+                          "definition_excerpt_hash":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                          "definition_text_excerpt":  "",
+                          "imported_from":  null
+                      }
+                  ],
+        "clauses":  [
+                        {
+                            "clause_id":  "REQ-GQSCD-54",
+                            "anchor":  "#req-gqscd-54",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "2c0835f04f4db4ec40a9c3712c7d40ee568b9ca017b5767158914635ff525e22"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-55",
+                            "anchor":  "#req-gqscd-55",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "51d573b02913f71f21e21a7a2a882e93f03ccfdc4151685101a1c307045f75d1"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-56",
+                            "anchor":  "#req-gqscd-56",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "7bd59a5b13c359ab976f40031a87987460038b4519549b042ceb816be6917526"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-01",
+                            "anchor":  "#req-gqscd-01",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "f2f9a2854d2679acdf8f2c33b38211ffc2b5500d36ea552152efc69d1c21abcd"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-02",
+                            "anchor":  "#req-gqscd-02",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "09266312ef61b04c953003ca4f9b39d9568c24ab872dcdcf227f07297cd23aa1"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-03",
+                            "anchor":  "#req-gqscd-03",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "650a0d48d7ff52bf19d657975228d4bdb1ccd601ab9ff7acf978d7a3b949485e"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-04",
+                            "anchor":  "#req-gqscd-04",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "5ac3a0f4ba9a4128bf4c69d5b355cf596cf9f7b6fc4a5bd244bcb1d01cd16a93"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-05",
+                            "anchor":  "#req-gqscd-05",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "bbfffb83bc67ba5e99054ddd825f4ba54564131601b03d38bde69f8849005ffe"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-06",
+                            "anchor":  "#req-gqscd-06",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "f6a00093bc2b52c0dbe231698911a1177a053b89ad14a0e63f81a95bfcea6309"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-07",
+                            "anchor":  "#req-gqscd-07",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "1c2f82a53bf82d5dd6d03b6f3023278c61255bfa97d652afe2e5976e1987167b"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-08",
+                            "anchor":  "#req-gqscd-08",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "54617944a0c5d7018029e2c0d01ddba276248fb31d32c0dab889968ddc96faaf"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-09",
+                            "anchor":  "#req-gqscd-09",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "74d49e533b099328304157c5d1029c068f57d3c7575a73de892f94dc9c0eee63"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-10",
+                            "anchor":  "#req-gqscd-10",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "d90e25be0a115193c924d8b1255e7c93d557433014d3b7c9ff82bec03c623010"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-11",
+                            "anchor":  "#req-gqscd-11",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "e8c1ad5af28c03b007c0def42264a823ac955383e713dbfdfb99086a6c2b756e"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-12",
+                            "anchor":  "#req-gqscd-12",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "2b999d2af554456b655cf88175000477147196eabd67757497ce164884dbc9c4"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-13",
+                            "anchor":  "#req-gqscd-13",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "9307b96ed10cdced647f10458f5b22bb6f8fe73929bb93eeba3d4a740e9ecab8"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-14",
+                            "anchor":  "#req-gqscd-14",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "d2b57d0b7d64b54b9da919630457d945e86b0ec5045087488aba4dc752932dc8"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-15",
+                            "anchor":  "#req-gqscd-15",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "ea587dded5e4bcbc811074c42cdb31494d9b90c6fd935c37c960057005bbfa5c"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-16",
+                            "anchor":  "#req-gqscd-16",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "9a34cd517dd53bbd0c29dfab3a0dd08410c96dda8e3fa8de7a84ff3bad3d84f6"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-17",
+                            "anchor":  "#req-gqscd-17",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "d546723822f65b6ac2adaa5acdab6a1b6a4fc33530ca2ddcb66aafa427b5ac6a"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-18",
+                            "anchor":  "#req-gqscd-18",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "4b2e404269025c5d18328637b39fa48e09090596b288817cdf33a6b47930e59b"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-19",
+                            "anchor":  "#req-gqscd-19",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "492e1fd002ad686f11071b4e793705c8dd31c00d4ca0529cd9c5696d5b6f823f"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-20",
+                            "anchor":  "#req-gqscd-20",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "342cfbcc9be10fb777b286f715af6cd5c433d875f8cc557e36335a7408ce07e2"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-21",
+                            "anchor":  "#req-gqscd-21",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "ec68e9b6d6228671a09b8a761800ed57e689fd3173179b844db3f9d1236530fc"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-22",
+                            "anchor":  "#req-gqscd-22",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "9db6d3315c7054a4fe03d1fe3596200ef9fb9afe67a0b82313a52ce86e20a6b3"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-23",
+                            "anchor":  "#req-gqscd-23",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "SHOULD"
+                                                        ],
+                            "text_excerpt_hash":  "118b41e389b4e4534c2494fc4ba50b205f291afa3e5364496bfd9ab2a2598e19"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-24",
+                            "anchor":  "#req-gqscd-24",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MAY"
+                                                        ],
+                            "text_excerpt_hash":  "844f2761336b599337024c5f33981423e65844c505d40349c81f9f865369cd9f"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-25",
+                            "anchor":  "#req-gqscd-25",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "SHOULD"
+                                                        ],
+                            "text_excerpt_hash":  "8e90b8640495a64d03510c44af39baf027a4beb374199fd99db7d3c2a4a696c9"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-26",
+                            "anchor":  "#req-gqscd-26",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+
+                                                        ],
+                            "text_excerpt_hash":  "5185d159b14427683d8e91112193dda14aa746df1891d6c2e21e6e2aa8f5396a"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-27",
+                            "anchor":  "#req-gqscd-27",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+
+                                                        ],
+                            "text_excerpt_hash":  "03a198061ebfde47ba9aeb3e7b91c3468ade1c0fd3333a2fdd6539b9243a4b2b"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-28",
+                            "anchor":  "#req-gqscd-28",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+
+                                                        ],
+                            "text_excerpt_hash":  "24c11f44751973e62711433ed20a6eb3dce3fd842921e6ac55adc7f6f9c1ac76"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-29",
+                            "anchor":  "#req-gqscd-29",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "REQUIRED"
+                                                        ],
+                            "text_excerpt_hash":  "16c0746d85aadeaee18c6d14b3adae80e30eb5a4662512e1f17742d790068946"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-30",
+                            "anchor":  "#req-gqscd-30",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "c0dbce52cbab87770010e877ae61fbc2db4764139ed26d9d49640a3f89385a08"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-31",
+                            "anchor":  "#req-gqscd-31",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "ba6525ef3546d13125d643cde6e3e2b01d506ec03c0093c5e7708b6c5474d905"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-32",
+                            "anchor":  "#req-gqscd-32",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "199f589c87f882771a68873be72dec1b17ed1b533b37f11f30684f724158ec98"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-33",
+                            "anchor":  "#req-gqscd-33",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "SHOULD",
+                                                            "MAY"
+                                                        ],
+                            "text_excerpt_hash":  "8dd9c18390f7d77b6739ae753bbab10f42333b1469f16500d8bbd0657a048cd8"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-34",
+                            "anchor":  "#req-gqscd-34",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MAY"
+                                                        ],
+                            "text_excerpt_hash":  "794f86e3535564ea1371604e7eee208ffd72ebb637c5e20bfea61e9e79577857"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-35",
+                            "anchor":  "#req-gqscd-35",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "d0f9a8703e63694ab811166e2baf4adbd73a2dd86b06b08ed1b8863294d87793"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-36",
+                            "anchor":  "#req-gqscd-36",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "2ec4b73f6735d9364ce7d36c4c82124afa2e129c62c6c33b38ce8a53e25d4f95"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-37",
+                            "anchor":  "#req-gqscd-37",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "465e0f2a21cffd4ccfbf6a61b1947dfe544c5bfb13985dd8b2566b19c2dbfb9a"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-38",
+                            "anchor":  "#req-gqscd-38",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "430bccdbb4f86ea0f872b89b08c5487836197390b9baa88c9c98017dbff7b29c"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-39",
+                            "anchor":  "#req-gqscd-39",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "398501341ac08f5ceb00bef5b21e25093e803a55f6cc524d3269fc5f91585ad7"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-40",
+                            "anchor":  "#req-gqscd-40",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "fd97dc3904d3883c69b02d920d2434be52ba69421abbfa95c509c2428be60fe2"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-41",
+                            "anchor":  "#req-gqscd-41",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "f996dea48e175ea75027a7ac09a8be9daf022a86211eff7b5a6058c1af40370b"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-42",
+                            "anchor":  "#req-gqscd-42",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "d90d35a02d719fac827ff0b8230b2bc58776931a6afa7b592a6fdc7e89271a6a"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-43",
+                            "anchor":  "#req-gqscd-43",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "0a14493e3dc87b29bd43c0158ca927f7433c7561107fb33c65193b3a959ee309"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-44",
+                            "anchor":  "#req-gqscd-44",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "4a0cbdf1ae56fa761f9305600bc0dfc18379938353321eedd68b423d809a3a89"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-45",
+                            "anchor":  "#req-gqscd-45",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "4a4d000db77823d8c39b456234185f192119a73e8b31e0c27ac2754ee49be01e"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-46",
+                            "anchor":  "#req-gqscd-46",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "9ebf0bf46feb92c70f7528d29eac3c97bc453289d738882e61d8e431af46d39f"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-47",
+                            "anchor":  "#req-gqscd-47",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "95f7ff48a128c90cd6ab42c88f21630619e94059afbd311cf3b585ffd8fc92e4"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-48",
+                            "anchor":  "#req-gqscd-48",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "c7f26cf237d426bfc789534787fff7f4ef17c7e16d6d46781b2804a6dbeb90b1"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-49",
+                            "anchor":  "#req-gqscd-49",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "715a2cae9199cdb1dd91548be6acc06a5063101b4daada497eaab5249cdac607"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-50",
+                            "anchor":  "#req-gqscd-50",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "aefaee85ece41d0594085f6555f84d80edf01e057f705c3e61f4881a66cb1291"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-51",
+                            "anchor":  "#req-gqscd-51",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST",
+                                                            "MUST NOT"
+                                                        ],
+                            "text_excerpt_hash":  "4e23b9813ebf8c8a927a6dc7262e444124df052503fe4812b000b022e0aee030"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-52",
+                            "anchor":  "#req-gqscd-52",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "b03c3e224fecba2bcfa5d4c8f47d83ccc75a83b291b97820c093100bd535298b"
+                        },
+                        {
+                            "clause_id":  "REQ-GQSCD-53",
+                            "anchor":  "#req-gqscd-53",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "d3c7ce829af2db22544dcbd1c184cf657a9e397e37bec033b0b83dde82166983"
+                        }
+                    ],
+        "cross_spec_references":  [
+                                      {
+                                          "type":  "href",
+                                          "value":  "https://z-base.github.io/gqscd/"
+                                      },
+                                      {
+                                          "type":  "href",
+                                          "value":  "https://z-base.github.io/gqts/"
+                                      },
+                                      {
+                                          "type":  "href",
+                                          "value":  "https://z-base.github.io/gdis/"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQTS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQSCD-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQTS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      }
+                                  ],
+        "openapi":  null
     },
-    "terms": [
-      {
-        "term_text": "end-user device",
-        "normalized_term": "enduser device",
-        "term_id": "end-user-device",
-        "anchor": "#end-user-device",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "3368bc77176274d3f8045952d031c53c9327887a140e0253a7aba34787327cdd",
-        "definition_text_excerpt": "A phone, tablet, laptop, desktop, or hardware authenticator operated by a natural person in signature workflows.",
-        "imported_from": null
-      },
-      {
-        "term_text": "signature creation data",
-        "normalized_term": "signature creation data",
-        "term_id": "signature-creation-data",
-        "anchor": "#signature-creation-data",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "8f8cf2d4e95650332728e54a43da68d2ad42014000cd1e6b3ede242a606b76b1",
-        "definition_text_excerpt": "Data uniquely used by the signatory to create an electronic signature; aligned with eIDAS terminology for electronic signature creation data ( [EU-910/2014] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "signature creation key",
-        "normalized_term": "signature creation key",
-        "term_id": "signature-creation-key",
-        "anchor": "#signature-creation-key",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "825d2eb260200f7a3c2210f8e0c04b3fa1fb9039b6f136027f8e380287b5d8ec",
-        "definition_text_excerpt": "Cryptographic private key material used as [=signature creation data=] in digital signature mechanisms ( [RFC7515] , [RFC9052] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "hardware-backed key",
-        "normalized_term": "hardwarebacked key",
-        "term_id": "hardware-backed-key",
-        "anchor": "#hardware-backed-key",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "72dbcdf2ccb8e0d0eefb6c62f5993a0969039a6c4ed0ac09ee733fb2ecc987d5",
-        "definition_text_excerpt": "A [=signature creation key=] whose generation, storage, and cryptographic use are enforced by protected hardware boundaries with non-exportability controls ( [ANDROID-KEYSTORE] , [MSFT-TPM] , [APPLE-SE] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "qualified signature creation device",
-        "normalized_term": "qualified signature creation device",
-        "term_id": "qualified-signature-creation-device",
-        "anchor": "#qualified-signature-creation-device",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "268eda3dbb6734bb4edbd19c511868d3af9adc3e2eadd784b52bb1b5f37e41ad",
-        "definition_text_excerpt": "Device class defined by eIDAS and evaluated against Annex II outcomes and referenced assessment standards ( [EU-910/2014] , [EU-2016/650] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "sole control",
-        "normalized_term": "sole control",
-        "term_id": "sole-control",
-        "anchor": "#sole-control",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "accd434d8672846002d21ffa4814ad833a514bfdde3ba7f97ad64dd243a1dbec",
-        "definition_text_excerpt": "Security objective that signature creation data can be used only under control of the legitimate signatory, as required by Annex II outcome language ( [EU-910/2014] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "trusted execution environment",
-        "normalized_term": "trusted execution environment",
-        "term_id": "trusted-execution-environment",
-        "anchor": "#trusted-execution-environment",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "1e6b62db7b4a474d6c228bfab3e411e3aa145c205ac5411d15b38551a1f1dd18",
-        "definition_text_excerpt": "Isolated execution context used for security-critical operations separate from the rich operating environment ( [ANDROID-TRUSTY] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "secure boot chain",
-        "normalized_term": "secure boot chain",
-        "term_id": "secure-boot-chain",
-        "anchor": "#secure-boot-chain",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "2d8dfe4a192d96425f14deb674cd168f8214e13be7ba5937314230889082052e",
-        "definition_text_excerpt": "Firmware and boot verification sequence that permits execution only of cryptographically verified boot components ( [ANDROID-AVB] , [MSFT-SECURE-BOOT] , [APPLE-BOOT] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "measured boot evidence",
-        "normalized_term": "measured boot evidence",
-        "term_id": "measured-boot-evidence",
-        "anchor": "#measured-boot-evidence",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "fac6fc3f388c992ae55c075191cb5f1163a5eabfbb583ac406f7565e8bea2fb9",
-        "definition_text_excerpt": "Measurement artifacts (for example TPM PCR values and event logs) describing boot state for remote verification ( [MSFT-TPM] , [SYSTEMD-PCR] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "user intent ceremony",
-        "normalized_term": "user intent ceremony",
-        "term_id": "user-intent-ceremony",
-        "anchor": "#user-intent-ceremony",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "b15b6cc931bca2ba90c47070f2ceade6967409ef2d8f4b005723b669d9fd14c8",
-        "definition_text_excerpt": "Complete interaction in which the signer can inspect what is being signed and explicitly authorize the operation, with security-critical portions mediated by trusted platform paths when available ( [ANDROID-PROTECTED-CONFIRMATION] , [WEBAUT",
-        "imported_from": null
-      },
-      {
-        "term_text": "user approved object",
-        "normalized_term": "user approved object",
-        "term_id": "user-approved-object",
-        "anchor": "#user-approved-object",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "e13526b2a51c675543adf760f2923466c0bc150474490edbc08019e331aed8b5",
-        "definition_text_excerpt": "The exact full payload byte sequence presented to and approved by the signer before signature creation; this profile does not permit signing operations where only a partial or transformed subset is shown as the approval target ( [EU-ANNEX-I",
-        "imported_from": null
-      },
-      {
-        "term_text": "user verification",
-        "normalized_term": "user verification",
-        "term_id": "user-verification",
-        "anchor": "#user-verification",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "5dde4882fcb42392d81ba50032f38d83d89a39867794d134c97de2d919be1228",
-        "definition_text_excerpt": "Authenticator procedure that validates the user through local authentication mechanisms before sensitive operations are performed ( [WEBAUTHN-L3] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "attestation evidence",
-        "normalized_term": "attestation evidence",
-        "term_id": "attestation-evidence",
-        "anchor": "#attestation-evidence",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "a907b251ffdc8256e727ed70bcf65617c1e177d6c6aa3e0f60ab40642ccb0e13",
-        "definition_text_excerpt": "Cryptographically verifiable evidence about key origin, authenticator/device properties, or execution state used by verifiers during trust decisions ( [WEBAUTHN-L3] , [ANDROID-ATTESTATION] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "zero-trust verification model",
-        "normalized_term": "zerotrust verification model",
-        "term_id": "zero-trust-verification-model",
-        "anchor": "#zero-trust-verification-model",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "49098f6099ec0053bee307bc2060ee199584f915500c5bd6b7849bb093149484",
-        "definition_text_excerpt": "Verification model where each decision is based on explicit per-transaction evidence and policy evaluation, rather than implicit trust in network location, client software, or governance labels alone ( [NIST-SP-800-207] , [RFC7515] , [RFC90",
-        "imported_from": null
-      },
-      {
-        "term_text": "trusted computing base",
-        "normalized_term": "trusted computing base",
-        "term_id": "trusted-computing-base",
-        "anchor": "#trusted-computing-base",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "58c5c9edb7651ff6a51d5ac6060f1f533529b70bb06689ab07c696236a9444fc",
-        "definition_text_excerpt": "Set of hardware, firmware, and software components that must behave correctly to uphold stated security properties ( [ETSI-319401] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "evidence record",
-        "normalized_term": "evidence record",
-        "term_id": "evidence-record",
-        "anchor": "#evidence-record",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "c10d9c399dff28d57e0e5f87d5648aacb3950b8a4af1c03c67931dcaa9d5f050",
-        "definition_text_excerpt": "Machine-verifiable artifact set used to substantiate technical or legal property claims ( [ETSI-319401] , [EU-2016/650] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "gqtsp discovery endpoint",
-        "normalized_term": "gqtsp discovery endpoint",
-        "term_id": "gqtsp-discovery-endpoint",
-        "anchor": "#gqtsp-discovery-endpoint",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "e5e65dd62af7570164899cf7ae73dab678a8abc5745c377e45078de4c21e4fda",
-        "definition_text_excerpt": "Deployment-defined HTTPS discovery location used to publish evidence metadata and pointers for decentralized verifier retrieval in this profile ( [RFC8615] , [RFC9110] , [GDIS-CORE] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "local signing profile",
-        "normalized_term": "local signing profile",
-        "term_id": "local-signing-profile",
-        "anchor": "#local-signing-profile",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "0149e41ea144479f546f1a4969d66c2b59e163a71d442e161a1cc51e58480c9a",
-        "definition_text_excerpt": "Model where signature creation data remains on the signatory-operated [=end-user device=] and is not duplicated to remote service custody.",
-        "imported_from": null
-      },
-      {
-        "term_text": "remote signing model",
-        "normalized_term": "remote signing model",
-        "term_id": "remote-signing-model",
-        "anchor": "#remote-signing-model",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "1c7b7b782e84122ab5a6625b46bd6bfead1470c72bacf437aec8d4181c3614b3",
-        "definition_text_excerpt": "Model where signature creation data is created, managed, or activated in server-side trust-service components external to the signatory device ( [CEN-419241-1] , [ETSI-119431-1] , [ETSI-119431-2] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "web profile",
-        "normalized_term": "web profile",
-        "term_id": "web-profile",
-        "anchor": "#web-profile",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "47083c0afe248b15efdbd63b5348a00970762a71bdb3f16c8af5e3c912e4b39d",
-        "definition_text_excerpt": "Primary interoperability profile in this specification, based on globally deployed web and internet standards ( [WEBCRYPTO-L2] , [WEBAUTHN-L3] , [RFC7515] , [RFC9052] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "eu compatibility profile",
-        "normalized_term": "eu compatibility profile",
-        "term_id": "eu-compatibility-profile",
-        "anchor": "#eu-compatibility-profile",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "06a9cb45e84ad49e8b89bf9d5c7ee8d3557ca015c3669c4aa89782b32ac2f53c",
-        "definition_text_excerpt": "Mapping layer from [=web profile=] artifacts to EU legal and ecosystem evidence requirements ( [EU-910/2014] , [EU-2016/650] , [EU-2024/2979] , [EU-2024/2982] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "qualified status claim",
-        "normalized_term": "qualified status claim",
-        "term_id": "qualified-status-claim",
-        "anchor": "#qualified-status-claim",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "6e0ed188aff15053f645193170c721ca3696f609bf4dfc95ab316587ff0202a6",
-        "definition_text_excerpt": "Claim that an actor, service, device, or signature has legal qualified status within a defined jurisdiction; such claims require authoritative status evidence ( [EU-TRUSTED-LISTS] , [EU-QSCD-NOTIFICATIONS] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "eidas framework",
-        "normalized_term": "eidas framework",
-        "term_id": "eidas-framework",
-        "anchor": "#eidas-framework",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "10c3eb083e62a593cbf8f1d295f8e10b70a9f50df6f7539fc2fe3307cf307166",
-        "definition_text_excerpt": "EU legal framework for electronic identification and trust services established by Regulation (EU) No 910/2014 and its amendments ( [EU-910/2014] , [EU-2024/1183] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "eudi wallet ecosystem",
-        "normalized_term": "eudi wallet ecosystem",
-        "term_id": "eudi-wallet-ecosystem",
-        "anchor": "#eudi-wallet-ecosystem",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "07112426e87874a5d04d459dd23c5ae2276ed13df150ae6e5cdc22dbc57fe70f",
-        "definition_text_excerpt": "EU Digital Identity Wallet ecosystem specified by the 2024 eIDAS amendment and implementing acts defining integrity, protocol, and interoperability requirements ( [EU-2024/1183] , [EU-2024/2979] , [EU-2024/2982] ).",
-        "imported_from": null
-      },
-      {
-        "term_text": "implementing specification",
-        "normalized_term": "implementing specification",
-        "term_id": "implementing-specification",
-        "anchor": "#implementing-specification",
-        "section_anchor": "#conformance",
-        "definition_excerpt_hash": "62bbd44f4eac910fd6a6a881c66e47ccbadcae58fb0ec732c2303f727f33ca5a",
-        "definition_text_excerpt": "Companion specification that profiles GQSCD-Core for a specific platform, deployment model, testing method, or jurisdictional evidence workflow while preserving core conformance semantics.",
-        "imported_from": null
-      },
-      {
-        "term_text": "qscd certification evidence tuple",
-        "normalized_term": "qscd certification evidence tuple",
-        "term_id": "qscd-certification-evidence-tuple",
-        "anchor": "#qscd-certification-evidence-tuple",
-        "section_anchor": "#eu-certification-notification-path",
-        "definition_excerpt_hash": "e9477bdc320e2a4b5d313fda0b3a6182c6b52f82fb219e2bdcb1c05ca55595bc",
-        "definition_text_excerpt": "{ certificate of conformity, certification report, certification report URL, certified configuration identifiers (hardware/firmware/software versions), validity dates and status, certification body identity }",
-        "imported_from": null
-      },
-      {
-        "term_text": "ANNEXII-1a",
-        "normalized_term": "annexii1a",
-        "term_id": "annexii-1a",
-        "anchor": "#annexii-1a",
-        "section_anchor": "#eu-compatibility-profile",
-        "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "definition_text_excerpt": "",
-        "imported_from": null
-      },
-      {
-        "term_text": "ANNEXII-1b",
-        "normalized_term": "annexii1b",
-        "term_id": "annexii-1b",
-        "anchor": "#annexii-1b",
-        "section_anchor": "#eu-compatibility-profile",
-        "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "definition_text_excerpt": "",
-        "imported_from": null
-      },
-      {
-        "term_text": "ANNEXII-1c",
-        "normalized_term": "annexii1c",
-        "term_id": "annexii-1c",
-        "anchor": "#annexii-1c",
-        "section_anchor": "#eu-compatibility-profile",
-        "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "definition_text_excerpt": "",
-        "imported_from": null
-      },
-      {
-        "term_text": "ANNEXII-1d",
-        "normalized_term": "annexii1d",
-        "term_id": "annexii-1d",
-        "anchor": "#annexii-1d",
-        "section_anchor": "#eu-compatibility-profile",
-        "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "definition_text_excerpt": "",
-        "imported_from": null
-      },
-      {
-        "term_text": "ANNEXII-2",
-        "normalized_term": "annexii2",
-        "term_id": "annexii-2",
-        "anchor": "#annexii-2",
-        "section_anchor": "#eu-compatibility-profile",
-        "definition_excerpt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "definition_text_excerpt": "",
-        "imported_from": null
-      }
-    ],
-    "clauses": [
-      {
-        "clause_id": "REQ-GQSCD-54",
-        "anchor": "#req-gqscd-54",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "2c0835f04f4db4ec40a9c3712c7d40ee568b9ca017b5767158914635ff525e22"
-      },
-      {
-        "clause_id": "REQ-GQSCD-55",
-        "anchor": "#req-gqscd-55",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "2d53cb82cd749963cf9921c33febd2b69c405d8618e53dc8686197a91dcb5a95"
-      },
-      {
-        "clause_id": "REQ-GQSCD-01",
-        "anchor": "#req-gqscd-01",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "f2f9a2854d2679acdf8f2c33b38211ffc2b5500d36ea552152efc69d1c21abcd"
-      },
-      {
-        "clause_id": "REQ-GQSCD-02",
-        "anchor": "#req-gqscd-02",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "09266312ef61b04c953003ca4f9b39d9568c24ab872dcdcf227f07297cd23aa1"
-      },
-      {
-        "clause_id": "REQ-GQSCD-03",
-        "anchor": "#req-gqscd-03",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "650a0d48d7ff52bf19d657975228d4bdb1ccd601ab9ff7acf978d7a3b949485e"
-      },
-      {
-        "clause_id": "REQ-GQSCD-04",
-        "anchor": "#req-gqscd-04",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "bb93697d576eaa5319dfd32f9c6ff203e44005dd512a44d1666045eb1ea7d079"
-      },
-      {
-        "clause_id": "REQ-GQSCD-05",
-        "anchor": "#req-gqscd-05",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "82ae7799fcc3460761f120a52166abe98959f5fdb5b1a15f27ce4b794b97124f"
-      },
-      {
-        "clause_id": "REQ-GQSCD-06",
-        "anchor": "#req-gqscd-06",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "f6a00093bc2b52c0dbe231698911a1177a053b89ad14a0e63f81a95bfcea6309"
-      },
-      {
-        "clause_id": "REQ-GQSCD-07",
-        "anchor": "#req-gqscd-07",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "1c2f82a53bf82d5dd6d03b6f3023278c61255bfa97d652afe2e5976e1987167b"
-      },
-      {
-        "clause_id": "REQ-GQSCD-08",
-        "anchor": "#req-gqscd-08",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "fc310946a05b92681c46af9bd60b1d01c39255f45dd59cc1a79017ba763fc3e7"
-      },
-      {
-        "clause_id": "REQ-GQSCD-09",
-        "anchor": "#req-gqscd-09",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "74d49e533b099328304157c5d1029c068f57d3c7575a73de892f94dc9c0eee63"
-      },
-      {
-        "clause_id": "REQ-GQSCD-10",
-        "anchor": "#req-gqscd-10",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "d90e25be0a115193c924d8b1255e7c93d557433014d3b7c9ff82bec03c623010"
-      },
-      {
-        "clause_id": "REQ-GQSCD-11",
-        "anchor": "#req-gqscd-11",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "e8c1ad5af28c03b007c0def42264a823ac955383e713dbfdfb99086a6c2b756e"
-      },
-      {
-        "clause_id": "REQ-GQSCD-12",
-        "anchor": "#req-gqscd-12",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "2b999d2af554456b655cf88175000477147196eabd67757497ce164884dbc9c4"
-      },
-      {
-        "clause_id": "REQ-GQSCD-13",
-        "anchor": "#req-gqscd-13",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "9307b96ed10cdced647f10458f5b22bb6f8fe73929bb93eeba3d4a740e9ecab8"
-      },
-      {
-        "clause_id": "REQ-GQSCD-14",
-        "anchor": "#req-gqscd-14",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "d2b57d0b7d64b54b9da919630457d945e86b0ec5045087488aba4dc752932dc8"
-      },
-      {
-        "clause_id": "REQ-GQSCD-15",
-        "anchor": "#req-gqscd-15",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "ea587dded5e4bcbc811074c42cdb31494d9b90c6fd935c37c960057005bbfa5c"
-      },
-      {
-        "clause_id": "REQ-GQSCD-16",
-        "anchor": "#req-gqscd-16",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "9a34cd517dd53bbd0c29dfab3a0dd08410c96dda8e3fa8de7a84ff3bad3d84f6"
-      },
-      {
-        "clause_id": "REQ-GQSCD-17",
-        "anchor": "#req-gqscd-17",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "b2c9d8e4345ba1430a1194185e880be66d6a347d6f2d669e41ef70ef11ea2e9e"
-      },
-      {
-        "clause_id": "REQ-GQSCD-18",
-        "anchor": "#req-gqscd-18",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "14be0c092c18c1ee1dfb85209c16c80242154221c25b51de5e65713ec18cf8b5"
-      },
-      {
-        "clause_id": "REQ-GQSCD-19",
-        "anchor": "#req-gqscd-19",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "19f20d9dd450b78cca60589b54e72588e7f6febb57709725c6240309ade73505"
-      },
-      {
-        "clause_id": "REQ-GQSCD-20",
-        "anchor": "#req-gqscd-20",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "342cfbcc9be10fb777b286f715af6cd5c433d875f8cc557e36335a7408ce07e2"
-      },
-      {
-        "clause_id": "REQ-GQSCD-21",
-        "anchor": "#req-gqscd-21",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "ec68e9b6d6228671a09b8a761800ed57e689fd3173179b844db3f9d1236530fc"
-      },
-      {
-        "clause_id": "REQ-GQSCD-22",
-        "anchor": "#req-gqscd-22",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "156fe545946b1414e9959372c987477852536641aa17347a1d565c9671e2ec75"
-      },
-      {
-        "clause_id": "REQ-GQSCD-23",
-        "anchor": "#req-gqscd-23",
-        "kind": "requirement",
-        "normative_keywords_used": ["SHOULD"],
-        "text_excerpt_hash": "1b288b79f2e682d762ae82bc9f2f8ea3fac79848485fb54ac6a6802a53e677a5"
-      },
-      {
-        "clause_id": "REQ-GQSCD-24",
-        "anchor": "#req-gqscd-24",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MAY"],
-        "text_excerpt_hash": "83249f0133114385e7c3857a7b0a630a306d8a4e0f975578258ab0fa5e83bb26"
-      },
-      {
-        "clause_id": "REQ-GQSCD-25",
-        "anchor": "#req-gqscd-25",
-        "kind": "requirement",
-        "normative_keywords_used": ["SHOULD"],
-        "text_excerpt_hash": "2fca88123b4cfb5aee0d6024471e5d62f3e509da6320a9d0c4d0094cdc3fb4d4"
-      },
-      {
-        "clause_id": "REQ-GQSCD-26",
-        "anchor": "#req-gqscd-26",
-        "kind": "requirement",
-        "normative_keywords_used": [],
-        "text_excerpt_hash": "c4ccaa0bff83c7264403110538499eec9fdd1d365db8870a35a57f2da092c03c"
-      },
-      {
-        "clause_id": "REQ-GQSCD-27",
-        "anchor": "#req-gqscd-27",
-        "kind": "requirement",
-        "normative_keywords_used": [],
-        "text_excerpt_hash": "8732ec63a2078cf04134dbe0e5339b809d9452d001833cabf3e4f6813e4e3d0a"
-      },
-      {
-        "clause_id": "REQ-GQSCD-28",
-        "anchor": "#req-gqscd-28",
-        "kind": "requirement",
-        "normative_keywords_used": [],
-        "text_excerpt_hash": "24c11f44751973e62711433ed20a6eb3dce3fd842921e6ac55adc7f6f9c1ac76"
-      },
-      {
-        "clause_id": "REQ-GQSCD-29",
-        "anchor": "#req-gqscd-29",
-        "kind": "requirement",
-        "normative_keywords_used": [],
-        "text_excerpt_hash": "4584212d2f73d9e6740bfdf02941a600d2488e9f55cfba9d1dd73b107824af65"
-      },
-      {
-        "clause_id": "REQ-GQSCD-30",
-        "anchor": "#req-gqscd-30",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "4a3af4b98a9740d054a131d287dfe7bb16709520130fb9788e4c79d273cfe20d"
-      },
-      {
-        "clause_id": "REQ-GQSCD-31",
-        "anchor": "#req-gqscd-31",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "ba6525ef3546d13125d643cde6e3e2b01d506ec03c0093c5e7708b6c5474d905"
-      },
-      {
-        "clause_id": "REQ-GQSCD-32",
-        "anchor": "#req-gqscd-32",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "199f589c87f882771a68873be72dec1b17ed1b533b37f11f30684f724158ec98"
-      },
-      {
-        "clause_id": "REQ-GQSCD-33",
-        "anchor": "#req-gqscd-33",
-        "kind": "requirement",
-        "normative_keywords_used": ["SHOULD", "MAY"],
-        "text_excerpt_hash": "8dd9c18390f7d77b6739ae753bbab10f42333b1469f16500d8bbd0657a048cd8"
-      },
-      {
-        "clause_id": "REQ-GQSCD-34",
-        "anchor": "#req-gqscd-34",
-        "kind": "requirement",
-        "normative_keywords_used": ["MAY"],
-        "text_excerpt_hash": "794f86e3535564ea1371604e7eee208ffd72ebb637c5e20bfea61e9e79577857"
-      },
-      {
-        "clause_id": "REQ-GQSCD-35",
-        "anchor": "#req-gqscd-35",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "d0f9a8703e63694ab811166e2baf4adbd73a2dd86b06b08ed1b8863294d87793"
-      },
-      {
-        "clause_id": "REQ-GQSCD-36",
-        "anchor": "#req-gqscd-36",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "3ca74fbc200f234266e88d1ce05d8325424bb137366ff0622217a92f54ec2ea5"
-      },
-      {
-        "clause_id": "REQ-GQSCD-37",
-        "anchor": "#req-gqscd-37",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "465e0f2a21cffd4ccfbf6a61b1947dfe544c5bfb13985dd8b2566b19c2dbfb9a"
-      },
-      {
-        "clause_id": "REQ-GQSCD-38",
-        "anchor": "#req-gqscd-38",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "430bccdbb4f86ea0f872b89b08c5487836197390b9baa88c9c98017dbff7b29c"
-      },
-      {
-        "clause_id": "REQ-GQSCD-39",
-        "anchor": "#req-gqscd-39",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "398501341ac08f5ceb00bef5b21e25093e803a55f6cc524d3269fc5f91585ad7"
-      },
-      {
-        "clause_id": "REQ-GQSCD-40",
-        "anchor": "#req-gqscd-40",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "fd97dc3904d3883c69b02d920d2434be52ba69421abbfa95c509c2428be60fe2"
-      },
-      {
-        "clause_id": "REQ-GQSCD-41",
-        "anchor": "#req-gqscd-41",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "f996dea48e175ea75027a7ac09a8be9daf022a86211eff7b5a6058c1af40370b"
-      },
-      {
-        "clause_id": "REQ-GQSCD-42",
-        "anchor": "#req-gqscd-42",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "d90d35a02d719fac827ff0b8230b2bc58776931a6afa7b592a6fdc7e89271a6a"
-      },
-      {
-        "clause_id": "REQ-GQSCD-43",
-        "anchor": "#req-gqscd-43",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "0a14493e3dc87b29bd43c0158ca927f7433c7561107fb33c65193b3a959ee309"
-      },
-      {
-        "clause_id": "REQ-GQSCD-44",
-        "anchor": "#req-gqscd-44",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "4a0cbdf1ae56fa761f9305600bc0dfc18379938353321eedd68b423d809a3a89"
-      },
-      {
-        "clause_id": "REQ-GQSCD-45",
-        "anchor": "#req-gqscd-45",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "4a4d000db77823d8c39b456234185f192119a73e8b31e0c27ac2754ee49be01e"
-      },
-      {
-        "clause_id": "REQ-GQSCD-46",
-        "anchor": "#req-gqscd-46",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "9ebf0bf46feb92c70f7528d29eac3c97bc453289d738882e61d8e431af46d39f"
-      },
-      {
-        "clause_id": "REQ-GQSCD-47",
-        "anchor": "#req-gqscd-47",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "95f7ff48a128c90cd6ab42c88f21630619e94059afbd311cf3b585ffd8fc92e4"
-      },
-      {
-        "clause_id": "REQ-GQSCD-48",
-        "anchor": "#req-gqscd-48",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "c7f26cf237d426bfc789534787fff7f4ef17c7e16d6d46781b2804a6dbeb90b1"
-      },
-      {
-        "clause_id": "REQ-GQSCD-49",
-        "anchor": "#req-gqscd-49",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "715a2cae9199cdb1dd91548be6acc06a5063101b4daada497eaab5249cdac607"
-      },
-      {
-        "clause_id": "REQ-GQSCD-50",
-        "anchor": "#req-gqscd-50",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "aefaee85ece41d0594085f6555f84d80edf01e057f705c3e61f4881a66cb1291"
-      },
-      {
-        "clause_id": "REQ-GQSCD-51",
-        "anchor": "#req-gqscd-51",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST", "MUST NOT"],
-        "text_excerpt_hash": "4e23b9813ebf8c8a927a6dc7262e444124df052503fe4812b000b022e0aee030"
-      },
-      {
-        "clause_id": "REQ-GQSCD-52",
-        "anchor": "#req-gqscd-52",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "b03c3e224fecba2bcfa5d4c8f47d83ccc75a83b291b97820c093100bd535298b"
-      },
-      {
-        "clause_id": "REQ-GQSCD-53",
-        "anchor": "#req-gqscd-53",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "d3c7ce829af2db22544dcbd1c184cf657a9e397e37bec033b0b83dde82166983"
-      }
-    ],
-    "cross_spec_references": [
-      {
-        "type": "href",
-        "value": "https://z-base.github.io/gqscd/"
-      },
-      {
-        "type": "href",
-        "value": "https://z-base.github.io/gqts/"
-      },
-      {
-        "type": "href",
-        "value": "https://z-base.github.io/gdis/"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GQSCD-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GQTS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      }
-    ],
-    "openapi": null
-  },
-  {
-    "spec_id": "GQTS-CORE",
-    "repo": "z-base/gqts",
-    "commit_or_version": "unspecified",
-    "home_url": "https://z-base.github.io/gqts/",
-    "files": {
-      "index_html": "C:\\Users\\jorts\\gqts\\index.html",
-      "openapi_yaml": "C:\\Users\\jorts\\gqts\\openapi.yaml",
-      "agents_md": "AGENTS.md"
-    },
-    "terms": [
-      {
-        "term_text": "GQTS host",
-        "normalized_term": "gqts host",
-        "term_id": "gqts-host",
-        "anchor": "#gqts-host",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "070466b3c71f8c3ae50c7b8cdf485f0f361daeb7cbbc710e83800d0c6f198295",
-        "definition_text_excerpt": "An HTTP origin that serves GQTS resources and MAY ingest, replicate, and gossip append-only event history material.",
-        "imported_from": null
-      },
-      {
-        "term_text": "service descriptor",
-        "normalized_term": "service descriptor",
-        "term_id": "service-descriptor",
-        "anchor": "#service-descriptor",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "da1a2e712533861f42837395d640f9f86cb5a4023f5cc03ff88b7b279576de45",
-        "definition_text_excerpt": "A machine-readable object describing one trust-service instance, its type, and its current event-log head commitment.",
-        "imported_from": null
-      },
-      {
-        "term_text": "scheme descriptor",
-        "normalized_term": "scheme descriptor",
-        "term_id": "scheme-descriptor",
-        "anchor": "#scheme-descriptor",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "33fd49dbd784498c81573074e5fa1eeec84a1ef7f85ea3127f40e862e86b66cb",
-        "definition_text_excerpt": "A machine-readable governance-scoped object describing naming rules, proof profile, canonicalization profile, and publication floor requirements.",
-        "imported_from": null
-      },
-      {
-        "term_text": "event namespace",
-        "normalized_term": "event namespace",
-        "term_id": "event-namespace",
-        "anchor": "#event-namespace",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "e5a6b7086515e3e08226c306f653766a6c4e6ce214600142b9acf77643cfda3d",
-        "definition_text_excerpt": "A scoped event stream identified by a log identifier where entries form an append-only history.",
-        "imported_from": null
-      },
-      {
-        "term_text": "head digest",
-        "normalized_term": "head digest",
-        "term_id": "head-digest",
-        "anchor": "#head-digest",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "fb18ffd23c937c56353b060d4ea0a808ecacb3bb338f1558a01b629e4cff1b2f",
-        "definition_text_excerpt": "Commitment to the latest accepted history head for an event namespace , used for cheap divergence detection before heavy synchronization.",
-        "imported_from": null
-      },
-      {
-        "term_text": "merge event",
-        "normalized_term": "merge event",
-        "term_id": "merge-event",
-        "anchor": "#merge-event",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "81879382ea1196498dc73ec4e06f61d426f9baf01a28005590b87834db192c13",
-        "definition_text_excerpt": "An event entry that references two or more parent heads to represent explicit history convergence.",
-        "imported_from": null
-      },
-      {
-        "term_text": "mechanical validity",
-        "normalized_term": "mechanical validity",
-        "term_id": "mechanical-validity",
-        "anchor": "#mechanical-validity",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "8762aa65e96d793c649cc2303cb62282c946c4df3e7f34f6f1ca1f41dc2d1ef3",
-        "definition_text_excerpt": "A verifier result stating that schema constraints, signatures/proofs, canonicalization, and hash-chain requirements were satisfied.",
-        "imported_from": null
-      },
-      {
-        "term_text": "recognition status",
-        "normalized_term": "recognition statu",
-        "term_id": "recognition-status",
-        "anchor": "#recognition-status",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "e95ba89f3d544f2dfb17b6fb909a3d884b7f185b79a2019de0379ddf78df6284",
-        "definition_text_excerpt": "A policy output derived from external governance sources (for example trusted lists, legal registries, contractual trust anchors), separate from mechanical validity .",
-        "imported_from": null
-      },
-      {
-        "term_text": "governance code",
-        "normalized_term": "governance code",
-        "term_id": "governance-code",
-        "anchor": "#governance-code",
-        "section_anchor": "#terminology",
-        "definition_excerpt_hash": "16753c9c359e84248053137bf59b3fef294688d43dcb54167eead088b5c20dfe",
-        "definition_text_excerpt": "A normalized identifier for governance-scoped objects. In this profile, values MUST be lowercase ASCII and match the pattern defined by the OpenAPI schema `GovernanceCode` .",
-        "imported_from": null
-      }
-    ],
-    "clauses": [
-      {
-        "clause_id": "REQ-GQTS-01",
-        "anchor": "#req-gqts-01",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "b1208167f39ff9b4a19af2fe8dfeca251a29afbe780fec153f41316b3aa42df2"
-      },
-      {
-        "clause_id": "REQ-GQTS-02",
-        "anchor": "#req-gqts-02",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "20f0ee684a402ac34182e93d01d50d2fec3e3a63d18ab736cd79cb50b9303a13"
-      },
-      {
-        "clause_id": "REQ-GQTS-03",
-        "anchor": "#req-gqts-03",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "783a304989c2d55e48f5723d898baeaef8791c7c1e2ac1d7305cc65a3fc7290e"
-      },
-      {
-        "clause_id": "REQ-GQTS-04",
-        "anchor": "#req-gqts-04",
-        "kind": "requirement",
-        "normative_keywords_used": ["SHOULD"],
-        "text_excerpt_hash": "2586058286c976332a44837ecf78c092751b46426db038952d6c6c44f3fc4495"
-      },
-      {
-        "clause_id": "REQ-GQTS-05",
-        "anchor": "#req-gqts-05",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "45e3ec2d5040f837ab42a1bd4ccd057f541458a1150771b8593749d08da9a536"
-      },
-      {
-        "clause_id": "REQ-GQTS-06",
-        "anchor": "#req-gqts-06",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "e6874729d374c7e884cc150fefd34626f75249e9e9c20960cce9bc14575747ed"
-      },
-      {
-        "clause_id": "REQ-GQTS-07",
-        "anchor": "#req-gqts-07",
-        "kind": "requirement",
-        "normative_keywords_used": ["MUST"],
-        "text_excerpt_hash": "9cf8c5e83282abf6c5c8d4cf93f6217ee55e08a3135e668659e8235e89ca76e1"
-      }
-    ],
-    "cross_spec_references": [
-      {
-        "type": "href",
-        "value": "https://z-base.github.io/gdis/"
-      },
-      {
-        "type": "href",
-        "value": "https://z-base.github.io/gqscd/"
-      },
-      {
-        "type": "label",
-        "value": "GDIS-CORE"
-      },
-      {
-        "type": "label",
-        "value": "GQSCD-CORE"
-      }
-    ],
-    "openapi": {
-      "operations": [
-        {
-          "operationId": "getSchemeDescriptor",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/scheme/{governanceCode}",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-01",
-          "media_types": ["application/gqts.scheme+json", "application/json"],
-          "schema_refs": ["SchemeDescriptor", "SchemeDescriptor"],
-          "operation_contract_hash": "eb261882d3fd63334b14867c013db40bc7c5639767ba6729655c5665cfffb846"
-        },
-        {
-          "operationId": "getEndpointKindCatalog",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/scheme/{governanceCode}/endpoint-kinds",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-02",
-          "media_types": [
-            "application/gqts.endpoint-kinds+json",
-            "application/json"
-          ],
-          "schema_refs": ["EndpointKindCatalog", "EndpointKindCatalog"],
-          "operation_contract_hash": "b99e64b4a067c3d04e09f20d5d4533a05e693642df23eb9dffe8ceee6518ec95"
-        },
-        {
-          "operationId": "getTypeDescriptor",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/type/{serviceId}",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-03",
-          "media_types": ["application/gqts.type+json", "application/json"],
-          "schema_refs": ["ServiceDescriptor", "ServiceDescriptor"],
-          "operation_contract_hash": "7e62c7b1058716e8a8f814c059ac6c4723b358bca3f3746b6fab2d6c00369f3e"
-        },
-        {
-          "operationId": "getEventLogView",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/event/{logId}",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-05",
-          "media_types": ["application/gqts.eventlog+json", "application/json"],
-          "schema_refs": ["EventLogView", "EventLogView"],
-          "operation_contract_hash": "6f50ab0c8126b90241e7e831c374173464d2067371a8e72cc73a38648601e497"
-        },
-        {
-          "operationId": "postEventIngest",
-          "method": "post",
-          "path": "/.well-known/gidas/gqts/event/{logId}",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-06",
-          "media_types": [
-            "application/gqts.ingest-receipt+json",
-            "application/json"
-          ],
-          "schema_refs": [
-            "EventIngestRequest",
-            "EventIngestRequest",
-            "AsyncReceipt",
-            "AsyncReceipt"
-          ],
-          "operation_contract_hash": "715382d694607ab116a666c24451746d1a84fa8023b923819f21ac56ba65f35d"
-        },
-        {
-          "operationId": "getEventHeadMeta",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/event/{logId}/meta",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-04",
-          "media_types": [
-            "application/gqts.event-head+json",
-            "application/json"
-          ],
-          "schema_refs": ["EventHeadMeta", "EventHeadMeta"],
-          "operation_contract_hash": "ba0f6e87e1618034e7ea928da24edd3d97f2daa118d809ccbd8d4dba922d2a66"
-        },
-        {
-          "operationId": "getEventById",
-          "method": "get",
-          "path": "/.well-known/gidas/gqts/event/{logId}/{eventId}",
-          "requirement_key": "x-gqts-requirement",
-          "x_requirement": "REQ-GQTS-07",
-          "media_types": ["application/gqts.event+json", "application/json"],
-          "schema_refs": [
-            "EventEnvelope",
-            "EventEnvelope",
-            "GovernanceCode",
-            "Identifier",
-            "Identifier",
-            "Identifier",
-            "Identifier",
-            "ProblemDetails",
-            "DigestTuple",
-            "GovernanceCode",
-            "EndpointKind",
-            "EndpointKind",
-            "...",
-            "ServiceDescriptor",
-            "EventEnvelope",
-            "GovernanceCode",
-            "EndpointKindEntry",
-            "SchemeDescriptor",
-            "ServiceDescriptor",
-            "EventEnvelope",
-            "Identifier",
-            "GovernanceCode",
-            "Identifier",
-            "Identifier",
-            "DigestTuple",
-            "UriDigest",
-            "Identifier",
-            "Identifier",
-            "DigestTuple",
-            "EventEnvelope",
-            "Identifier",
-            "Identifier",
-            "Identifier",
-            "DigestTuple",
-            "Identifier",
-            "Identifier",
-            "DigestTuple",
-            "DigestTuple",
-            "Proof",
-            "EventEnvelope",
-            "DigestTuple",
-            "Identifier",
-            "Identifier",
-            "ErrorCode"
-          ],
-          "operation_contract_hash": "76411e73b80b543335c037cfc3be1db1ead1bd942f9d5ab566003cb2b9861144"
-        }
-      ],
-      "schemas": [
-        {
-          "name": "GovernanceCode",
-          "json_pointer": "/components/schemas/GovernanceCode",
-          "key_constraints_hash": "8ec86fbbe65fb6b91b4bdd01d301c68c408c659b1b02648440e413aff76bfd66"
-        },
-        {
-          "name": "Identifier",
-          "json_pointer": "/components/schemas/Identifier",
-          "key_constraints_hash": "5b9eae44d39d553e32c387686f465a133662848422a6c976b673695ddf0f2653"
-        },
-        {
-          "name": "DigestTuple",
-          "json_pointer": "/components/schemas/DigestTuple",
-          "key_constraints_hash": "a429eca5e6e01979cfdb4d9d62c5a005cce201e818faabd42f8c4a0a0663531b"
-        },
-        {
-          "name": "UriDigest",
-          "json_pointer": "/components/schemas/UriDigest",
-          "key_constraints_hash": "4d55baaa56797adaebd8270f3580451e6967213e1383ce814002f0cc785188e8"
-        },
-        {
-          "name": "SchemeDescriptor",
-          "json_pointer": "/components/schemas/SchemeDescriptor",
-          "key_constraints_hash": "5c096c205d2fa59e62af114a916fd91a41a08cc5064f0938629febb288fd8d07"
-        },
-        {
-          "name": "EndpointKindEntry",
-          "json_pointer": "/components/schemas/EndpointKindEntry",
-          "key_constraints_hash": "650edfe8d2937f4745e6fb1c7e914c7d9e47a1f1e50e14c3a023efc524a9cd1b"
-        },
-        {
-          "name": "EndpointKindCatalog",
-          "json_pointer": "/components/schemas/EndpointKindCatalog",
-          "key_constraints_hash": "7084de139f2cc6bb84932b171343f469aee2afc0e1f7700cce0f56f97812fad0"
-        },
-        {
-          "name": "ServiceDescriptor",
-          "json_pointer": "/components/schemas/ServiceDescriptor",
-          "key_constraints_hash": "249a3f5a1aab5f11e30430d47b64437ec8aa8cffe10962b66b298b62fe470f14"
-        },
-        {
-          "name": "EventLogView",
-          "json_pointer": "/components/schemas/EventLogView",
-          "key_constraints_hash": "b9020ca6063d8a5c6922133d7466c1cc770df227e012ddd1d7a557fae70c5e8d"
-        },
-        {
-          "name": "EventHeadMeta",
-          "json_pointer": "/components/schemas/EventHeadMeta",
-          "key_constraints_hash": "3029dc312c99bc1ee9c5fbeef3a251db7dc4634ac008a966f45be70febdf267a"
-        },
-        {
-          "name": "EventEnvelope",
-          "json_pointer": "/components/schemas/EventEnvelope",
-          "key_constraints_hash": "599807d460d07aa1a73cb36e2d93233a59ff4ee0e55d3aea29b49eb03697a02b"
-        },
-        {
-          "name": "Proof",
-          "json_pointer": "/components/schemas/Proof",
-          "key_constraints_hash": "14f1d8995a420eab1de7d63e4bd613f26153d705a5f0d6d10ea460e2b6fdadeb"
-        },
-        {
-          "name": "ErrorCode",
-          "json_pointer": "/components/schemas/ErrorCode",
-          "key_constraints_hash": "6c98df33d4de8440feac5c1900af8cff40791ce5bb765171cb9fae951e3294cf"
-        },
-        {
-          "name": "EventIngestRequest",
-          "json_pointer": "/components/schemas/EventIngestRequest",
-          "key_constraints_hash": "eafb25b2311984b6600672f6dedf16409661d91685b88635b4debec86f77c1b0"
-        },
-        {
-          "name": "AsyncReceipt",
-          "json_pointer": "/components/schemas/AsyncReceipt",
-          "key_constraints_hash": "f603f0cfcbc758fd372584f40220c06920034ec55ac0dee148c0fae96ce00187"
-        },
-        {
-          "name": "ProblemDetails",
-          "json_pointer": "/components/schemas/ProblemDetails",
-          "key_constraints_hash": "ea87a1b82a38a47b9b256b6044e247a4c24c090af4597f0919f843f4a5ad6eb9"
-        }
-      ],
-      "requirement_maps": [
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-01",
-          "description": "Governance-scoped scheme discovery."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-02",
-          "description": "Endpoint-kind taxonomy publication."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-03",
-          "description": "Service descriptor head commitment publication."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-04",
-          "description": "Low-cost divergence detection via compact head metadata."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-05",
-          "description": "Append-only log retrieval."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-06",
-          "description": "Asynchronous ingest and receipt model."
-        },
-        {
-          "map_key": "x-gqts-requirements",
-          "requirement_id": "REQ-GQTS-07",
-          "description": "Immutable event addressing."
-        }
-      ]
+    {
+        "spec_id":  "GQTS-CORE",
+        "repo":  "z-base/gqts",
+        "commit_or_version":  "unspecified",
+        "home_url":  "https://z-base.github.io/gqts/",
+        "files":  {
+                      "index_html":  "C:\\Users\\jorts\\gqts\\index.html",
+                      "openapi_yaml":  "C:\\Users\\jorts\\gqts\\openapi.yaml",
+                      "agents_md":  "AGENTS.md"
+                  },
+        "terms":  [
+                      {
+                          "term_text":  "GQTS host",
+                          "normalized_term":  "gqts host",
+                          "term_id":  "gqts-host",
+                          "anchor":  "#gqts-host",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "8f62732a2a292d910ba432273547ad2239cd7eae49cc9a2d459261405ed97fde",
+                          "definition_text_excerpt":  "An HTTP origin that serves GQTS resources and MAY ingest, replicate, and gossip append-only signed-token history material.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "service descriptor",
+                          "normalized_term":  "service descriptor",
+                          "term_id":  "service-descriptor",
+                          "anchor":  "#service-descriptor",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "d66aba3af2f350862c12380a5eea02dc0e55e4009f043e88e4db7ec414bbbad4",
+                          "definition_text_excerpt":  "A machine-readable object describing one trust-service instance, its type, and its current token-chain head state.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "scheme descriptor",
+                          "normalized_term":  "scheme descriptor",
+                          "term_id":  "scheme-descriptor",
+                          "anchor":  "#scheme-descriptor",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "33fd49dbd784498c81573074e5fa1eeec84a1ef7f85ea3127f40e862e86b66cb",
+                          "definition_text_excerpt":  "A machine-readable governance-scoped object describing naming rules, proof profile, canonicalization profile, and publication floor requirements.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "event namespace",
+                          "normalized_term":  "event namespace",
+                          "term_id":  "event-namespace",
+                          "anchor":  "#event-namespace",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "256402727373bef1440eaf1fc2b3558400065df9cd9d07ab551b6926778bc3b8",
+                          "definition_text_excerpt":  "A scoped signed-token stream identified by a log identifier where entries form an append-only directed linear history.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "head token",
+                          "normalized_term":  "head token",
+                          "term_id":  "head-token",
+                          "anchor":  "#head-token",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "9e8966a9b1884ca112815677822168da55f2aa48ba2e30890517dfe7d62507e6",
+                          "definition_text_excerpt":  "Identifier of the latest accepted token for an event namespace , used for cheap synchronization checks before heavy retrieval.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "merge token",
+                          "normalized_term":  "merge token",
+                          "term_id":  "merge-token",
+                          "anchor":  "#merge-token",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "2d0c093e078d30c2f416b698f9e6a1a99cc49a78d9d72815aa33bc0d5ac27152",
+                          "definition_text_excerpt":  "A signed token that reconciles competing candidate heads while preserving one canonical previous-token pointer in the accepted chain.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "mechanical validity",
+                          "normalized_term":  "mechanical validity",
+                          "term_id":  "mechanical-validity",
+                          "anchor":  "#mechanical-validity",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "f8892ef5d120029b291f844e591282c22b57548ccd13587caa8e825454d13c6e",
+                          "definition_text_excerpt":  "A verifier result stating that schema constraints, signatures/proofs, canonicalization, and signed-token chain requirements were satisfied.",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "recognition status",
+                          "normalized_term":  "recognition statu",
+                          "term_id":  "recognition-status",
+                          "anchor":  "#recognition-status",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "e95ba89f3d544f2dfb17b6fb909a3d884b7f185b79a2019de0379ddf78df6284",
+                          "definition_text_excerpt":  "A policy output derived from external governance sources (for example trusted lists, legal registries, contractual trust anchors), separate from mechanical validity .",
+                          "imported_from":  null
+                      },
+                      {
+                          "term_text":  "governance code",
+                          "normalized_term":  "governance code",
+                          "term_id":  "governance-code",
+                          "anchor":  "#governance-code",
+                          "section_anchor":  "#terminology",
+                          "definition_excerpt_hash":  "16753c9c359e84248053137bf59b3fef294688d43dcb54167eead088b5c20dfe",
+                          "definition_text_excerpt":  "A normalized identifier for governance-scoped objects. In this profile, values MUST be lowercase ASCII and match the pattern defined by the OpenAPI schema `GovernanceCode` .",
+                          "imported_from":  null
+                      }
+                  ],
+        "clauses":  [
+                        {
+                            "clause_id":  "REQ-GQTS-01",
+                            "anchor":  "#req-gqts-01",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "b1208167f39ff9b4a19af2fe8dfeca251a29afbe780fec153f41316b3aa42df2"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-02",
+                            "anchor":  "#req-gqts-02",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "20f0ee684a402ac34182e93d01d50d2fec3e3a63d18ab736cd79cb50b9303a13"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-03",
+                            "anchor":  "#req-gqts-03",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "65890c656d8ae82369b48876718ca7d4452f5703f768026b420b6e873213e1ae"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-04",
+                            "anchor":  "#req-gqts-04",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "SHOULD"
+                                                        ],
+                            "text_excerpt_hash":  "b42c1341294d469af9fade243b2a6630f711e74ed378e025281676612c7c2418"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-05",
+                            "anchor":  "#req-gqts-05",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "45e3ec2d5040f837ab42a1bd4ccd057f541458a1150771b8593749d08da9a536"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-06",
+                            "anchor":  "#req-gqts-06",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "e6874729d374c7e884cc150fefd34626f75249e9e9c20960cce9bc14575747ed"
+                        },
+                        {
+                            "clause_id":  "REQ-GQTS-07",
+                            "anchor":  "#req-gqts-07",
+                            "kind":  "requirement",
+                            "normative_keywords_used":  [
+                                                            "MUST"
+                                                        ],
+                            "text_excerpt_hash":  "9cf8c5e83282abf6c5c8d4cf93f6217ee55e08a3135e668659e8235e89ca76e1"
+                        }
+                    ],
+        "cross_spec_references":  [
+                                      {
+                                          "type":  "href",
+                                          "value":  "https://z-base.github.io/gdis/"
+                                      },
+                                      {
+                                          "type":  "href",
+                                          "value":  "https://z-base.github.io/gqscd/"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQSCD-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQSCD-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQSCD-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GDIS-CORE"
+                                      },
+                                      {
+                                          "type":  "label",
+                                          "value":  "GQSCD-CORE"
+                                      }
+                                  ],
+        "openapi":  {
+                        "operations":  [
+                                           {
+                                               "operationId":  "getSchemeDescriptor",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/scheme/{governanceCode}",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-01",
+                                               "media_types":  [
+                                                                   "application/gqts.scheme+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "SchemeDescriptor",
+                                                                   "SchemeDescriptor"
+                                                               ],
+                                               "operation_contract_hash":  "eb261882d3fd63334b14867c013db40bc7c5639767ba6729655c5665cfffb846"
+                                           },
+                                           {
+                                               "operationId":  "getEndpointKindCatalog",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/scheme/{governanceCode}/endpoint-kinds",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-02",
+                                               "media_types":  [
+                                                                   "application/gqts.endpoint-kinds+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "EndpointKindCatalog",
+                                                                   "EndpointKindCatalog"
+                                                               ],
+                                               "operation_contract_hash":  "b99e64b4a067c3d04e09f20d5d4533a05e693642df23eb9dffe8ceee6518ec95"
+                                           },
+                                           {
+                                               "operationId":  "getTypeDescriptor",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/type/{serviceId}",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-03",
+                                               "media_types":  [
+                                                                   "application/gqts.type+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "ServiceDescriptor",
+                                                                   "ServiceDescriptor"
+                                                               ],
+                                               "operation_contract_hash":  "7e62c7b1058716e8a8f814c059ac6c4723b358bca3f3746b6fab2d6c00369f3e"
+                                           },
+                                           {
+                                               "operationId":  "getEventLogView",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/event/{logId}",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-05",
+                                               "media_types":  [
+                                                                   "application/gqts.eventlog+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "EventLogView",
+                                                                   "EventLogView"
+                                                               ],
+                                               "operation_contract_hash":  "6f50ab0c8126b90241e7e831c374173464d2067371a8e72cc73a38648601e497"
+                                           },
+                                           {
+                                               "operationId":  "postEventIngest",
+                                               "method":  "post",
+                                               "path":  "/.well-known/gidas/gqts/event/{logId}",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-06",
+                                               "media_types":  [
+                                                                   "application/gqts.ingest-receipt+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "EventIngestRequest",
+                                                                   "EventIngestRequest",
+                                                                   "AsyncReceipt",
+                                                                   "AsyncReceipt"
+                                                               ],
+                                               "operation_contract_hash":  "715382d694607ab116a666c24451746d1a84fa8023b923819f21ac56ba65f35d"
+                                           },
+                                           {
+                                               "operationId":  "getEventHeadMeta",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/event/{logId}/meta",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-04",
+                                               "media_types":  [
+                                                                   "application/gqts.event-head+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "EventHeadMeta",
+                                                                   "EventHeadMeta"
+                                                               ],
+                                               "operation_contract_hash":  "ba0f6e87e1618034e7ea928da24edd3d97f2daa118d809ccbd8d4dba922d2a66"
+                                           },
+                                           {
+                                               "operationId":  "getEventById",
+                                               "method":  "get",
+                                               "path":  "/.well-known/gidas/gqts/event/{logId}/{eventId}",
+                                               "requirement_key":  "x-gqts-requirement",
+                                               "x_requirement":  "REQ-GQTS-07",
+                                               "media_types":  [
+                                                                   "application/gqts.event+json",
+                                                                   "application/json"
+                                                               ],
+                                               "schema_refs":  [
+                                                                   "EventEnvelope",
+                                                                   "EventEnvelope",
+                                                                   "GovernanceCode",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "ProblemDetails",
+                                                                   "GovernanceCode",
+                                                                   "EndpointKind",
+                                                                   "EndpointKind",
+                                                                   "...",
+                                                                   "ServiceDescriptor",
+                                                                   "EventEnvelope",
+                                                                   "GovernanceCode",
+                                                                   "EndpointKindEntry",
+                                                                   "SchemeDescriptor",
+                                                                   "ServiceDescriptor",
+                                                                   "EventEnvelope",
+                                                                   "Identifier",
+                                                                   "GovernanceCode",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "UriDigest",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "EventEnvelope",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Proof",
+                                                                   "EventEnvelope",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "Identifier",
+                                                                   "ErrorCode"
+                                                               ],
+                                               "operation_contract_hash":  "3437664a3321cdfe81317baf4e6a75dd04a37bba645fa0a572ac4aa15d2cc413"
+                                           }
+                                       ],
+                        "schemas":  [
+                                        {
+                                            "name":  "GovernanceCode",
+                                            "json_pointer":  "/components/schemas/GovernanceCode",
+                                            "key_constraints_hash":  "8ec86fbbe65fb6b91b4bdd01d301c68c408c659b1b02648440e413aff76bfd66"
+                                        },
+                                        {
+                                            "name":  "Identifier",
+                                            "json_pointer":  "/components/schemas/Identifier",
+                                            "key_constraints_hash":  "5b9eae44d39d553e32c387686f465a133662848422a6c976b673695ddf0f2653"
+                                        },
+                                        {
+                                            "name":  "UriDigest",
+                                            "json_pointer":  "/components/schemas/UriDigest",
+                                            "key_constraints_hash":  "d9f7fb207b4f871a29fb564e05bddccfe83cec66ad21313d50d033ef212eb3b8"
+                                        },
+                                        {
+                                            "name":  "SchemeDescriptor",
+                                            "json_pointer":  "/components/schemas/SchemeDescriptor",
+                                            "key_constraints_hash":  "85440c259e6fa9e372d79117ff9ce144301ae929c31530e93c017141df83f482"
+                                        },
+                                        {
+                                            "name":  "EndpointKindEntry",
+                                            "json_pointer":  "/components/schemas/EndpointKindEntry",
+                                            "key_constraints_hash":  "650edfe8d2937f4745e6fb1c7e914c7d9e47a1f1e50e14c3a023efc524a9cd1b"
+                                        },
+                                        {
+                                            "name":  "EndpointKindCatalog",
+                                            "json_pointer":  "/components/schemas/EndpointKindCatalog",
+                                            "key_constraints_hash":  "7084de139f2cc6bb84932b171343f469aee2afc0e1f7700cce0f56f97812fad0"
+                                        },
+                                        {
+                                            "name":  "ServiceDescriptor",
+                                            "json_pointer":  "/components/schemas/ServiceDescriptor",
+                                            "key_constraints_hash":  "d9563e95a58db16090951a5d99f2ca8a49a07d7059561efed3ff3bd3ba5633b6"
+                                        },
+                                        {
+                                            "name":  "EventLogView",
+                                            "json_pointer":  "/components/schemas/EventLogView",
+                                            "key_constraints_hash":  "f9b1377bd0e0c6dd1f5d7920c7fa66813af5831fdfbed6de3cad5ced4f79829a"
+                                        },
+                                        {
+                                            "name":  "EventHeadMeta",
+                                            "json_pointer":  "/components/schemas/EventHeadMeta",
+                                            "key_constraints_hash":  "c77ec670511266dc72c611ec52434f1261627e4bf190e537a124861463c0b4c2"
+                                        },
+                                        {
+                                            "name":  "EventEnvelope",
+                                            "json_pointer":  "/components/schemas/EventEnvelope",
+                                            "key_constraints_hash":  "5637c283cf6381e8b3b45d7f79aaee203ecf9bdf3fdcb9d7c2bcbc2936fda0ff"
+                                        },
+                                        {
+                                            "name":  "Proof",
+                                            "json_pointer":  "/components/schemas/Proof",
+                                            "key_constraints_hash":  "ac15815ae75fabb4122421873213557861d9b8b1ad9f48306e25d30079f8a097"
+                                        },
+                                        {
+                                            "name":  "ErrorCode",
+                                            "json_pointer":  "/components/schemas/ErrorCode",
+                                            "key_constraints_hash":  "3f073d4cc70cd48a77db8341d648aebddf81f0938c5d54a26d6194a488725da1"
+                                        },
+                                        {
+                                            "name":  "EventIngestRequest",
+                                            "json_pointer":  "/components/schemas/EventIngestRequest",
+                                            "key_constraints_hash":  "99dad7889c66b7782f90e07785cd1b90f2d80a6e3d29abc69bf04e3481fd2114"
+                                        },
+                                        {
+                                            "name":  "AsyncReceipt",
+                                            "json_pointer":  "/components/schemas/AsyncReceipt",
+                                            "key_constraints_hash":  "f603f0cfcbc758fd372584f40220c06920034ec55ac0dee148c0fae96ce00187"
+                                        },
+                                        {
+                                            "name":  "ProblemDetails",
+                                            "json_pointer":  "/components/schemas/ProblemDetails",
+                                            "key_constraints_hash":  "ea87a1b82a38a47b9b256b6044e247a4c24c090af4597f0919f843f4a5ad6eb9"
+                                        }
+                                    ],
+                        "requirement_maps":  [
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-01",
+                                                     "description":  "Governance-scoped scheme discovery."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-02",
+                                                     "description":  "Endpoint-kind taxonomy publication."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-03",
+                                                     "description":  "Service descriptor active token-chain state publication."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-04",
+                                                     "description":  "Low-cost head-token synchronization and merge-reconciliation metadata publication."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-05",
+                                                     "description":  "Append-only linear token-chain retrieval."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-06",
+                                                     "description":  "Asynchronous ingest and receipt model."
+                                                 },
+                                                 {
+                                                     "map_key":  "x-gqts-requirements",
+                                                     "requirement_id":  "REQ-GQTS-07",
+                                                     "description":  "Immutable token addressing."
+                                                 }
+                                             ]
+                    }
     }
-  }
 ]

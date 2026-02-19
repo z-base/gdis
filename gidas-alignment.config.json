@@ -1,0 +1,25 @@
+{
+  "self": {
+    "spec_id": "GDIS-CORE",
+    "repo": "z-base/gdis",
+    "home_url": "https://z-base.github.io/gdis/",
+    "index": "index.html",
+    "openapi": "openapi.yaml"
+  },
+  "peers": [
+    {
+      "spec_id": "GQSCD-CORE",
+      "repo": "z-base/gqscd",
+      "home_url": "https://z-base.github.io/gqscd/",
+      "index": "../gqscd/index.html",
+      "openapi": null
+    },
+    {
+      "spec_id": "GQTS-CORE",
+      "repo": "z-base/gqts",
+      "home_url": "https://z-base.github.io/gqts/",
+      "index": "../gqts/index.html",
+      "openapi": "../gqts/openapi.yaml"
+    }
+  ]
+}
