@@ -72,27 +72,30 @@
     <section id="abstract">
       <p>
         This document specifies
-        <strong>GDIS: Global Digital Identity Scheme</strong>
-        as a web-first identity binding profile that starts from a physical,
-        governance-issued identity item and produces verifier-checkable
-        cryptographic evidence.
+        <strong>Global Digital Identity Scheme (GDIS) Core</strong> as a
+        web-first profile for physical-to-digital identity binding evidence.
       </p>
       <p>
-        GDIS does not claim automatic legal recognition in any jurisdiction. It
-        defines how to derive deterministic subject-binding evidence from
-        MRZ-extracted PID material, bind physical-validity method evidence and
-        governance verification endpoints, issue the binding as a VC to a DID
-        controlled by a GQSCD-class device, and publish verification material in
-        an open decentralized publication network.
+        It defines deterministic subject-binding outcomes, governance-policy
+        binding, and verifier-checkable issuance evidence that can be evaluated
+        without implementation-specific assumptions.
+      </p>
+      <p>
+        This specification does not create legal recognition or qualified status
+        by itself. Legal effect is an external policy and governance decision.
       </p>
     </section>
 
     <section id="sotd">
       <p>This is an unofficial draft.</p>
       <p>
+        Document authority: this text is not a legal instrument and does not
+        create jurisdictional recognition effects.
+      </p>
+      <p>
         AI assistance disclosure: this draft used OpenAI GPT-5 Codex for
         drafting support, structure proposals, and editorial rewrites. Human
-        editor review determines normative intent, accepted/rejected changes,
+        editor review determined normative intent, accepted/rejected changes,
         and final wording.
       </p>
       <p>
@@ -120,39 +123,36 @@
         <a href="#conformance-classes">Conformance Classes</a>.
       </p>
       <p>
-        Unless explicitly overridden, data-model terms such as
-        <a>list</a>, <a>set</a>, <a>tuple</a>, and <a>byte sequence</a>
-        are interpreted according to Infra
-        <a href="#ref-infra">[INFRA]</a>. JSON payload and array semantics are
-        interpreted according to <a href="#ref-rfc8259">[RFC8259]</a>.
+        Unless explicitly overridden, data-model terms such as <a>list</a>,
+        <a>set</a>, <a>tuple</a>, and <a>byte sequence</a> are interpreted
+        according to Infra <a href="#ref-infra">[INFRA]</a>. JSON payload and
+        array semantics are interpreted according to
+        <a href="#ref-rfc8259">[RFC8259]</a>.
+      </p>
+      <p>
+        This specification defines externally observable data models,
+        verification invariants, and deterministic processing outcomes. It does
+        not define implementation architecture, runtime internals, or
+        optimization strategy.
       </p>
       <p>
         End-to-end machine verifiability is mandatory: any acceptance decision,
         legal-status claim, or policy-compatibility claim MUST be backed by
-        machine-verifiable artifacts and explicit source references, not UI
-        labels or unverifiable declarations.
-      </p>
-      <p>
-        This specification defines behavioral requirements and verification
-        invariants. It intentionally remains implementation-agnostic about
-        runtime complexity and internal data structures, provided equivalent
-        outputs are produced for equivalent inputs.
+        machine-verifiable artifacts and explicit source references.
       </p>
       <p>
         Conformance in this specification is outcome-based: required verifier
         outputs and security/privacy invariants are normative; implementation
-        strategy is a competitive concern.
+        strategy remains implementation-defined.
       </p>
       <p>
         This document does not define programming-language implementations or
-        API usage recipes; it defines interoperable data contracts and verifier
-        behavior.
+        API usage recipes.
       </p>
-      <p>
-        Where protocol endpoints are defined, normative wire contracts are
-        defined in <span class="mono">openapi.yaml</span>. ReSpec prose in this
-        document defines invariants, processing rules, and conformance semantics
-        for those contracts <a href="#ref-oas-3-1-2">[OAS-3.1.2]</a>.
+      <p class="note">
+        NOTE: The <span class="mono">openapi.yaml</span> contracts are
+        indicative and are not yet normative. Official schemas will be finalized
+        after the first reference implementation.
       </p>
     </section>
 
@@ -182,6 +182,10 @@
       <ul>
         <li>create legal recognition by itself;</li>
         <li>
+          store or restate wallet-private claims, credentials, or private proof
+          witnesses;
+        </li>
+        <li>
           replace jurisdictional trust lists, supervisory registries, or legal
           status determinations;
         </li>
@@ -195,120 +199,129 @@
     <section id="positioning-adoption" class="informative">
       <h2>Positioning and Adoption Model</h2>
       <p>
-        This section is informative. It describes stakeholder adoption pathways
-        as explicit
-        <span class="mono"
+        This specification defines web-native, verifier-checkable
+        device-assurance evidence for signature-creation security outcomes.
+        Adoption is expressed by stakeholder action chains:
+        <strong
           >goal -&gt; required artifact/interface -&gt; verifier behavior -&gt;
-          adoption pathway</span
-        >
-        mappings.
+          adoption pathway</strong
+        >.
+      </p>
+      <p>
+        Implementing specifications may profile this core for platform-specific
+        delivery while preserving the same conformance and verification
+        semantics.
       </p>
       <table class="simple tight">
         <thead>
           <tr>
             <th>Stakeholder</th>
-            <th>Goal and Required Artifact/Interface</th>
-            <th>Verifier Behavior</th>
-            <th>Adoption Pathway</th>
+            <th>Goal</th>
+            <th>Required artifact/interface</th>
+            <th>Verifier behavior</th>
+            <th>Adoption pathway</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Device and platform manufacturers</td>
             <td>
-              Goal: expose auditable key-custody and user-intent evidence.
-              Required interface: GQSCD-aligned controller evidence and
-              verifiable signing material.
+              Ship signer-controlled key-custody and intent-assurance controls
             </td>
             <td>
-              Verify controller evidence and cryptographic proof material before
-              accepting protected-key claims.
+              Device evidence records, attestation outputs, and discovery
+              metadata
             </td>
             <td>
-              Publish implementation conformance evidence mapped to GQSCD
-              profile requirements.
+              Verify key non-exportability, approval binding, and state evidence
+              against policy
+            </td>
+            <td>
+              Publish conformance targets and implementation profiles for
+              assessed configurations
             </td>
           </tr>
           <tr>
             <td>Wallet and app implementers</td>
+            <td>Deliver end-user controlled signing and attestation flows</td>
             <td>
-              Goal: implement end-user controlled signing and identity binding.
-              Required artifact: GDIS binding credential and publication
-              evidence.
+              User-approved-object binding artifacts and verifiable
+              signing-event evidence
             </td>
             <td>
-              Verify PID policy compliance, proof validity, and replay/freshness
-              controls.
+              Reject signing results lacking deterministic proof and payload
+              equality evidence
             </td>
             <td>
-              Publish conformance reports with test vectors and machine-readable
-              evidence outputs.
+              Publish profile conformance evidence and avoid remote-by-default
+              custody patterns
             </td>
           </tr>
           <tr>
             <td>Standards development organizations (SDOs)</td>
+            <td>Create interoperable profiles and test suites</td>
             <td>
-              Goal: profile interoperability contracts. Required interface:
-              profile work items, registries, and conformance test suites.
+              Profile specifications, test assertions, and registry/discovery
+              rules
             </td>
             <td>
-              Require deterministic verification outputs for equivalent inputs
-              across implementations.
+              Run deterministic pass/fail checks against declared profile
+              requirements
             </td>
             <td>
-              Adopt profile-specific compatibility mappings and normative test
-              assertions.
+              Standardize profile work items and reuse common terminology and
+              evidence formats
             </td>
           </tr>
           <tr>
             <td>Governments and regulators</td>
             <td>
-              Goal: publish authoritative policy and recognition inputs.
-              Required interface: governance discovery endpoints and
-              authoritative registries, plus legally valid issuer/delegate
-              authorization data.
+              Support recognition procedures without conflating legal status and
+              cryptographic validity
             </td>
             <td>
-              Separate cryptographic validity from legal-status determination
-              and evaluate each layer explicitly.
+              Authoritative registries/discovery endpoints and status
+              publication procedures
             </td>
             <td>
-              Define governance profiles and legal recognition procedures that
-              consume verifier-checkable artifacts, keep physical-item issuance
-              as the primary path, and use remote-eID delegation only as an
-              explicit fallback.
+              Separate technical verification output from legal-recognition
+              determination
+            </td>
+            <td>
+              Publish compatibility-profile rules over the web profile baseline
             </td>
           </tr>
           <tr>
             <td>Auditors, CABs, and assessors</td>
             <td>
-              Goal: assess conformance with machine-verifiable artifacts.
-              Required artifact: conformance reports, test outputs, and
-              verification transcripts.
+              Evaluate implementation evidence with machine-verifiable checks
             </td>
             <td>
-              Evaluate deterministic requirement satisfaction and explicit
-              failure semantics.
+              Test assertions, evaluation procedures, and evidence corpora
             </td>
             <td>
-              Publish assessment criteria that map requirement identifiers to
-              objective evidence.
+              Validate cryptographic proofs and reproducible requirement
+              mappings
+            </td>
+            <td>
+              Issue assessment outcomes bound to reproducible artifacts instead
+              of narrative-only claims
             </td>
           </tr>
           <tr>
             <td>Verifiers and relying parties</td>
+            <td>Make deterministic acceptance/rejection decisions</td>
             <td>
-              Goal: make acceptance decisions from evidence, not declarations.
-              Required artifact: credential proofs, policy documents, and
-              publication evidence.
+              Evidence records, discovery metadata, and policy input independent
+              of UI labels
             </td>
             <td>
-              Execute deterministic verification logic and return explicit
-              machine-readable decisions.
+              Verify every security claim cryptographically and report explicit
+              failure reasons
             </td>
             <td>
-              Integrate verifier outputs into relying-party policy decisions
-              without replacing cryptographic checks with trust lists alone.
+              Adopt classed conformance verification and policy overlays per
+              jurisdiction
             </td>
           </tr>
         </tbody>
@@ -573,6 +586,24 @@
         <dd>Imported term from <a href="#ref-gqscd-core">[GQSCD-CORE]</a>.</dd>
       </dl>
     </section>
+    <section id="normative-interface-surface">
+      <h2>Normative Interface Surface</h2>
+      <p>
+        ReSpec prose in this specification defines interface invariants and
+        processing behavior. It does not restate wire-format field contracts.
+      </p>
+      <p>
+        During the provisional phase,
+        <span class="mono">openapi.yaml</span> provides the indicative interface
+        surface (<em>suuntaa antavia</em>) for implementation trials and
+        interoperability testing.
+      </p>
+      <p>
+        Normative requirements in this specification remain authoritative for
+        verification behavior, failure semantics, and conformance outcomes until
+        schema finalization.
+      </p>
+    </section>
     <section id="mandate-law">
       <h2>Normative Source Constraints</h2>
       <p>
@@ -660,7 +691,7 @@
     </section>
 
     <section id="design-proposal">
-      <h2>GDIS Technical Model</h2>
+      <h2>Architecture</h2>
       <p>
         <span class="status-tag">Architecture Layer</span>
       </p>
@@ -711,8 +742,8 @@
           </li>
           <li>
             The derived <a>PID binding value</a> is bound to endpoint evidence
-            and <a>physical validity evidence artifact</a> outputs for issuer and
-            verifier checks.
+            and <a>physical validity evidence artifact</a> outputs for issuer
+            and verifier checks.
           </li>
           <li>
             An issuer creates a <a>GDIS binding credential</a> addressed to a
@@ -878,7 +909,7 @@
     </section>
 
     <section id="evidence-artifact-model">
-      <h2>Evidence Artifact Model</h2>
+      <h2>Data Model</h2>
       <p>
         Conforming implementations MUST produce and process explicit
         <a>evidence artifact</a> objects. Artifact schemas MAY evolve by profile
@@ -1088,9 +1119,10 @@
           3. Verification Endpoint Requirements
         </h3>
         <p>
-          Wire contracts for GDIS endpoint operations are normative in
-          <span class="mono">openapi.yaml</span>. This section defines only
-          behavioral invariants and conformance expectations
+          The provisional interface description in
+          <span class="mono">openapi.yaml</span> is
+          <em>suuntaa antavia</em> (indicative). This requirement defines
+          normative endpoint invariants and conformance outcomes
           <a href="#ref-oas-3-1-2">[OAS-3.1.2]</a>.
         </p>
         <ul>
@@ -1109,7 +1141,7 @@
           </li>
           <li>
             Endpoint resources <em class="rfc2119">MUST</em> provide at least
-            discovery metadata and status/revocation data.
+            discovery metadata, PID policy material, and status/revocation data.
           </li>
           <li>
             Governance areas defining PID requirements
@@ -1117,46 +1149,17 @@
             <a>PID identification endpoint</a>.
           </li>
           <li>
-            Conforming implementations
-            <em class="rfc2119">MUST</em> implement the
-            <span class="mono">getGdisPidIdentificationPolicy</span> operation
-            in <span class="mono">openapi.yaml</span> without behavioral
-            deviation from declared parameters, response schemas, and error
-            semantics.
+            PID policy retrieval semantics <em class="rfc2119">MUST</em> be
+            deterministic for equivalent inputs and
+            <em class="rfc2119">MUST</em> define explicit error outcomes for
+            unknown governance context, unsupported version requests, and
+            invalid query parameters.
           </li>
           <li>
-            The PID policy contract
-            <em class="rfc2119">MUST</em> conform to the
-            <span class="mono">GdisPidIdentificationPolicy</span> and
-            <span class="mono">GdisPidFieldRequirement</span> schemas in
-            <span class="mono">openapi.yaml</span>.
-          </li>
-          <li>
-            PID policy responses <em class="rfc2119">MUST</em> declare
-            subject-binding outcome metadata (at minimum
-            <span class="mono">subjectBindingProfile</span> and
-            <span class="mono">publicHandlePolicy</span>) so verifiers can
-            evaluate conformance outcomes without assuming one cryptographic
-            implementation.
-          </li>
-          <li>
-            PID policy responses <em class="rfc2119">MUST</em> declare
-            physical-validity method constraints in a machine-readable object
-            (at minimum
-            <span class="mono">physicalValidityProfileId</span>,
-            <span class="mono">acceptedInputChannels</span>, and
-            <span class="mono">governanceTrustSourceRefs</span>) so issuers and
-            verifiers can deterministically evaluate whether MRZ-only or
-            MRZ-plus-NFC evidence satisfies governance policy.
-          </li>
-          <li>
-            PID policy responses <em class="rfc2119">MUST</em> declare delegated
-            issuance constraints in a machine-readable object (at minimum
-            <span class="mono">physicalItemPrimary</span>,
-            <span class="mono">remoteEidFallbackAllowed</span>, and
-            <span class="mono">issuerAuthorityChainRefs</span>) so verifiers can
-            detect whether remote-eID delegation is fallback-only or incorrectly
-            configured as a default dependency.
+            PID policy responses <em class="rfc2119">MUST</em> include
+            machine-verifiable constraints for subject binding,
+            physical-validity checks, and delegated-issuance posture so issuer
+            and verifier decisions are reproducible.
           </li>
           <li>
             PID field regular-expression checks declared by the PID policy
@@ -1165,11 +1168,10 @@
             <a href="#ref-rfc9485">[RFC9485]</a>.
           </li>
           <li>
-            The PID policy operation
-            <em class="rfc2119">MUST</em> support optional
-            <span class="mono">asOf</span>
-            <a>asOf query parameter</a> selection and policy-version resolution
-            semantics as declared in <span class="mono">openapi.yaml</span>.
+            Historical policy resolution <em class="rfc2119">MUST</em> support
+            an optional <span class="mono">asOf</span>
+            <a>asOf query parameter</a> selector or an equivalent
+            version-selection mechanism with deterministic resolution semantics.
           </li>
           <li>
             PID policy responses <em class="rfc2119">MUST</em> be
@@ -1293,13 +1295,9 @@
           <li>
             Host-profile conformance behavior <em class="rfc2119">MUST</em> be
             at least equivalent to
-            <a href="https://z-base.github.io/gqts/#req-gqts-01"
-              >REQ-GQTS-01</a
-            >
+            <a href="https://z-base.github.io/gqts/#req-gqts-01">REQ-GQTS-01</a>
             through
-            <a href="https://z-base.github.io/gqts/#req-gqts-07"
-              >REQ-GQTS-07</a
-            >
+            <a href="https://z-base.github.io/gqts/#req-gqts-07">REQ-GQTS-07</a>
             for discovery, append-only retrieval, asynchronous ingest, and
             immutable event addressing.
           </li>
@@ -1381,14 +1379,14 @@
         </h3>
         <ul>
           <li>
-            Issuance and verification flows <em class="rfc2119">MUST</em> process
-            a <a>physical validity evidence artifact</a> whenever the resolved
+            Issuance and verification flows
+            <em class="rfc2119">MUST</em> process a
+            <a>physical validity evidence artifact</a> whenever the resolved
             governance PID policy requires physical-validity checks.
           </li>
           <li>
             The physical-validity artifact <em class="rfc2119">MUST</em> include
-            at minimum
-            <span class="mono">physicalValidityProfileId</span>,
+            at minimum <span class="mono">physicalValidityProfileId</span>,
             <span class="mono">acceptedInputChannels</span> satisfaction result,
             <span class="mono">governanceTrustSourceRefs</span>, verification
             timestamp, and integrity proof metadata.
@@ -1428,12 +1426,24 @@
               <td><span class="mono">REQ-GDIS-04</span></td>
               <td><a href="#ref-gqscd-core">[GQSCD-CORE]</a></td>
               <td>
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-06">REQ-GQSCD-06</a>,
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-17">REQ-GQSCD-17</a>,
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-26">REQ-GQSCD-26</a>,
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-27">REQ-GQSCD-27</a>,
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-28">REQ-GQSCD-28</a>,
-                <a href="https://z-base.github.io/gqscd/#req-gqscd-29">REQ-GQSCD-29</a>
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-06"
+                  >REQ-GQSCD-06</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-17"
+                  >REQ-GQSCD-17</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-26"
+                  >REQ-GQSCD-26</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-27"
+                  >REQ-GQSCD-27</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-28"
+                  >REQ-GQSCD-28</a
+                >,
+                <a href="https://z-base.github.io/gqscd/#req-gqscd-29"
+                  >REQ-GQSCD-29</a
+                >
               </td>
               <td>
                 Controller evidence, user-intent binding, and verifier-checkable
@@ -1444,13 +1454,27 @@
               <td><span class="mono">REQ-GDIS-05</span></td>
               <td><a href="#ref-gqts-core">[GQTS-CORE]</a></td>
               <td>
-                <a href="https://z-base.github.io/gqts/#req-gqts-01">REQ-GQTS-01</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-02">REQ-GQTS-02</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-03">REQ-GQTS-03</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-04">REQ-GQTS-04</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-05">REQ-GQTS-05</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-06">REQ-GQTS-06</a>,
-                <a href="https://z-base.github.io/gqts/#req-gqts-07">REQ-GQTS-07</a>
+                <a href="https://z-base.github.io/gqts/#req-gqts-01"
+                  >REQ-GQTS-01</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-02"
+                  >REQ-GQTS-02</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-03"
+                  >REQ-GQTS-03</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-04"
+                  >REQ-GQTS-04</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-05"
+                  >REQ-GQTS-05</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-06"
+                  >REQ-GQTS-06</a
+                >,
+                <a href="https://z-base.github.io/gqts/#req-gqts-07"
+                  >REQ-GQTS-07</a
+                >
               </td>
               <td>
                 Host discovery, publication, append-only event retrieval, and
@@ -1472,8 +1496,8 @@
                 >
               </td>
               <td>
-                Deterministic zero-trust validation of physical-validity evidence
-                and governance-source checks.
+                Deterministic zero-trust validation of physical-validity
+                evidence and governance-source checks.
               </td>
             </tr>
           </tbody>
@@ -1712,52 +1736,79 @@
     </section>
 
     <section id="conformance-reporting">
-      <h2>Conformance Reporting Requirements</h2>
+      <h2>Conformance Reporting</h2>
       <p>
-        Implementations claiming conformance MUST publish or provide a
-        <a>conformance report</a> containing at least:
+        A conformance claim MUST be accompanied by a machine-readable
+        <a>conformance report</a> with at least the following fields.
       </p>
-      <ul>
-        <li>
-          declared conformance class (Issuer, Verifier, or multiple) and
-          declared satisfied requirement identifiers;
-        </li>
-        <li>supported profile and schema versions;</li>
-        <li>
-          if publication evidence is evaluated, declared host profile URI(s) and
-          version pinning for publication semantics (for example GQTS);
-        </li>
-        <li>declared mandatory cryptographic suites and key constraints;</li>
-        <li>
-          implemented requirement identifiers (for example
-          <span class="mono">REQ-GDIS-03</span>) and any documented exclusions;
-        </li>
-        <li>
-          test evidence, including pass/fail results and artifact samples;
-        </li>
-        <li>
-          canonicalization and URI-normalization test vectors and compatibility
-          results;
-        </li>
-        <li>
-          PID field-set source identifiers and regular-expression conformance
-          test results for required governance profiles;
-        </li>
-        <li>
-          physical-validity method profile identifiers, accepted input-channel
-          outcomes, and governance trust-source references used during
-          verification;
-        </li>
-        <li>
-          delegated-issuance posture outputs, including whether remote-eID
-          fallback was allowed and which issuer-authority chain references were
-          used;
-        </li>
-        <li>
-          security assumptions, clock/freshness policy values, and trust anchor
-          policy inputs.
-        </li>
-      </ul>
+      <table class="simple tight">
+        <thead>
+          <tr>
+            <th>Report Field</th>
+            <th>Requirement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Implementation identifier and version</td>
+            <td>MUST be declared.</td>
+          </tr>
+          <tr>
+            <td>Conformance class set</td>
+            <td>MUST list all claimed classes.</td>
+          </tr>
+          <tr>
+            <td>Requirement coverage</td>
+            <td>
+              MUST list satisfied and excluded
+              <span class="mono">REQ-GDIS-xx</span> identifiers.
+            </td>
+          </tr>
+          <tr>
+            <td>Profile and schema versions</td>
+            <td>
+              MUST identify the evaluated profile versions and contract
+              revision.
+            </td>
+          </tr>
+          <tr>
+            <td>Host profile declarations</td>
+            <td>
+              MUST declare host profile URI and version pinning when publication
+              evidence is evaluated.
+            </td>
+          </tr>
+          <tr>
+            <td>Cryptographic suite declaration</td>
+            <td>MUST declare mandatory suites and key constraints.</td>
+          </tr>
+          <tr>
+            <td>Test evidence</td>
+            <td>MUST include pass/fail results and artifact samples.</td>
+          </tr>
+          <tr>
+            <td>Determinism vectors</td>
+            <td>
+              MUST include canonicalization and URI-normalization compatibility
+              vectors.
+            </td>
+          </tr>
+          <tr>
+            <td>Policy evaluation evidence</td>
+            <td>
+              MUST include PID policy source references, physical-validity
+              profile outputs, and delegated-issuance posture outputs.
+            </td>
+          </tr>
+          <tr>
+            <td>Security assumptions</td>
+            <td>
+              MUST declare clock/freshness policy values and trust-anchor
+              inputs.
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <p>
         Reports SHOULD include machine-readable fields so independent tooling
         can compare behavior across implementations.
@@ -1765,9 +1816,9 @@
     </section>
 
     <section id="web-first-profile">
-      <h2>Web Profile (Mandatory) and Compatibility Layers</h2>
+      <h2>Interoperability Profiles</h2>
       <section id="web-profile-primary">
-        <h3>Primary Web Profile</h3>
+        <h3>Web Profile</h3>
         <p>
           Implementations <em class="rfc2119">MUST</em> treat web standards as
           the primary interoperability baseline (<a>web profile</a>):
@@ -1940,6 +1991,7 @@
     </section>
     <section id="threat-model">
       <h2>Security Considerations</h2>
+      <h3>Threat Model</h3>
       <p>
         Implementations MUST assume hostile client/network environments unless
         security boundaries are cryptographically enforced.

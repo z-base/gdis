@@ -1,53 +1,25 @@
-﻿SYSTEM / ROLE
-You are GPT-5.3-Codex acting as a cross-repository alignment agent for these specs:
-- z-base/gdis   (GDIS-CORE)
-- z-base/gqts  (GQTS-CORE)
-- z-base/gqscd (GQSCD-CORE)
-Follow the AGENTS.md drafting posture (read it first) and the repo config for peer snapshots.
+Apply the GIDAS editorial guidelines to revise this specification. Use the same
+formal, technical voice and structure in every document. Ensure identical
+headings for identical content.
 
-HARD CONSTRAINTS:
-- Wallet-private vs Trust-public: Treat "proof artifacts" (credentials, PID binding VCs, attestations) as private to the wallet. Do NOT have GQTS or GQSCD restate or store private claims. GQTS only stores public verification material (keys, DID docs, status) in its tamper-evident log.
-- Directed linear logs: Assume the GQTS history is an append-only, signed chain. The first event is the root key; each new verification method event must link by signature to the previous head. If a log entry conflicts, it should be flagged as a bad node (do not silently merge).
-- No duplication of definitions: Replace duplicated term definitions with `data-cite` references to the canonical spec.
+For example, every spec must include sections titled "Positioning and Adoption
+Model", "Scope", "Terminology", "Conformance Classes", "Security
+Considerations", and "Privacy Considerations", with uniform phrasing across
+repos. Merge or rename sections so shared concepts align (for example, use one
+unified name for the Threat Model section).
 
-INPUT PARAMETERS (per repo)
-SELF_SPEC_ID, SELF_REPO_FULL_NAME, SELF_HOME_URL as before.
-Peer snapshots as before.
+Maintain precise, short sentences and a cold logical tone. Define all normative
+requirements with MUST/SHOULD in RFC 2119 style (all-caps) and REQ-IDs per
+`REQ-<COMP>-XX`. Do not repeat OpenAPI details in prose; describe invariants
+and behaviors abstractly.
 
-TASKS:
-0. Preconditions: Read AGENTS.md and gidas-alignment.config.json. Ensure peer snapshots exist for all peers. Fail (alignment-report.md) if any are missing.
-1. Deterministic index: Run scripts/cross-spec-align.mjs (or replicate its behavior) to compute `spec-index.self.json` and `spec-index.peers.json`.
-2. Cross-spec mapping: Analyze `cross-spec-map.json`:
-   - Term clusters: Merge same concepts. Enforce canonical ownership rules (device/key terms -> GQSCD; identity/PID terms -> GDIS; log/publication terms -> GQTS).
-   - New term rules: "proof artifact" or "binding credential" = private, GDIS-owned; "verification material" = public, GQTS-owned.
-   - Clause clusters: Map identical OpenAPI ops. Check no op is defined in two specs with different semantics.
-   - Conflict detection:
-     - If the same operationId has different request/response schemas, flag `operation-contract-conflict`.
-     - If the same operation has different requirement IDs (`x-gqts-requirement`), flag `requirement-id-namespace-conflict`.
-   - Gap detection:
-     - If a term is used but not defined in SELF (and not imported via data-cite), flag undefined-term.
-3. Alignment plan (alignment-plan.md):
-   - List canonical term/anchor owners (include "proof artifact" as GDIS, "verification material" as GQTS).
-   - List canonical clause mapping per operation.
-   - Outline exactly what SELF repo must change:
-     - E.g. "Replace local definition of `mechanical validity` with `data-cite="GQTS-CORE#mechanical-validity"`."
-     - "In GDIS, keep the Verifiable Credential (PID binding) but mark its output as private (UNSPECIFIED how to publish)."
-     - "In GQTS, ensure the event log is described as a signed linear chain (add or verify text to that effect)."
-     - Mark any details that remain UNSPECIFIED.
-4. Apply edits to SELF repo:
-   - LocalBiblio: Ensure entries for GDIS-CORE, GQTS-CORE, GQSCD-CORE.
-   - Definitions: For each non-canonical term in SELF, replace `<dfn>Term</dfn>` with `<dfn data-cite="OWNER_SPEC_ID#canonical-anchor">Term</dfn>` and minimal local note.
-   - Verification vs Proof: Explicitly note in text that SELF does not store private wallet claims. (No actual data migration is needed, just cross-ref.)
-   - OpenAPI: If SELF includes any GQTS-hosted endpoints, delete or rewrite them to use canonical IDs. Ensure `x-gqts-requirement` matches GQTS's numbering and verify schema equivalence (especially Proof and DID Document structure).
-   - Anchors: Confirm every requirement ID has a stable anchor; add alias spans if needed.
-5. Output:
-   - proposed-changes.patch: a git diff of the above edits.
-   - alignment-report.md: summarize changes made, duplicates removed, and any remaining conflicts (UNSPECIFIED).
-   - alignment-plan.md: the plan from step 3.
+Include a ReSpec note in the introduction stating that the `openapi.yaml`
+contracts are indicative ("suuntaa antavia") and that official schemas will be
+finalized after the first reference implementation.
 
-FINAL OUTPUT (to user)
-A concise explanation of changes, plus:
-- Files changed.
-- Summary of duplicates removed and cross-references added.
-- Pointer to `.gidas/alignment/` with spec-index and map.
-- The prompt template (above) is ready to copy into each repo for alignment.
+Follow the stakeholder table format
+goal -> artifact -> verifier -> pathway in "Positioning and Adoption Model".
+
+Finally, verify that any paragraph or bullet conveying the same idea as in the
+other GIDAS specs is word-for-word identical. Use the same terms and phrasing
+throughout to achieve end-to-end alignment.
