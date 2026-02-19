@@ -291,8 +291,8 @@ paths:
       x-gdis-requirement: REQ-GDIS-03
       description: |
         Returns the governance-defined PID identification policy, including required
-        MRZ-derived fields, physical-validity method constraints, and per-field
-        regular-expression constraints.
+        MRZ-derived fields, physical-validity method constraints, delegated
+        issuance constraints, and per-field regular-expression constraints.
       parameters:
         - $ref: '#/components/parameters/AsOf'
         - $ref: '#/components/parameters/IfNoneMatch'
@@ -510,6 +510,40 @@ components:
           type: boolean
           default: true
 
+    GdisDelegatedIssuancePolicy:
+      type: object
+      additionalProperties: false
+      required:
+        - physicalItemPrimary
+        - remoteEidFallbackAllowed
+        - issuerAuthorityChainRefs
+      properties:
+        physicalItemPrimary:
+          type: boolean
+          const: true
+          description: |
+            Conforming policy posture. Physical identity-item issuance is the
+            primary path for PID binding.
+        remoteEidFallbackAllowed:
+          type: boolean
+          description: |
+            Indicates whether remote eID provider delegation is allowed as a
+            documented fallback.
+        remoteEidFallbackPolicy:
+          type: string
+          minLength: 1
+          description: |
+            Policy identifier or condition reference governing fallback
+            activation when remote delegation is allowed.
+        issuerAuthorityChainRefs:
+          type: array
+          minItems: 1
+          description: |
+            Authoritative references used to verify legal issuer and delegate
+            authority chain status.
+          items:
+            $ref: '#/components/schemas/UriDigest'
+
     GdisPidIdentificationPolicy:
       type: object
       additionalProperties: false
@@ -521,6 +555,7 @@ components:
         - subjectBindingProfile
         - publicHandlePolicy
         - physicalValidity
+        - delegatedIssuance
         - pidFieldSet
         - signature
       properties:
@@ -558,6 +593,8 @@ components:
             or otherwise privacy-preserving by default.
         physicalValidity:
           $ref: '#/components/schemas/GdisPhysicalValidityPolicy'
+        delegatedIssuance:
+          $ref: '#/components/schemas/GdisDelegatedIssuancePolicy'
         nonRevocationModel:
           type: object
           additionalProperties: false

@@ -265,7 +265,8 @@
             <td>
               Goal: publish authoritative policy and recognition inputs.
               Required interface: governance discovery endpoints and
-              authoritative registries.
+              authoritative registries, plus legally valid issuer/delegate
+              authorization data.
             </td>
             <td>
               Separate cryptographic validity from legal-status determination
@@ -273,7 +274,9 @@
             </td>
             <td>
               Define governance profiles and legal recognition procedures that
-              consume verifier-checkable artifacts.
+              consume verifier-checkable artifacts, keep physical-item issuance
+              as the primary path, and use remote-eID delegation only as an
+              explicit fallback.
             </td>
           </tr>
           <tr>
@@ -319,6 +322,20 @@
         <dd>
           A legal and administrative domain that issues and governs identity
           items and their verification rules.
+        </dd>
+
+        <dt><dfn>delegated PID issuer</dfn></dt>
+        <dd>
+          An issuance delegate that a <a>governance area</a> has legally
+          authorized to issue PID-bound identity evidence under governance
+          policy.
+        </dd>
+
+        <dt><dfn>remote eID provider</dfn></dt>
+        <dd>
+          A network-mediated identity service used for PID issuance or
+          delegation workflows (for example SIM-based or bank-mediated
+          issuance), distinct from direct physical identity-item issuance.
         </dd>
 
         <dt><dfn>physical identity item</dfn></dt>
@@ -579,6 +596,26 @@
           <a href="#ref-eu-2024-1183">[EU-2024/1183]</a>
           <a href="#ref-eu-trusted-lists">[EU-TRUSTED-LISTS]</a>
           <a href="#ref-eu-qscd-notifications">[EU-QSCD-NOTIFICATIONS]</a>.
+        </p>
+        <p>
+          A governance area MUST designate legally valid PID issuance
+          authorities and, if delegation exists, MUST designate each
+          <a>delegated PID issuer</a> and publish machine-verifiable authority
+          chain references.
+        </p>
+        <p>
+          Governance profiles that support or require
+          <a>remote eID provider</a> issuance as the default path are
+          <em class="rfc2119">NOT RECOMMENDED</em> due to centralization risk.
+          Remote delegation MAY be allowed only as a documented fallback when
+          direct physical identity-item issuance is infeasible in the applicable
+          governance context.
+        </p>
+        <p>
+          Governance profiles <em class="rfc2119">SHOULD</em> include a direct
+          path for binding PID-derived identity evidence to a DID without
+          mandatory dependence on a remote issuance service, and SHOULD maximize
+          availability of proper physical identity items for that path.
         </p>
       </section>
 
@@ -935,6 +972,26 @@
             <a>governance verification endpoint</a> data sufficient for
             legitimacy verification in that governance context.
           </li>
+          <li>
+            Governance profiles <em class="rfc2119">MUST</em> publish a legally
+            valid issuer/delegate authority chain for PID issuance, including
+            references needed to verify each <a>delegated PID issuer</a>.
+          </li>
+          <li>
+            Profiles that make <a>remote eID provider</a> issuance the default
+            path (for example SIM-based or bank-mediated issuance) are
+            <em class="rfc2119">NOT RECOMMENDED</em> due to centralization risk.
+          </li>
+          <li>
+            A governance area MAY allow <a>remote eID provider</a> delegation
+            only as a fallback when direct physical identity-item issuance is
+            infeasible and documented policy conditions are satisfied.
+          </li>
+          <li>
+            Governance profiles <em class="rfc2119">SHOULD</em> preserve a
+            direct issuance-to-DID path that does not require a mandatory remote
+            issuance dependency.
+          </li>
         </ul>
       </section>
 
@@ -1091,6 +1148,15 @@
             <span class="mono">governanceTrustSourceRefs</span>) so issuers and
             verifiers can deterministically evaluate whether MRZ-only or
             MRZ-plus-NFC evidence satisfies governance policy.
+          </li>
+          <li>
+            PID policy responses <em class="rfc2119">MUST</em> declare delegated
+            issuance constraints in a machine-readable object (at minimum
+            <span class="mono">physicalItemPrimary</span>,
+            <span class="mono">remoteEidFallbackAllowed</span>, and
+            <span class="mono">issuerAuthorityChainRefs</span>) so verifiers can
+            detect whether remote-eID delegation is fallback-only or incorrectly
+            configured as a default dependency.
           </li>
           <li>
             PID field regular-expression checks declared by the PID policy
@@ -1683,6 +1749,11 @@
           verification;
         </li>
         <li>
+          delegated-issuance posture outputs, including whether remote-eID
+          fallback was allowed and which issuer-authority chain references were
+          used;
+        </li>
+        <li>
           security assumptions, clock/freshness policy values, and trust anchor
           policy inputs.
         </li>
@@ -1929,6 +2000,16 @@
             <td>Governance over-closure of host set</td>
             <td>Mandatory host sets treated only as publication floor</td>
             <td>Publication policy and host-distribution record</td>
+          </tr>
+          <tr>
+            <td>Centralization by default remote-eID issuance dependency</td>
+            <td>
+              Physical-item-primary issuance policy + fallback-only remote
+              delegation + issuer-authority chain verification
+            </td>
+            <td>
+              PID policy delegated-issuance object and authority-chain evidence
+            </td>
           </tr>
         </tbody>
       </table>
